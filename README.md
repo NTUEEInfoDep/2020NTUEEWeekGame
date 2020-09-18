@@ -1,7 +1,7 @@
 # 2020NTUEEWeekGame
 
-### Front End
+### Front-End
 
 PixiJS
 
-### Back End
+### Back-End
