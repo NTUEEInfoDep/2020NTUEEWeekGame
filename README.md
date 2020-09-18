@@ -2,6 +2,6 @@
 
 ### Front End
 
-PIXI.js
+PixiJS
 
 ### Back End
