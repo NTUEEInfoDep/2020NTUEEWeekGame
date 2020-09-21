@@ -8,8 +8,9 @@ class Bullet extends ObjectClass {
     this.parentID = parentID;
   }
 
+
   // Returns true if the bullet should be destroyed
-  update(dt) {
+  /*update(dt) {
     super.update(dt);
     return (
       this.x < 0 ||
@@ -18,6 +19,6 @@ class Bullet extends ObjectClass {
       this.y > Constants.MAP_SIZE
     );
   }
-}
+}*/
 
 module.exports = Bullet;

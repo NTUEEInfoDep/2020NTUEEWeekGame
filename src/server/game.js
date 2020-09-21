@@ -1,6 +1,6 @@
 const Constants = require("../shared/constants");
 const Player = require("./player");
-const applyCollisions = require("./collisions");
+//const applyCollisions = require("./collisions");
 
 class Game {
   constructor() {
