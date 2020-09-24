@@ -1,5 +1,4 @@
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -102,7 +101,7 @@ button:focus {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-#disconnect-modal > div {
+#disconnect-modal>div {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -117,29 +116,23 @@ button:focus {
   h1 {
     font-size: 2rem;
   }
-
   h2 {
     font-size: 1.75rem;
   }
-
   #play-menu {
     padding: 10px 15px;
     min-width: 280px;
   }
-
-  #disconnect-modal > div {
+  #disconnect-modal>div {
     padding: 10px;
     min-width: 280px;
   }
-
   #leaderboard th {
     padding: 0 3px;
   }
-
   #leaderboard td {
     padding: 0 3px;
   }
-
   #leaderboard table {
     font-size: 14px;
   }
