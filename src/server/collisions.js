@@ -25,4 +25,3 @@ function applyCollisions(players, bullets) {
 }
 
 module.exports = applyCollisions;
-
