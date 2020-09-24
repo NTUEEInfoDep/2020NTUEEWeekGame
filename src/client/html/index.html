@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>An example .io game</title>
+    <link rel=stylesheet type="text/css" href="../css/main.css">
+    <title>tEnET</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="shortcut icon" href="/assets/icon64.png" />
+    <link rel="shortcut icon" href="../../../public/assets/icon64.png" />
     <meta
       property="description"
       content="A complete example multiplayer .io web game implemented from scratch. Built with Javascript and Node.js. Open source on Github."
@@ -16,7 +17,7 @@
       property="og:description"
       content="A complete example multiplayer .io web game implemented from scratch. Built with Javascript and Node.js. Open source on Github."
     />
-    <meta property="og:image" content="/assets/icon1200.png" />
+    <meta property="og:image" content="../../../public/assets/icon1200.png" />
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=UA-58664433-3"
@@ -34,33 +35,88 @@
   <body>
     <canvas id="game-canvas"></canvas>
     <div id="play-menu" class="hidden">
-      <h1>An example .io game</h1>
-      <p>
-        Stay alive and shoot other players.
+
+      <div id="header">
+        <div id="title" style="margin-top: 10px">tEnET</div>
+        <div id="subtitle">NTUEE&nbsp;WEEK&nbsp;tEnEt</div>
+        <div id="subtitle">10/19&nbsp;~&nbsp;10/23</div>
+      </div>
+
+      <div id="content">
+        
         <br />
-        Use your mouse to move.
-      </p>
-      <hr />
-      <p>
-        <!-- <br /> -->
-        Read the tutorial:
-        <a
-          href="https://victorzhou.com/blog/build-an-io-game-part-1/"
-          target="_blank"
-          >How to Build an .io Game</a
-        >.
         <br />
-        See the source code on
-        <a href="https://github.com/vzhou842/example-.io-game" target="_blank"
-          >Github</a
-        >.
+        <input type="text" id="username-input" maxlength="25" placeholder="Username">
         <br />
-        Created by <a href="https://victorzhou.com">Victor Zhou</a>.
-      </p>
-      <hr />
-      <input type="text" id="username-input" placeholder="Username" />
-      <button id="play-button">PLAY</button>
+        <br />
+        <button id="enter-button" class="button1">ENTER</button>
+        <br />
+      </div>
+      
     </div>
+    <div id="mode-menu" class="hidden">
+
+      <div id="header">
+        <div id="title" style="margin-top: 10px">CHOOSE&nbsp;A&nbsp;CHARACTER</div>
+      </div>
+
+      <div id="character-table">
+
+        <div id="character-container-1" class="characterContainer">
+          <div id="character-pic-1">
+            <img src="../../../public/assets/num1.png" class="characterPic">
+          </div>
+          <div id="character-name-1">CHARACTER&nbsp;1</div> 
+        </div>
+
+        <div id="character-container-2" class="characterContainer">
+          <div id="character-pic-2">
+            <img src="../../../public/assets/num2.png" class="characterPic">
+          </div>
+          <div id="character-name-2">CHARACTER&nbsp;2</div> 
+        </div>
+
+        <div id="character-container-3" class="characterContainer">
+          <div id="character-pic-3">
+            <img src="../../../public/assets/num3.png" class="characterPic">
+          </div>
+          <div id="character-name-3">CHARACTER&nbsp;3</div> 
+        </div>
+
+        <div id="character-container-4" class="characterContainer">
+          <div id="character-pic-4">
+            <img src="../../../public/assets/num4.png" class="characterPic">
+          </div>
+          <div id="character-name-4">CHARACTER&nbsp;4</div> 
+        </div>
+
+        <div id="character-container-random" class="characterContainer">
+          <div id="character-pic-random">
+            <img src="../../../public/assets/randomCharacter.png" class="characterPic">
+          </div>
+          <div id="character-name-random">RANDOM</div> 
+        </div>
+
+      </div>
+
+      <div id="mode-select">
+        <button id="random-button" class="button2">Random&nbsp;Game</button>
+        <button id="create-room-button" class="button2">Create&nbsp;A&nbsp;Room</button>
+        <button id="join-room-button" class="button2">Join&nbsp;A&nbsp;Room</button>
+      </div>
+      
+    </div>
+    <div id="instructions" class="hidden">
+      <p>
+        Stay alive and shoot other players!!!
+        <br />
+        Press "left" and "right" to move, "up" and "down" to adjust the angle.
+        <br />
+        Hold "space" to control the shooting strength.
+      </p>
+      <div id="enter-game" class="blink">Press "enter" to start</div>
+    </div>
+
     <div id="leaderboard" class="hidden">
       <table>
         <tr>
