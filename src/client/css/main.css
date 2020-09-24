@@ -1,5 +1,6 @@
 html, body {
   margin: 0;
+  border: 0;
   padding: 0;
   overflow: hidden;
   overscroll-behavior: none;
@@ -59,7 +60,26 @@ button:focus {
   margin-bottom: 0;
 }
 
-#play-menu input {
+#play-menu div {
+  margin: 12px 0 3px;
+}
+
+#play-menu input[type="radio"] {
+  display: none;
+}
+
+#play-menu img {
+  width: 80px;
+  height: 80px;
+  padding: 10px;
+}
+
+#play-menu input[type="radio"]:checked+img {
+  border: 2px solid #000000;
+  border-radius: 5%;
+}
+
+#play-menu input[type="text"] {
   font-size: 18px;
   outline: none;
   border: none;
