@@ -42,11 +42,9 @@ class Player extends ObjectClass {
   move(e) {
     if (e[1] === "ArrowLeft") {
       this.direction = -Math.PI/2;
-      console.log("Move left!!!");
     }
     if (e[1] === "ArrowRight") {
       this.direction = Math.PI/2;
-      console.log("Move Right");
     }
     this.speed = Constants.PLAYER_SPEED;
   }
