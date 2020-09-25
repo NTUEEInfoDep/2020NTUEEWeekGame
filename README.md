@@ -187,10 +187,10 @@ How to Build a Multiplayer(.io) Web Game -- Victor Zhou
   - <b>update</b> ()
     Calculate the time elapsed, update the bullets' and the players' status, judge collisions and scores and renew all players' scenes.
   - <b>getLeaderBoard</b> ()
-    | Info        | Description       |
+    | Info | Description |
     | ----------- | ----------------- |
-    | Return      | The new dashboard |
-    | Return type | Array             |
+    | Return | The new dashboard |
+    | Return type | Array |
     Renew the dashboard by ordering players by their new scores and return it.
   - <b>createUpdate</b> (player, leaderboard)
 
@@ -205,11 +205,11 @@ How to Build a Multiplayer(.io) Web Game -- Victor Zhou
 ### Functions
 
 - <b>applyCollisions</b> (players, bullets)
-  | Info        | Description       |
+  | Info | Description |
   | ----------- | ----------------- |
-  | Parameters  |                   |
-  | Return      | Destroyed bullets |
-  | Return type | Array             |
+  | Parameters | |
+  | Return | Destroyed bullets |
+  | Return type | Array |
   Check if the player is shot by a bullet, if so, decrease the player's hp value and return the bullet array to be cleared.
 - <b>joinGame</b> (username)
 

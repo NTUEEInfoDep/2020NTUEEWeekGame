@@ -1,7 +1,7 @@
+const { join } = require("lodash");
 const Constants = require("../shared/constants");
 const Player = require("./player");
 const applyCollisions = require("./collisions");
-const { join } = require("lodash");
 
 class Game {
   constructor() {
