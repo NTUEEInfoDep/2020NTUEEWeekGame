@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
     "develop": "cross-env NODE_ENV=development node src/server/server.js",
-    "start": "cross-env NODE_ENV=production node src/server/server.js"
+    "start": "cross-env NODE_ENV=production node src/server/server.js",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
