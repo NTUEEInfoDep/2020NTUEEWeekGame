@@ -17,6 +17,7 @@ const playMenu = document.getElementById("play-menu");
 const playButton = document.getElementById("play-button");
 const usernameInput = document.getElementById("username-input");
 
+
 function onGameOver() {
   stopCapturingInput();
   stopRendering();
