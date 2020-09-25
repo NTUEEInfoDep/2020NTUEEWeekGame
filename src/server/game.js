@@ -18,20 +18,18 @@ class Game {
   addPlayer(socket, username) {
     this.sockets[socket.id] = socket;
 
-    // Adding player to rooms and store the name. The first player joined 
+    // Adding player to rooms and store the name. The first player joined
     // goes to waitrooms. The second player will be join and move the room
     // from waitrooms to playrooms. If a third player is coming, it will be blocked.
     // Ridection or alert for this is still needed.
     if (username in this.playrooms) {
-      console.log('The room is too crowd');
-    }
-    else if (username in this.waitrooms) {
+      console.log("The room is too crowd");
+    } else if (username in this.waitrooms) {
       socket.join(username);
-      this.playrooms[username] = (this.waitrooms[username]);
+      this.playrooms[username] = this.waitrooms[username];
       this.playrooms[username].push(socket.id);
       delete this.waitrooms[username];
-    }
-    else {
+    } else {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
@@ -54,13 +52,13 @@ class Game {
   // Deal with disconnected player and its room
   removeDisconnectedPlayer(socket) {
     Object.keys(this.playrooms).forEach((roomname) => {
-      const playerIDs = this.playrooms[roomname]
-      if (playerIDs.includes(socket.id)){
+      const playerIDs = this.playrooms[roomname];
+      if (playerIDs.includes(socket.id)) {
         this.removeRoom(roomname, playerIDs);
-      };
+      }
     });
   }
-  
+
   // Send Game over and remove room and players
   removeRoom(roomname, playerIDs) {
     delete this.playrooms[roomname];
@@ -77,7 +75,7 @@ class Game {
       const player = this.players[socket.id];
       const key_type = key_event[0];
       const key = key_event[1];
-      if (key_type === "keydown"){
+      if (key_type === "keydown") {
         if (key === "Space") {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
@@ -136,20 +134,20 @@ class Game {
     this.bullets = this.bullets.filter(
       (bullet) => !destroyedBullets.includes(bullet)
     );
-    
+
     // Check if any game ended in the playrooms
     Object.keys(this.playrooms).forEach((roomname) => {
       const playerIDs = this.playrooms[roomname];
-      const hps = playerIDs.map((playerID) => (this.players[playerID].hp));
-      if (hps[0]<=0 || hps[1]<=0) {
-          this.removeRoom(roomname, playerIDs);
+      const hps = playerIDs.map((playerID) => this.players[playerID].hp);
+      if (hps[0] <= 0 || hps[1] <= 0) {
+        this.removeRoom(roomname, playerIDs);
       }
     });
 
     // Send a game update to each player every other time
     if (this.shouldSendUpdate) {
       const leaderboard = this.getLeaderboard();
-      
+
       // Update for players in waitroom
       Object.keys(this.waitrooms).forEach((roomname) => {
         const playerIDs = this.waitrooms[roomname];
@@ -159,10 +157,10 @@ class Game {
           socket.emit(
             Constants.MSG_TYPES.GAME_UPDATE,
             this.createRoomUpdate(playerIDs, player, leaderboard)
-          )
+          );
         });
       });
-      
+
       // Update for players in playroom
       Object.keys(this.playrooms).forEach((roomname) => {
         const playerIDs = this.playrooms[roomname];
@@ -172,7 +170,7 @@ class Game {
           socket.emit(
             Constants.MSG_TYPES.GAME_UPDATE,
             this.createRoomUpdate(playerIDs, player, leaderboard)
-          )
+          );
         });
       });
 
@@ -188,15 +186,15 @@ class Game {
       .slice(0, 5)
       .map((p) => ({ username: p.username, score: Math.round(p.score) }));
   }
-  
-  // Only create update object within the room 
+
+  // Only create update object within the room
   createRoomUpdate(playerIDs, player, leaderboard) {
-    const playerInRoom = playerIDs.map(
-      (playerID)=>(this.players[playerID])
-    );
-    
+    const playerInRoom = playerIDs.map((playerID) => this.players[playerID]);
+
     const bulletInRoom = this.bullets.filter(
-      (b) => (b.distanceTo(player) <= Constants.MAP_SIZE / 2 && playerIDs.includes(b.parentID))
+      (b) =>
+        b.distanceTo(player) <= Constants.MAP_SIZE / 2 &&
+        playerIDs.includes(b.parentID)
     );
 
     return {

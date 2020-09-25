@@ -19,9 +19,9 @@ class Player extends ObjectClass {
 
     // Update score
     this.score += dt * Constants.SCORE_PER_SECOND;
-    
+
     // Apply player friction
-    if (this.speed > 0 && this.friction !==0) this.speed -= this.friction * dt;
+    if (this.speed > 0 && this.friction !== 0) this.speed -= this.friction * dt;
     if (this.speed <= 0) {
       this.speed = 0;
       this.friction = 0;
@@ -31,31 +31,31 @@ class Player extends ObjectClass {
     this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
 
     this.fireCooldown -= dt;
-    if (this.fireCooldown <= 0 ){
-      this.fireCooldown = 0;     
+    if (this.fireCooldown <= 0) {
+      this.fireCooldown = 0;
     }
-    
+
     return null;
   }
 
   // Receive keyboard input and move character
   move(e) {
     if (e[1] === "ArrowLeft") {
-      this.direction = -Math.PI/2;
+      this.direction = -Math.PI / 2;
     }
     if (e[1] === "ArrowRight") {
-      this.direction = Math.PI/2;
+      this.direction = Math.PI / 2;
     }
     this.speed = Constants.PLAYER_SPEED;
   }
-  
+
   // Stop the player's movement
-  stop(e){
+  stop(e) {
     this.friction = Constants.PLAYER_FRICTION;
   }
 
   // Fire a bullet with cooldown limit
-  fire(){
+  fire() {
     if (this.fireCooldown <= 0) {
       this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
       return new Bullet(this.id, this.x, this.y, this.direction, this.username);

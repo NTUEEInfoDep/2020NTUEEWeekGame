@@ -20,7 +20,7 @@ function onKeydown(e) {
   updateMovement(["keydown", e.code]);
 }
 
-function onKeyUp(e){
+function onKeyUp(e) {
   updateMovement(["keyup", e.code]);
 }
 

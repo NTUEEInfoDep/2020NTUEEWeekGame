@@ -41,6 +41,6 @@ export const updateDirection = throttle(20, (dir) => {
   socket.emit(Constants.MSG_TYPES.INPUT, dir);
 });
 
-export const updateMovement = throttle(20, (movement)=> {
-  socket.emit(Constants.MSG_TYPES.KEY_INPUT, movement)
+export const updateMovement = throttle(20, (movement) => {
+  socket.emit(Constants.MSG_TYPES.KEY_INPUT, movement);
 });
