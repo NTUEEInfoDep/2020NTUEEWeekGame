@@ -143,9 +143,13 @@ How to Build a Multiplayer(.io) Web Game -- Victor Zhou
 
     Update the player's score, coordinates and cool-down time, if needed, a bullet also will be fired.
 
-  - <b>takeBulletDamage</b> ()
+  - <b>takeBulletDamage</b> (role)
+    
+    | Info        | Description                                                      |
+    | ----------- | ---------------------------------------------------------------- |
+    | Parameters  | role - One of the roles                                          |
 
-    Decrease the player's hp value if shot by a bullet.
+    Decrease the player's hp value if shot by a bullet from different roles.
 
   - <b>onDealtDamage</b> ()
     Increase the player's score if another player is shot by which.
