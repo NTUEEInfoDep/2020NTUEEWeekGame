@@ -5,7 +5,8 @@ const { plugins } = require("../../webpack.config");
 
 class Player extends ObjectClass {
   constructor(id, username, x, y) {
-    super(id, x, y, Math.random() * 2 * Math.PI, 0);
+    // faces toward left or right, currently right
+    super(id, x, y, 0, 0);
     this.username = username;
     this.hp = Constants.PLAYER_MAX_HP;
 <<<<<<< HEAD
@@ -83,8 +84,8 @@ class Player extends ObjectClass {
   }
 >>>>>>> 92ebfe8aa74e293dec4925583f18453c5aa38d75
 
-  takeBulletDamage() {
-    this.hp -= Constants.BULLET_DAMAGE;
+  takeBulletDamage(role) {
+    this.hp -= role.bulletDamage;
   }
 
   /*onDealtDamage() {
