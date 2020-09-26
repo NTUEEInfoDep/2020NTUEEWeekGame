@@ -43,9 +43,17 @@ function renderBackground(x, y) {
 
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
-  const { x, y, direction } = player;
+  const { x, y, direction, fireDirection } = player;
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
+
+  // Draw muzzle
+  context.save();
+  context.translate(canvasX, canvasY);
+  context.rotate(fireDirection - Math.PI / 2);
+  context.fillStyle = "LawnGreen";
+  context.fillRect(0, -3, PLAYER_RADIUS * 3, 6);
+  context.restore();
 
   // Draw ship
   context.save();

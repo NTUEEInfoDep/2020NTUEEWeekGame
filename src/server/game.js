@@ -39,7 +39,7 @@ class Game {
 
     // Generate a position to start this player at.
     const x = Constants.MAP_SIZE * (0.3 + Math.random() * 0.2);
-    const y = Constants.MAP_SIZE * (0.3 + Math.random() * 0.2);
+    const y = Constants.MAP_SIZE * (0.9 + Math.random() * 0.1);
     this.players[socket.id] = new Player(socket.id, username, x, y);
   }
 
@@ -90,7 +90,7 @@ class Game {
 
   handleInput(socket, dir) {
     if (this.players[socket.id]) {
-      this.players[socket.id].setDirection(dir);
+      this.players[socket.id].setFireDirection(dir);
     }
   }
 

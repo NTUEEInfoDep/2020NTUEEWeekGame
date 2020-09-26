@@ -9,6 +9,7 @@ class Player extends ObjectClass {
     super(id, x, y, 0, 0);
     this.username = username;
     this.hp = Constants.PLAYER_MAX_HP;
+    this.fireDirection = 0;
     this.fireCooldown = 0;
     this.friction = 0;
     this.score = 0;
@@ -59,7 +60,13 @@ class Player extends ObjectClass {
   fire() {
     if (this.fireCooldown <= 0) {
       this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
-      return new Bullet(this.id, this.x, this.y, this.direction, this.username);
+      return new Bullet(
+        this.id,
+        this.x,
+        this.y,
+        this.fireDirection,
+        this.username
+      );
     }
     return null;
   }
@@ -68,14 +75,19 @@ class Player extends ObjectClass {
     this.hp -= role.bulletDamage;
   }
 
-  /* onDealtDamage() {
+  onDealtDamage() {
     this.score += Constants.SCORE_BULLET_HIT;
-  } */
+  }
+
+  setFireDirection(dir) {
+    this.fireDirection = dir;
+  }
 
   serializeForUpdate() {
     return {
       ...super.serializeForUpdate(),
       direction: this.direction,
+      fireDirection: this.fireDirection,
       hp: this.hp,
     };
   }
