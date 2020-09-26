@@ -1,6 +1,7 @@
 html,
 body {
   margin: 0;
+  border: 0;
   padding: 0;
   overflow: hidden;
   overscroll-behavior: none;
@@ -14,22 +15,12 @@ body {
 
 @font-face {
   font-family: "AstronBoy";
-  src: url("../../../public/fonts/astronBoy.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "AstronBoyItalic";
-  src: url("../../../public/fonts/astronBoyItalic.ttf") format("truetype");
+  src: url("../../../public/fonts/astron_boy.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Nest";
-  src: url("../../../public/fonts/Nest.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "AstronBoyWonder";
-  src: url("../../../public/fonts/astronBoyWonder.ttf") format("truetype");
+  /* src: url("../../../public/fonts/Nest.otf") format("truetype"); */
 }
 
 canvas {
@@ -59,9 +50,9 @@ hr {
 .button1:hover {
   background: coral;
   letter-spacing: 3px;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
   transition: all 0.4s ease 0s;
 }
 
@@ -100,10 +91,10 @@ hr {
 }
 @keyframes blink {
   from {
-      opacity: 1;
+    opacity: 1;
   }
   to {
-      opacity: 0;
+    opacity: 0;
   }
 }
 
@@ -128,9 +119,9 @@ hr {
 .characterContainer:hover {
   background-color: coral;
   letter-spacing: 3px;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-  box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
   transition: all 0.4s ease 0s;
 }
 
@@ -144,13 +135,13 @@ hr {
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  padding: 70px ;
+  padding: 70px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
-  max-height: 85%; 
+  max-height: 85%;
   text-align: center;
 }
 
@@ -185,13 +176,13 @@ hr {
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  padding: px ;
+  padding: px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
-  max-height: 85%; 
+  max-height: 85%;
   text-align: center;
 }
 
@@ -215,13 +206,13 @@ hr {
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
-  padding: 70px ;
+  padding: 70px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 5px;
-  max-height: 85%; 
+  max-height: 85%;
   text-align: center;
   margin-bottom: 0;
   font-family: "Nest";
@@ -281,29 +272,23 @@ hr {
   h1 {
     font-size: 2rem;
   }
-
   h2 {
     font-size: 1.75rem;
   }
-
   #play-menu {
     padding: 10px 15px;
     min-width: 280px;
   }
-
   #disconnect-modal > div {
     padding: 10px;
     min-width: 280px;
   }
-
   #leaderboard th {
     padding: 0 3px;
   }
-
   #leaderboard td {
     padding: 0 3px;
   }
-
   #leaderboard table {
     font-size: 14px;
   }

@@ -36,8 +36,13 @@ function handleInput(dir) {
   game.handleInput(this, dir);
 }
 
+// Handle keyboard input
+function handleKeyInput(key_event) {
+  game.handleKeyInput(this, key_event);
+}
+
 function onDisconnect() {
-  game.removePlayer(this);
+  game.removeDisconnectedPlayer(this);
 }
 
 // Setup socket.io
@@ -49,5 +54,6 @@ io.on("connection", (socket) => {
 
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
   socket.on(Constants.MSG_TYPES.INPUT, handleInput);
+  socket.on(Constants.MSG_TYPES.KEY_INPUT, handleKeyInput);
   socket.on("disconnect", onDisconnect);
 });

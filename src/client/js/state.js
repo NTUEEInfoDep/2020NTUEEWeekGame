@@ -13,7 +13,7 @@ let firstServerTimestamp = 0;
 // Determines the best way to rotate (cw or ccw) when interpolating a direction.
 // For example, when rotating from -3 radians to +3 radians, we should really rotate from
 // -3 radians to +3 - 2pi radians.
-function interpolateDirection(d1, d2, ratio) {
+/*function interpolateDirection(d1, d2, ratio) {
   const absD = Math.abs(d2 - d1);
   if (absD >= Math.PI) {
     // The angle between the directions is large - we should rotate the other way
@@ -57,7 +57,7 @@ function interpolateObjectArray(objects1, objects2, ratio) {
     )
   );
 }
-
+*/
 export function initState() {
   gameStart = 0;
   firstServerTimestamp = 0;
