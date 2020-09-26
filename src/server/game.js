@@ -1,15 +1,7 @@
 const { join } = require("lodash");
 const Constants = require("../shared/constants");
 const Player = require("./player");
-<<<<<<< HEAD
-//const applyCollisions = require("./collisions");
-=======
 const applyCollisions = require("./collisions");
-<<<<<<< HEAD
-const { join } = require("lodash");
->>>>>>> 92ebfe8aa74e293dec4925583f18453c5aa38d75
-=======
->>>>>>> e7b84340f3cb69d133bd5de3ad71a4f89fc1645f
 
 class Game {
   constructor() {
@@ -78,20 +70,20 @@ class Game {
 
   // Acquire presssed key code and its keytype. Call functions to handle these
   // inputs accordingly. Arrowkey is to move the player and space to shot bullet.
-  handleKeyInput(socket, key_event) {
+  handleKeyInput(socket, keyEvent) {
     if (this.players[socket.id]) {
       const player = this.players[socket.id];
-      const key_type = key_event[0];
-      const key = key_event[1];
-      if (key_type === "keydown") {
+      const keyType = keyEvent[0];
+      const key = keyEvent[1];
+      if (keyType === "keydown") {
         if (key === "Space") {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
         }
-        if (key === "ArrowLeft" || key === "ArrowRight") player.move(key_event);
+        if (key === "ArrowLeft" || key === "ArrowRight") player.move(keyEvent);
       }
-      if (key_type === "keyup") {
-        if (key === "ArrowLeft" || key === "ArrowRight") player.stop(key_event);
+      if (keyType === "keyup") {
+        if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent);
       }
     }
   }
