@@ -120,7 +120,7 @@ function render() {
   bullets.forEach(renderBullet.bind(null, me));
 
   // Draw all players
-  renderPlayer(me, me);
+  //renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
 }
 
