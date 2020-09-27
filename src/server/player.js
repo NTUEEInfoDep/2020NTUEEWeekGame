@@ -1,7 +1,7 @@
 const ObjectClass = require("./object");
 const Bullet = require("./bullet");
 const Constants = require("../shared/constants");
-const { plugins } = require("../../webpack.config");
+// const { plugins } = require("../../webpack.config");
 
 class Player extends ObjectClass {
   constructor(id, username, x, y) {
@@ -80,7 +80,13 @@ class Player extends ObjectClass {
   }
 
   setFireDirection(dir) {
-    this.fireDirection = dir;
+    if (dir < Constants.FIRE_RANGE_MIN) {
+      this.fireDirection = Constants.FIRE_RANGE_MIN;
+    } else if (dir > Constants.FIRE_RANGE_MAX) {
+      this.fireDirection = Constants.FIRE_RANGE_MAX;
+    } else {
+      this.fireDirection = dir;
+    }
   }
 
   serializeForUpdate() {

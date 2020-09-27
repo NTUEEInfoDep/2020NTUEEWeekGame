@@ -5,7 +5,7 @@ import { getAsset } from "./assets";
 import { getCurrentState } from "./state";
 
 const Constants = require("../../shared/constants");
-
+const styleNum = Math.random();
 const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
 
 // Get the canvas graphics context
@@ -79,8 +79,16 @@ function renderPlayer(me, player) {
   // Draw fire range
   context.save();
   context.beginPath();
-  context.arc(canvasX, canvasY, PLAYER_RADIUS * 2.5, 0, Math.PI, true);
-  context.lineWidth = PLAYER_RADIUS / 3;
+  context.arc(
+    canvasX,
+    canvasY,
+    PLAYER_RADIUS * 2.5,
+    Constants.FIRE_RANGE_MIN - Math.PI / 2,
+    Constants.FIRE_RANGE_MAX - Math.PI / 2,
+    false
+  );
+  context.lineWidth = PLAYER_RADIUS / 5;
+  context.lineCap = "round";
   context.strokeStyle = "white";
   context.stroke();
   context.restore();
@@ -89,13 +97,35 @@ function renderPlayer(me, player) {
   context.save();
   context.translate(canvasX, canvasY);
   context.rotate(fireDirection - Math.PI);
-  context.strokeStyle = "LawnGreen";
-  context.strokeRect(
-    -BULLET_RADIUS,
-    PLAYER_RADIUS * 2,
-    BULLET_RADIUS * 2,
-    PLAYER_RADIUS
-  );
+
+  if (styleNum < 1 / 3) {
+    // dash-line style
+    context.strokeStyle = "tomato";
+    context.lineWidth = 2;
+    context.setLineDash([2, 2]);
+    context.beginPath();
+    context.moveTo(0, PLAYER_RADIUS);
+    context.lineTo(0, PLAYER_RADIUS * 2.5);
+    context.stroke();
+  } else if (styleNum < 2 / 3) {
+    // long-aimer style
+    context.strokeStyle = "lightblue";
+    context.beginPath();
+    context.moveTo(-BULLET_RADIUS, PLAYER_RADIUS);
+    context.lineTo(-BULLET_RADIUS, PLAYER_RADIUS * 4);
+    context.moveTo(BULLET_RADIUS, PLAYER_RADIUS);
+    context.lineTo(BULLET_RADIUS, PLAYER_RADIUS * 4);
+    context.stroke();
+  } else {
+    // dashboard style
+    context.fillStyle = "LawnGreen";
+    context.fillRect(
+      -BULLET_RADIUS,
+      PLAYER_RADIUS * 2,
+      BULLET_RADIUS * 2,
+      PLAYER_RADIUS
+    );
+  }
   context.restore();
 }
 
