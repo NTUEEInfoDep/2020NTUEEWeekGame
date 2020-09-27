@@ -83,6 +83,27 @@ function renderPlayer(me, player) {
     PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
     2
   );
+
+  // Draw throw control
+  context.beginPath();
+  context.arc(canvasX, canvasY, PLAYER_RADIUS * 3, 0, Math.PI, true);
+  context.lineWidth = 10;
+  context.strokeStyle = "white";
+  context.stroke();
+
+  const tars = -Math.PI / 2;
+  context.beginPath();
+  context.arc(
+    canvasX,
+    canvasY,
+    PLAYER_RADIUS * 3,
+    tars + Math.PI / 60,
+    tars - Math.PI / 60,
+    true
+  );
+  context.lineWidth = 12;
+  context.strokeStyle = "grey";
+  context.stroke();
 }
 
 function renderBullet(me, bullet) {
