@@ -47,20 +47,12 @@ function renderPlayer(me, player) {
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
-  // Draw muzzle
-  context.save();
-  context.translate(canvasX, canvasY);
-  context.rotate(fireDirection - Math.PI / 2);
-  context.fillStyle = "LawnGreen";
-  context.fillRect(0, -3, PLAYER_RADIUS * 3, 6);
-  context.restore();
-
   // Draw ship
   context.save();
   context.translate(canvasX, canvasY);
   context.rotate(direction);
   context.drawImage(
-    getAsset("ship.svg"),
+    getAsset("bullet.svg"), // originally `ship.svg`
     -PLAYER_RADIUS,
     -PLAYER_RADIUS,
     PLAYER_RADIUS * 2,
@@ -84,26 +76,27 @@ function renderPlayer(me, player) {
     2
   );
 
-  // Draw throw control
+  // Draw fire range
+  context.save();
   context.beginPath();
-  context.arc(canvasX, canvasY, PLAYER_RADIUS * 3, 0, Math.PI, true);
-  context.lineWidth = 10;
+  context.arc(canvasX, canvasY, PLAYER_RADIUS * 2.5, 0, Math.PI, true);
+  context.lineWidth = PLAYER_RADIUS / 3;
   context.strokeStyle = "white";
   context.stroke();
+  context.restore();
 
-  const tars = -Math.PI / 2;
-  context.beginPath();
-  context.arc(
-    canvasX,
-    canvasY,
-    PLAYER_RADIUS * 3,
-    tars + Math.PI / 60,
-    tars - Math.PI / 60,
-    true
+  // Draw barrel
+  context.save();
+  context.translate(canvasX, canvasY);
+  context.rotate(fireDirection - Math.PI);
+  context.strokeStyle = "LawnGreen";
+  context.strokeRect(
+    -BULLET_RADIUS,
+    PLAYER_RADIUS * 2,
+    BULLET_RADIUS * 2,
+    PLAYER_RADIUS
   );
-  context.lineWidth = 12;
-  context.strokeStyle = "grey";
-  context.stroke();
+  context.restore();
 }
 
 function renderBullet(me, bullet) {
