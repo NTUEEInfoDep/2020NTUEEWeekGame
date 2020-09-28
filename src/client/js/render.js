@@ -120,9 +120,9 @@ function renderPlayer(me, player) {
     // dashboard style
     context.fillStyle = "LawnGreen";
     context.fillRect(
-      -BULLET_RADIUS,
+      -BULLET_RADIUS / 2,
       PLAYER_RADIUS * 2,
-      BULLET_RADIUS * 2,
+      BULLET_RADIUS,
       PLAYER_RADIUS
     );
   }
@@ -131,8 +131,19 @@ function renderPlayer(me, player) {
 
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
+
+  let bulletStyle = "bullet.svg";
+  if (styleNum < 1 / 4) {
+    bulletStyle = "bullet1.png";
+  } else if (styleNum < 2 / 4) {
+    bulletStyle = "bullet2.png";
+  } else if (styleNum < 3 / 4) {
+    bulletStyle = "bullet3.png";
+  } else {
+    bulletStyle = "bullet4.png";
+  }
   context.drawImage(
-    getAsset("bullet.svg"),
+    getAsset(bulletStyle),
     canvas.width / 2 + x - me.x - BULLET_RADIUS,
     canvas.height / 2 + y - me.y - BULLET_RADIUS,
     BULLET_RADIUS * 2,

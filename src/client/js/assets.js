@@ -1,4 +1,13 @@
-const ASSET_NAMES = ["ship.svg", "bullet.svg"];
+const ASSET_NAMES = [
+  "ship.svg",
+  "bullet.svg",
+
+  "bullet1.png",
+  "bullet2.png",
+  "bullet3.png",
+  "bullet4.png",
+  "map1.png",
+];
 
 const assets = {};
 
