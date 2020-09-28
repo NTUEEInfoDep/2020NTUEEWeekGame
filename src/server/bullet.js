@@ -9,20 +9,17 @@ class Bullet extends ObjectClass {
     this.username = username;
   }
 
-
   // Returns true if the bullet should be destroyed
-  /*update(dt) {
+  update(dt) {
     super.update(dt);
 
     // Apply Gravity to speed and direction. May apply wind or other special effects
-    const newSpeed = Math.pow(
-      Math.pow(this.speed * Math.sin(this.direction), 2) +
-        Math.pow(
-          this.speed * Math.cos(this.direction) - Constants.BULLET_GRAVITY * dt,
-          2
-        ),
-      0.5
-    );
+    const newSpeed =
+      ((this.speed * Math.sin(this.direction)) ** 2 +
+        (this.speed * Math.cos(this.direction) -
+          Constants.BULLET_GRAVITY * dt) **
+          2) **
+      0.5;
     const newDirection = Math.atan2(
       this.speed * Math.sin(this.direction),
       this.speed * Math.cos(this.direction) - Constants.BULLET_SPEED * dt
@@ -37,6 +34,6 @@ class Bullet extends ObjectClass {
       this.y > Constants.MAP_SIZE
     );
   }
-}*/
+}
 
 module.exports = Bullet;

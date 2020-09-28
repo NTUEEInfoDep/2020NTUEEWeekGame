@@ -37,8 +37,8 @@ function handleInput(dir) {
 }
 
 // Handle keyboard input
-function handleKeyInput(key_event) {
-  game.handleKeyInput(this, key_event);
+function handleKeyInput(keyEvent) {
+  game.handleKeyInput(this, keyEvent);
 }
 
 function onDisconnect() {

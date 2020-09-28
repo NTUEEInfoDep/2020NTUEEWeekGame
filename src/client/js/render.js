@@ -5,7 +5,7 @@ import { getAsset } from "./assets";
 import { getCurrentState } from "./state";
 
 const Constants = require("../../shared/constants");
-
+const styleNum = Math.random();
 const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
 
 // Get the canvas graphics context
@@ -43,7 +43,7 @@ function renderBackground(x, y) {
 
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
-  const { x, y, direction } = player;
+  const { x, y, direction, fireDirection } = player;
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
@@ -52,7 +52,7 @@ function renderPlayer(me, player) {
   context.translate(canvasX, canvasY);
   context.rotate(direction);
   context.drawImage(
-    getAsset("ship.svg"),
+    getAsset("bullet.svg"), // originally `ship.svg`
     -PLAYER_RADIUS,
     -PLAYER_RADIUS,
     PLAYER_RADIUS * 2,
@@ -75,6 +75,58 @@ function renderPlayer(me, player) {
     PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
     2
   );
+
+  // Draw fire range
+  context.save();
+  context.beginPath();
+  context.arc(
+    canvasX,
+    canvasY,
+    PLAYER_RADIUS * 2.5,
+    Constants.FIRE_RANGE_MIN - Math.PI / 2,
+    Constants.FIRE_RANGE_MAX - Math.PI / 2,
+    false
+  );
+  context.lineWidth = PLAYER_RADIUS / 5;
+  context.lineCap = "round";
+  context.strokeStyle = "white";
+  context.stroke();
+  context.restore();
+
+  // Draw barrel
+  context.save();
+  context.translate(canvasX, canvasY);
+  context.rotate(fireDirection - Math.PI);
+
+  if (styleNum < 1 / 3) {
+    // dash-line style
+    context.strokeStyle = "tomato";
+    context.lineWidth = 2;
+    context.setLineDash([2, 2]);
+    context.beginPath();
+    context.moveTo(0, PLAYER_RADIUS);
+    context.lineTo(0, PLAYER_RADIUS * 2.5);
+    context.stroke();
+  } else if (styleNum < 2 / 3) {
+    // long-aimer style
+    context.strokeStyle = "lightblue";
+    context.beginPath();
+    context.moveTo(-BULLET_RADIUS, PLAYER_RADIUS);
+    context.lineTo(-BULLET_RADIUS, PLAYER_RADIUS * 4);
+    context.moveTo(BULLET_RADIUS, PLAYER_RADIUS);
+    context.lineTo(BULLET_RADIUS, PLAYER_RADIUS * 4);
+    context.stroke();
+  } else {
+    // dashboard style
+    context.fillStyle = "LawnGreen";
+    context.fillRect(
+      -BULLET_RADIUS,
+      PLAYER_RADIUS * 2,
+      BULLET_RADIUS * 2,
+      PLAYER_RADIUS
+    );
+  }
+  context.restore();
 }
 
 function renderBullet(me, bullet) {

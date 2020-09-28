@@ -1,7 +1,7 @@
 const ObjectClass = require("./object");
 const Bullet = require("./bullet");
 const Constants = require("../shared/constants");
-const { plugins } = require("../../webpack.config");
+// const { plugins } = require("../../webpack.config");
 
 class Player extends ObjectClass {
   constructor(id, username, x, y) {
@@ -9,14 +9,10 @@ class Player extends ObjectClass {
     super(id, x, y, 0, 0);
     this.username = username;
     this.hp = Constants.PLAYER_MAX_HP;
-<<<<<<< HEAD
-    //this.fireCooldown = 0;
-    //this.score = 0;
-=======
+    this.fireDirection = 0;
     this.fireCooldown = 0;
     this.friction = 0;
     this.score = 0;
->>>>>>> 92ebfe8aa74e293dec4925583f18453c5aa38d75
   }
 
   // Returns a newly created bullet, or null.
@@ -24,10 +20,6 @@ class Player extends ObjectClass {
     super.update(dt);
 
     // Update score
-<<<<<<< HEAD
-    //this.score += dt * Constants.SCORE_PER_SECOND;
-
-=======
     this.score += dt * Constants.SCORE_PER_SECOND;
 
     // Apply player friction
@@ -36,15 +28,10 @@ class Player extends ObjectClass {
       this.speed = 0;
       this.friction = 0;
     }
->>>>>>> 92ebfe8aa74e293dec4925583f18453c5aa38d75
     // Make sure the player stays in bounds
     this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
     this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
 
-<<<<<<< HEAD
-    // Fire a bullet, if needed
-    /*this.fireCooldown -= dt;
-=======
     this.fireCooldown -= dt;
     if (this.fireCooldown <= 0) {
       this.fireCooldown = 0;
@@ -70,36 +57,43 @@ class Player extends ObjectClass {
   }
 
   // Fire a bullet with cooldown limit
-<<<<<<< HEAD
-  fire(){
->>>>>>> 92ebfe8aa74e293dec4925583f18453c5aa38d75
-=======
   fire() {
->>>>>>> e7b84340f3cb69d133bd5de3ad71a4f89fc1645f
     if (this.fireCooldown <= 0) {
       this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
-      return new Bullet(this.id, this.x, this.y, this.direction, this.username);
+      return new Bullet(
+        this.id,
+        this.x,
+        this.y,
+        this.fireDirection,
+        this.username
+      );
     }
-<<<<<<< HEAD
-
     return null;
-  }*/
-=======
   }
->>>>>>> 92ebfe8aa74e293dec4925583f18453c5aa38d75
 
   takeBulletDamage(role) {
     this.hp -= role.bulletDamage;
   }
 
-  /*onDealtDamage() {
+  onDealtDamage() {
     this.score += Constants.SCORE_BULLET_HIT;
-  }*/
+  }
+
+  setFireDirection(dir) {
+    if (dir < Constants.FIRE_RANGE_MIN) {
+      this.fireDirection = Constants.FIRE_RANGE_MIN;
+    } else if (dir > Constants.FIRE_RANGE_MAX) {
+      this.fireDirection = Constants.FIRE_RANGE_MAX;
+    } else {
+      this.fireDirection = dir;
+    }
+  }
 
   serializeForUpdate() {
     return {
       ...super.serializeForUpdate(),
       direction: this.direction,
+      fireDirection: this.fireDirection,
       hp: this.hp,
     };
   }
