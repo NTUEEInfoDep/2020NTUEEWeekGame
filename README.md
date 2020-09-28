@@ -5,7 +5,7 @@
 1.  Clone this project
 2.  cmd `npm install` (if done it before then don't need)
 3.  cmd `npm run develop`
-4.  Open browser and go to 127.0.0.1:3000
+4.  Open browser and go to [127.0.0.1:3000](http://localhost:3000)
 
 ### What we have done (9/25)
 
@@ -144,10 +144,10 @@ How to Build a Multiplayer(.io) Web Game -- Victor Zhou
     Update the player's score, coordinates and cool-down time, if needed, a bullet also will be fired.
 
   - <b>takeBulletDamage</b> (role)
-    
-    | Info        | Description                                                      |
-    | ----------- | ---------------------------------------------------------------- |
-    | Parameters  | role - One of the roles                                          |
+
+    | Info       | Description             |
+    | ---------- | ----------------------- |
+    | Parameters | role - One of the roles |
 
     Decrease the player's hp value if shot by a bullet from different roles.
 
