@@ -2,11 +2,18 @@ const ASSET_NAMES = [
   "ship.svg",
   "bullet.svg",
 
+  // bullet
   "bullet1.png",
   "bullet2.png",
   "bullet3.png",
   "bullet4.png",
+  // map
   "map1.png",
+  // player
+  "num1.png",
+  "num2.png",
+  "num3.png",
+  "num4.png",
 ];
 
 const assets = {};
