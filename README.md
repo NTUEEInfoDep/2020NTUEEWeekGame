@@ -105,11 +105,11 @@ How to Build a Multiplayer(.io) Web Game -- Victor Zhou
 
 - Bullet
 
-  - <b>constructor</b> (parentID, x, y, dir, speed)
+  - <b>constructor</b> (parent, x, y, dir, speed)
 
     | Info       | Description                                                                                                                                                          |
     | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | Parameters | parentID - The id of object that shots the bullet</br>x - Initial x-coordinate</br>y - Initial y-coordinate</br>dir - Initial orientation</br>speed - A fixed number |
+    | Parameters | parent - The role instance that shots the bullet</br>x - Initial x-coordinate</br>y - Initial y-coordinate</br>dir - Initial orientation</br>speed - A fixed number |
 
     Save basic bullet information.
 
