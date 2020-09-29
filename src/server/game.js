@@ -6,6 +6,7 @@ const { join } = require("lodash");
 
 class Game {
   constructor() {
+    this.randomrooms = [];
     this.playrooms = {};
     this.waitrooms = {};
     this.sockets = {};
@@ -28,25 +29,42 @@ class Game {
     // Adding player to rooms and store the name. The first player joined 
     // goes to waitrooms. The second player will be join and move the room
     // from waitrooms to playrooms. If a third player is coming, it will be blocked.
-    if (username in this.playrooms) {
+    console.log(username + " ask to join");
+    if (username === "random"){
+      console.log("random pair triggered!");
+      this.randomrooms.push(socket.id);
+      this.players[socket.id] = new Player(socket.id, username, x, y);
+      if (this.randomrooms.length >= 2){
+        let player1 = this.sockets[this.randomrooms.pop()];
+        let player2 = this.sockets[this.randomrooms.pop()];
+        this.addPlayer(player1, player1.id);
+        this.addPlayer(player2, player1.id);
+        //return;
+      }
+      else console.log('Waiting to be paired !!!');
+    }
+    else if (username in this.playrooms) {
       console.log('The room is too crowd');
+      delete this.sockets[socket.id];
+      //return;
     }
     else if (username in this.waitrooms) {
       socket.join(username);
       this.playrooms[username] = (this.waitrooms[username]);
       this.playrooms[username].push(socket.id);
       delete this.waitrooms[username];
+      this.players[socket.id] = new Player(socket.id, username, x, y);
     }
     else {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
       this.cameras[username] = new Camera(socket.id, username, x, y);
+      this.players[socket.id] = new Player(socket.id, username, x, y);
     }
     console.log(this.playrooms);
     console.log(this.waitrooms);
-    
-    this.players[socket.id] = new Player(socket.id, username, x, y);
+    //this.players[socket.id] = new Player(socket.id, username, x, y);
   }
 
   // Simply remove player from game
