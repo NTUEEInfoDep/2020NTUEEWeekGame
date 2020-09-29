@@ -123,6 +123,15 @@ class Game {
     }
   }
 
+  handleCameraMove(socket, mouseXY){
+    if (this.players[socket.id]) {
+      const player = this.players[socket.id];
+      const camera = this.cameras[player.username];
+      if (mouseXY[0] === 0 &&  mouseXY[1] === 0) camera.stop();
+      else camera.move(mouseXY);
+    }
+  }
+
   update() {
     // Calculate time elapsed
     const now = Date.now();

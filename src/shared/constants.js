@@ -5,6 +5,9 @@ module.exports = Object.freeze({
   PLAYER_SPEED: 400,
   PLAYER_FIRE_COOLDOWN: 0.25,
 
+  CAMERA_SPEED: 300,
+  CAMERA_FRICTION: 1300,
+
   BULLET_RADIUS: 3,
   BULLET_SPEED: 800,
   BULLET_GRAVITY: 300,
@@ -20,5 +23,6 @@ module.exports = Object.freeze({
     INPUT: 'input',
     KEY_INPUT: 'key_input',
     GAME_OVER: 'dead',
+    MOVE_CAMERA: "move_camera",
   },
 });
