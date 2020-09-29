@@ -14,7 +14,7 @@ import "../css/bootstrap-reboot.css";
 import "../css/main.css";
 
 const playMenu = document.getElementById("play-menu");
-const playButton = document.getElementById("enter-button");
+const playButton = document.getElementById("play-menu-enter");
 const usernameInput = document.getElementById("username-input");
 
 function onGameOver() {
