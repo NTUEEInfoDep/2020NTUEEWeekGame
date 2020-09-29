@@ -7,12 +7,14 @@ class Player extends ObjectClass {
   constructor(id, username, x, y) {
     // faces toward left or right, currently right
     super(id, x, y, 0, 0);
+    this.startx = this.x;
     this.username = username;
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireDirection = 0;
     this.fireCooldown = 0;
     this.friction = 0;
     this.score = 0;
+    this.movearea = Constants.PLAYER_MOVE_AREA;
   }
 
   // Returns a newly created bullet, or null.
@@ -29,7 +31,7 @@ class Player extends ObjectClass {
       this.friction = 0;
     }
     // Make sure the player stays in bounds
-    this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
+    this.x = Math.max(Math.max(0, this.startx - this.movearea), Math.min(Constants.MAP_SIZE, this.x, this.startx + this.movearea));
     this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
 
     this.fireCooldown -= dt;
@@ -38,6 +40,10 @@ class Player extends ObjectClass {
     }
 
     return null;
+  }
+
+  setstartx(val){
+    this.startx = val;
   }
 
   // Receive keyboard input and move character
