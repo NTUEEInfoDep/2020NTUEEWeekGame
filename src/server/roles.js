@@ -33,6 +33,7 @@ class Pudding extends Player {
     constructor(id, username, x, y){
 	super(id, username, x, y);
 	this.role = 'Pudding';
+	this.bulletDamage = Constants.BULLET_DAMAGE;
     }
 }
 
@@ -41,5 +42,6 @@ class Banana extends Player {
     constructor(id, username, x, y){
 	super(id, username, x, y);
 	this.role = 'Banana';
+	this.bulletDamage = Constants.BULLET_DAMAGE;
     };
 }

@@ -127,8 +127,8 @@ class Game {
       this.bullets
     );
     destroyedBullets.forEach((b) => {
-      if (this.players[b.parentID]) {
-        this.players[b.parentID].onDealtDamage();
+      if (this.players[b._parent.id]) {
+        this.players[b._parent.id].onDealtDamage();
       }
     });
     this.bullets = this.bullets.filter(
@@ -194,7 +194,7 @@ class Game {
     const bulletInRoom = this.bullets.filter(
       (b) =>
         b.distanceTo(player) <= Constants.MAP_SIZE / 2 &&
-        playerIDs.includes(b.parentID)
+        playerIDs.includes(b._parent.id)
     );
 
     return {

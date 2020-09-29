@@ -16,6 +16,7 @@ function applyCollisions(players, bullets) {
         bullet.username === player.username
       ) {
         destroyedBullets.push(bullet);
+	// judge by role instance
         player.takeBulletDamage(bullet._parent);
         break;
       }

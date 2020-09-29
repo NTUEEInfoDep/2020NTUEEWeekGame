@@ -29,6 +29,8 @@ Promise.all([connect(onGameOver), downloadAssets()])
     playMenu.classList.remove("hidden");
     usernameInput.focus();
     playButton.onclick = () => {
+      // Select a role
+
       // Play!
       play(usernameInput.value);
       playMenu.classList.add("hidden");
