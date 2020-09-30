@@ -39,7 +39,7 @@ class Game {
 
     // Generate a position to start this player at.
     const x = Constants.MAP_SIZE * (0.3 + Math.random() * 0.2);
-    const y = Constants.MAP_SIZE * (0.9 + Math.random() * 0.1);
+    const y = Constants.MAP_SIZE; // Should be on map (determine by the y-vaule of the point player standing)
     this.players[socket.id] = new Player(socket.id, username, x, y);
   }
 
