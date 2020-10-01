@@ -50,7 +50,10 @@ class Player extends ObjectClass {
   // Receive keyboard input and move character
   move(e) {
     if (e[1] === "ArrowLeft") {
-      this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10)] - Constants.MAP[Math.floor(this.x / 10 + 1)]) / 10) - Math.PI / 2;
+      if(Constants.MAP[Math.floor(this.x / 10)] < Constants.MAP[Math.floor(this.x / 10 + 1)])
+        this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10)] - Constants.MAP[Math.floor(this.x / 10 + 1)]) / 10);
+      else
+        this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10) + 1] - Constants.MAP[Math.floor(this.x / 10)]) / 10) - Math.PI / 2;
     }
     if (e[1] === "ArrowRight") {
       this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10 + 1)] - Constants.MAP[Math.floor(this.x / 10)]) / 10) + Math.PI / 2;
