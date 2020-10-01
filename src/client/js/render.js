@@ -1,12 +1,13 @@
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#5-client-rendering
 import { debounce } from "throttle-debounce";
+import { MAP_SIZE_LENGTH, MAP_SIZE_WIDTH } from "../../shared/constants";
 import { getAsset } from "./assets";
 import { getCurrentState } from "./state";
 
 const Constants = require("../../shared/constants");
 
-const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
+const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
 const styleNum = Math.random();
 
 // Get the canvas graphics context
@@ -26,19 +27,19 @@ setCanvasDimensions();
 window.addEventListener("resize", debounce(40, setCanvasDimensions));
 
 function renderBackground() {
-  // const backgroundX = MAP_SIZE / 2 - x + canvas.width / 2;
-  // const backgroundY = MAP_SIZE / 2 - y + canvas.height / 2;
-  // const backgroundGradient = context.createRadialGradient(
-  //   backgroundX,
-  //   backgroundY,
-  //   MAP_SIZE / 10,
-  //   backgroundX,
-  //   backgroundY,
-  //   MAP_SIZE / 2
-  // );
-  // backgroundGradient.addColorStop(0, "black");
-  // backgroundGradient.addColorStop(1, "gray");
-  // context.fillStyle = backgroundGradient;
+  /* const backgroundX = MAP_SIZE_LENGTH / 2 - x + canvas.width / 2;
+   const backgroundY = MAP_SIZE_WIDTH / 2 - y + canvas.height / 2;
+   const backgroundGradient = context.createRadialGradient(
+     backgroundX,
+     backgroundY,
+     MAP_SIZE_LENGTH / 10,
+     backgroundX,
+     backgroundY,
+     MAP_SIZE_WIDTH / 2
+   );
+   backgroundGradient.addColorStop(0, "black");
+   backgroundGradient.addColorStop(1, "gray");
+   context.fillStyle = backgroundGradient;*/
   if (styleNum < 1 / 3) {
     context.fillStyle = "white";
   } else if (styleNum < 2 / 3) {
@@ -177,8 +178,8 @@ function renderBullet(me, bullet) {
 
 function renderMainMenu() {
   const t = Date.now() / 7500;
-  const x = MAP_SIZE / 2 + 800 * Math.cos(t);
-  const y = MAP_SIZE / 2 + 800 * Math.sin(t);
+  const x = MAP_SIZE_LENGTH / 2 + 800 * Math.cos(t);
+  const y = MAP_SIZE_WIDTH / 2 + 800 * Math.sin(t);
   renderBackground(x, y);
 }
 
@@ -197,7 +198,7 @@ function render() {
   // REMOVE the below after map is ready!!!
   //
   // Draw boundaries
-  if (styleNum < 1 / 3) {
+  /*if (styleNum < 1 / 3) {
     context.strokeStyle = "gray";
   } else {
     context.strokeStyle = "white";
@@ -206,21 +207,21 @@ function render() {
   context.strokeRect(
     canvas.width / 2 - me.x,
     canvas.height / 2 - me.y,
-    MAP_SIZE,
-    MAP_SIZE
-  );
+    MAP_SIZE_LENGTH,
+    MAP_SIZE_WIDTH
+  );*/
   //
   // REMOVE the above after map is ready!!!
   //
 
   // // TODO: Draw map
-  // context.drawImage(
-  //   getAsset("map1.png"),
-  //   canvas.width / 2 - me.x,
-  //   canvas.height / 2 - me.y,
-  //   MAP_SIZE,
-  //   MAP_SIZE
-  // );
+   context.drawImage(
+     getAsset("map1.png"),
+     canvas.width / 2 - me.x,
+     canvas.height / 2 - me.y,
+     MAP_SIZE_LENGTH,
+     MAP_SIZE_WIDTH
+   );
   // //
 
   // Draw all bullets
