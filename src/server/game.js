@@ -34,12 +34,17 @@ class Game {
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
     }
+    console.log("Playrooms:");
     console.log(this.playrooms);
+    console.log("Waitrooms:");
     console.log(this.waitrooms);
 
     // Generate a position to start this player at.
     const x = Constants.MAP_SIZE_LENGTH * (0.3 + Math.random() * 0.2);
-    const y = (Constants.MAP[Math.floor(x / 10)] * (x % 10) + Constants.MAP[Math.floor(x / 10 + 1)] * (10 - x % 10)) / 10; // Should be on map (determine by the y-vaule of the point player standing)
+    const y =
+      (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
+        Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
+      10; // Should be on map (determine by the y-vaule of the point player standing)
     this.players[socket.id] = new Player(socket.id, username, x, y);
   }
 
@@ -80,9 +85,8 @@ class Game {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
         }
-        if (key === "ArrowLeft" || key === "ArrowRight"){
+        if (key === "ArrowLeft" || key === "ArrowRight") {
           player.move(keyEvent);
-          
         }
       }
       if (keyType === "keyup") {

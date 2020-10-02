@@ -50,7 +50,7 @@ const io = socketio(server);
 
 // Listen for socket.io connections
 io.on("connection", (socket) => {
-  console.log("Player connected!", socket.id);
+  console.log(`\nPlayer connected! (id: ${socket.id})`);
 
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
   socket.on(Constants.MSG_TYPES.INPUT, handleInput);
