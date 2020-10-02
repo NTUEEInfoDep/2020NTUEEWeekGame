@@ -18,7 +18,7 @@ function loadOver() {
   const arrow = new Sprite(resources["/assets/icon64.png"].texture);
 }
 
-function placePlayer(player) {
+function placePlayer(player, playerNum) {
   if (playerNum === 1) {
     app.stage.addChild(player);
     player.x = (0.8 * app.screen.width) / 13.4;
