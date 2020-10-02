@@ -24,20 +24,28 @@ function onGameOver() {
   setLeaderboardHidden(true);
 }
 
+function gameStart() {
+  // Select a role
+
+  // Play!
+  play(usernameInput.value);
+  playMenu.classList.add("hidden");
+  initState();
+  startCapturingInput();
+  startRendering();
+  setLeaderboardHidden(false);
+}
+
 Promise.all([connect(onGameOver), downloadAssets()])
   .then(() => {
     playMenu.classList.remove("hidden");
     usernameInput.focus();
-    playButton.onclick = () => {
-      // Select a role
-
-      // Play!
-      play(usernameInput.value);
-      playMenu.classList.add("hidden");
-      initState();
-      startCapturingInput();
-      startRendering();
-      setLeaderboardHidden(false);
+    playButton.onclick = gameStart;
+    usernameInput.onkeypress = (e) => {
+      // Enter key event code == 13
+      if (e.which === 13) {
+        gameStart();
+      }
     };
   })
   // eslint-disable-next-line no-console
