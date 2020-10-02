@@ -19,13 +19,11 @@ function interpolateDirection(d1, d2, ratio) {
     // The angle between the directions is large - we should rotate the other way
     if (d1 > d2) {
       return d1 + (d2 + 2 * Math.PI - d1) * ratio;
-    } else {
-      return d1 - (d2 - 2 * Math.PI - d1) * ratio;
     }
-  } else {
-    // Normal interp
-    return d1 + (d2 - d1) * ratio;
+    return d1 - (d2 - 2 * Math.PI - d1) * ratio;
   }
+  // Normal interp
+  return d1 + (d2 - d1) * ratio;
 }
 
 function interpolateObject(object1, object2, ratio) {
@@ -71,7 +69,7 @@ function currentServerTime() {
 // current server time, or -1 if N/A.
 function getBaseUpdate() {
   const serverTime = currentServerTime();
-  for (let i = gameUpdates.length - 1; i >= 0; i--) {
+  for (let i = gameUpdates.length - 1; i >= 0; i -= 1) {
     if (gameUpdates[i].t <= serverTime) {
       return i;
     }
