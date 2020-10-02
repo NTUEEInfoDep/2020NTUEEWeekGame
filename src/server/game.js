@@ -38,8 +38,8 @@ class Game {
     console.log(this.waitrooms);
 
     // Generate a position to start this player at.
-    const x = Constants.MAP_SIZE * (0.3 + Math.random() * 0.2);
-    const y = Constants.MAP_SIZE * (0.9 + Math.random() * 0.1);
+    const x = Constants.MAP_SIZE_LENGTH * (0.3 + Math.random() * 0.2);
+    const y = (Constants.MAP[Math.floor(x / 10)] * (x % 10) + Constants.MAP[Math.floor(x / 10 + 1)] * (10 - x % 10)) / 10; // Should be on map (determine by the y-vaule of the point player standing)
     this.players[socket.id] = new Player(socket.id, username, x, y);
   }
 
@@ -80,7 +80,10 @@ class Game {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
         }
-        if (key === "ArrowLeft" || key === "ArrowRight") player.move(keyEvent);
+        if (key === "ArrowLeft" || key === "ArrowRight"){
+          player.move(keyEvent);
+          
+        }
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent);

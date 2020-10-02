@@ -29,9 +29,9 @@ class Bullet extends ObjectClass {
 
     return (
       this.x < 0 ||
-      this.x > Constants.MAP_SIZE ||
+      this.x > Constants.MAP_SIZE_LENGTH ||
       this.y < 0 ||
-      this.y > Constants.MAP_SIZE
+      this.y > Constants.MAP_SIZE_WIDTH
     );
   }
 }

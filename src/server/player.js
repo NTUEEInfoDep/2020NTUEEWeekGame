@@ -31,8 +31,9 @@ class Player extends ObjectClass {
       this.friction = 0;
     }
     // Make sure the player stays in bounds
-    this.x = Math.max(Math.max(0, this.startx - this.movearea), Math.min(Constants.MAP_SIZE, this.x, this.startx + this.movearea));
-    this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
+    this.x = Math.max(Math.max(0, this.startx - this.movearea), Math.min(Constants.MAP_SIZE_LENGTH, this.x, this.startx + this.movearea));
+    //this.y = Math.max(0, Math.min(Constants.MAP_SIZE_WIDTH, this.y));
+    this.y = (Constants.MAP[Math.floor(this.x / 10)] * (10 - this.x % 10) + Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) / 10;
 
     this.fireCooldown -= dt;
     if (this.fireCooldown <= 0) {
@@ -49,10 +50,13 @@ class Player extends ObjectClass {
   // Receive keyboard input and move character
   move(e) {
     if (e[1] === "ArrowLeft") {
-      this.direction = -Math.PI / 2;
+      if(Constants.MAP[Math.floor(this.x / 10)] < Constants.MAP[Math.floor(this.x / 10 + 1)])
+        this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10)] - Constants.MAP[Math.floor(this.x / 10 + 1)]) / 10);
+      else
+        this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10) + 1] - Constants.MAP[Math.floor(this.x / 10)]) / 10) - Math.PI / 2;
     }
     if (e[1] === "ArrowRight") {
-      this.direction = Math.PI / 2;
+      this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10 + 1)] - Constants.MAP[Math.floor(this.x / 10)]) / 10) + Math.PI / 2;
     }
     this.speed = Constants.PLAYER_SPEED;
   }
