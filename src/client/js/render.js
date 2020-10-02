@@ -8,7 +8,12 @@ import { getCurrentState } from "./state";
 const Constants = require("../../shared/constants");
 
 const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
+
+//  delete BELOW after characters are ready
+//
 const styleNum = Math.random();
+//
+//  remove ABOVE after characters are ready
 
 // Get the canvas graphics context
 const canvas = document.getElementById("game-canvas");
@@ -27,19 +32,19 @@ setCanvasDimensions();
 window.addEventListener("resize", debounce(40, setCanvasDimensions));
 
 function renderBackground() {
-  /* const backgroundX = MAP_SIZE_LENGTH / 2 - x + canvas.width / 2;
-   const backgroundY = MAP_SIZE_WIDTH / 2 - y + canvas.height / 2;
-   const backgroundGradient = context.createRadialGradient(
-     backgroundX,
-     backgroundY,
-     MAP_SIZE_LENGTH / 10,
-     backgroundX,
-     backgroundY,
-     MAP_SIZE_WIDTH / 2
-   );
-   backgroundGradient.addColorStop(0, "black");
-   backgroundGradient.addColorStop(1, "gray");
-   context.fillStyle = backgroundGradient;*/
+  //  const backgroundX = MAP_SIZE_LENGTH / 2 - x + canvas.width / 2;
+  //  const backgroundY = MAP_SIZE_WIDTH / 2 - y + canvas.height / 2;
+  //  const backgroundGradient = context.createRadialGradient(
+  //    backgroundX,
+  //    backgroundY,
+  //    MAP_SIZE_LENGTH / 10,
+  //    backgroundX,
+  //    backgroundY,
+  //    MAP_SIZE_WIDTH / 2
+  //  );
+  //  backgroundGradient.addColorStop(0, "black");
+  //  backgroundGradient.addColorStop(1, "gray");
+  //  context.fillStyle = backgroundGradient;
   if (styleNum < 1 / 3) {
     context.fillStyle = "white";
   } else if (styleNum < 2 / 3) {
@@ -59,7 +64,9 @@ function renderPlayer(me, player) {
   // Draw player
   context.save();
   context.translate(canvasX, canvasY);
-  context.rotate(direction);
+  if (direction < 0) {
+    context.scale(-1, 1);
+  }
   let playerStyle = "bullet.svg";
   if (styleNum < 1 / 4) {
     playerStyle = "num1.png";
@@ -198,30 +205,30 @@ function render() {
   // REMOVE the below after map is ready!!!
   //
   // Draw boundaries
-  /*if (styleNum < 1 / 3) {
-    context.strokeStyle = "gray";
-  } else {
-    context.strokeStyle = "white";
-  }
-  context.lineWidth = 10;
-  context.strokeRect(
-    canvas.width / 2 - me.x,
-    canvas.height / 2 - me.y,
-    MAP_SIZE_LENGTH,
-    MAP_SIZE_WIDTH
-  );*/
+  // if (styleNum < 1 / 3) {
+  //   context.strokeStyle = "gray";
+  // } else {
+  //   context.strokeStyle = "white";
+  // }
+  // context.lineWidth = 10;
+  // context.strokeRect(
+  //   canvas.width / 2 - me.x,
+  //   canvas.height / 2 - me.y,
+  //   MAP_SIZE_LENGTH,
+  //   MAP_SIZE_WIDTH
+  // );
   //
   // REMOVE the above after map is ready!!!
   //
 
   // // TODO: Draw map
-   context.drawImage(
-     getAsset("map1.png"),
-     canvas.width / 2 - me.x,
-     canvas.height / 2 - me.y,
-     MAP_SIZE_LENGTH,
-     MAP_SIZE_WIDTH
-   );
+  context.drawImage(
+    getAsset("map1.png"),
+    canvas.width / 2 - me.x,
+    canvas.height / 2 - me.y,
+    MAP_SIZE_LENGTH,
+    MAP_SIZE_WIDTH
+  );
   // //
 
   // Draw all bullets
