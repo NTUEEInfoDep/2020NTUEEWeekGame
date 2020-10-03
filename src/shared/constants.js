@@ -51,6 +51,6 @@ module.exports = Object.freeze({
         858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0,
         858.0, 858.0
   ],
-  //LEFT: true,
-  //RIGHT: false
+  LEFT: true,
+  RIGHT: false
 });

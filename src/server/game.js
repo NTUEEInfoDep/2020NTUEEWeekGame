@@ -17,6 +17,7 @@ class Game {
 
   addPlayer(socket, username) {
     this.sockets[socket.id] = socket;
+    let side = username in this.waitrooms;
 
     // Adding player to rooms and store the name. The first player joined
     // goes to waitrooms. The second player will be join and move the room
@@ -39,12 +40,14 @@ class Game {
     console.log("Waitrooms:");
     console.log(this.waitrooms);
     // Generate a position to start this player at.
-    const x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);    
+    let x;
+    if(side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);    
+    else x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);
     const y =
         (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
           Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
         10;
-    this.players[socket.id] = new Player(socket.id, username, x, y);
+    this.players[socket.id] = new Player(socket.id, username, x, y, side);
   }
 
   // Simply remove player from game
