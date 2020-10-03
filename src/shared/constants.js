@@ -7,8 +7,8 @@ module.exports = Object.freeze({
   PLAYER_MOVE_AREA: 500,
 
   BULLET_RADIUS: 10,
-  BULLET_SPEED: 800,
-  BULLET_GRAVITY: 300,
+  BULLET_SPEED: 400,
+  BULLET_GRAVITY: 100,
   BULLET_DAMAGE: 10,
 
   FIRE_RANGE_MIN: 0,
@@ -50,5 +50,7 @@ module.exports = Object.freeze({
         858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0,
         858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0, 858.0,
         858.0, 858.0
-  ]
+  ],
+  //LEFT: true,
+  //RIGHT: false
 });

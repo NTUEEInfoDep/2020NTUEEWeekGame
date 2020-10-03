@@ -38,13 +38,12 @@ class Game {
     console.log(this.playrooms);
     console.log("Waitrooms:");
     console.log(this.waitrooms);
-
     // Generate a position to start this player at.
-    const x = Constants.MAP_SIZE_LENGTH * (0.3 + Math.random() * 0.2);
+    const x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);    
     const y =
-      (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
-        Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
-      10; // Should be on map (determine by the y-vaule of the point player standing)
+        (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
+          Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
+        10;
     this.players[socket.id] = new Player(socket.id, username, x, y);
   }
 
@@ -200,7 +199,7 @@ class Game {
 
     const bulletInRoom = this.bullets.filter(
       (b) =>
-        b.distanceTo(player) <= Constants.MAP_SIZE / 2 &&
+        b.distanceTo(player) <= Constants.MAP_SIZE_LENGTH / 2 &&
         playerIDs.includes(b._parent.id)
     );
 
