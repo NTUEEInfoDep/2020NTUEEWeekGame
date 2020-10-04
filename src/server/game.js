@@ -28,7 +28,6 @@ class Game {
         (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
           Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
         10;
-    console.log(x,y);
     // Adding player to rooms and store the name. The first player joined
     // goes to waitrooms. The second player will be join and move the room
     // from waitrooms to playrooms. If a third player is coming, it will be blocked.
@@ -107,7 +106,6 @@ class Game {
       const camera = this.cameras[player.username];
       const keyType = keyEvent[0];
       const key = keyEvent[1];
-      console.log(key);
       if (keyType === "keydown"){
         if (key === "Space") {
           const newBullet = player.fire();
