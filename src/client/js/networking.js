@@ -44,3 +44,7 @@ export const updateDirection = throttle(20, (dir) => {
 export const updateMovement = throttle(20, (movement) => {
   socket.emit(Constants.MSG_TYPES.KEY_INPUT, movement);
 });
+
+export const updateCamera = throttle(20, (mouseXY) => {
+  socket.emit(Constants.MSG_TYPES.MOVE_CAMERA, mouseXY);
+});

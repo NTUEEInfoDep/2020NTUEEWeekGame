@@ -6,6 +6,9 @@ module.exports = Object.freeze({
   PLAYER_FIRE_COOLDOWN: 0.25,
   PLAYER_MOVE_AREA: 500,
 
+  CAMERA_SPEED: 300,
+  CAMERA_FRICTION: 1300,
+
   BULLET_RADIUS: 10,
   BULLET_SPEED: 400,
   BULLET_GRAVITY: 100,
@@ -20,11 +23,12 @@ module.exports = Object.freeze({
   MAP_SIZE_LENGTH: 2300,
   MAP_SIZE_WIDTH: 1080,
   MSG_TYPES: {
-    JOIN_GAME: "join_game",
-    GAME_UPDATE: "update",
-    INPUT: "input",
-    KEY_INPUT: "key_input",
-    GAME_OVER: "dead",
+    JOIN_GAME: 'join_game',
+    GAME_UPDATE: 'update',
+    INPUT: 'input',
+    KEY_INPUT: 'key_input',
+    GAME_OVER: 'dead',
+    MOVE_CAMERA: "move_camera",
   },
   MAP: [936.0, 936.0, 936.0, 936.0, 936.0, 936.0, 936.0, 936.0, 936.0, 936.0,
         936.0, 936.0, 936.0, 936.0, 936.0, 936.0, 936.0, 936.0, 936.0, 936.0,

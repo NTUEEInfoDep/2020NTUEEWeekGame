@@ -1,14 +1,17 @@
 const { join } = require("lodash");
 const Constants = require("../shared/constants");
 const Player = require("./player");
+const Camera = require("./camera");
 const applyCollisions = require("./collisions");
 
 class Game {
   constructor() {
+    this.randomrooms = [];
     this.playrooms = {};
     this.waitrooms = {};
     this.sockets = {};
     this.players = {};
+    this.cameras = {};
     this.bullets = [];
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
@@ -18,28 +21,6 @@ class Game {
   addPlayer(socket, username) {
     this.sockets[socket.id] = socket;
     let side = username in this.waitrooms;
-
-    // Adding player to rooms and store the name. The first player joined
-    // goes to waitrooms. The second player will be join and move the room
-    // from waitrooms to playrooms. If a third player is coming, it will be blocked.
-    // Ridection or alert for this is still needed.
-    if (username in this.playrooms) {
-      console.log("The room is too crowd");
-    } else if (username in this.waitrooms) {
-      socket.join(username);
-      this.playrooms[username] = this.waitrooms[username];
-      this.playrooms[username].push(socket.id);
-      delete this.waitrooms[username];
-    } else {
-      socket.join(username);
-      this.waitrooms[username] = [];
-      this.waitrooms[username].push(socket.id);
-    }
-    console.log("Playrooms:");
-    console.log(this.playrooms);
-    console.log("Waitrooms:");
-    console.log(this.waitrooms);
-    // Generate a position to start this player at.
     let x;
     if(side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);    
     else x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);
@@ -47,7 +28,49 @@ class Game {
         (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
           Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
         10;
-    this.players[socket.id] = new Player(socket.id, username, x, y, side);
+    console.log(x,y);
+    // Adding player to rooms and store the name. The first player joined
+    // goes to waitrooms. The second player will be join and move the room
+    // from waitrooms to playrooms. If a third player is coming, it will be blocked.
+    // Ridection or alert for this is still needed.
+    if (username === "random"){
+      console.log("random pair triggered!");
+      this.randomrooms.push(socket.id);
+      //this.players[socket.id] = new Player(socket.id, username, x, y, side);
+      if (this.randomrooms.length >= 2){
+        let player1 = this.sockets[this.randomrooms.pop()];
+        let player2 = this.sockets[this.randomrooms.pop()];
+        this.addPlayer(player1, player1.id);
+        this.addPlayer(player2, player1.id);
+        //return;
+      }
+      else console.log('Waiting to be paired !!!');
+    }
+    else if (username in this.playrooms) {
+      console.log('The room is too crowd');
+      delete this.sockets[socket.id];
+      //return;
+    }
+    else if (username in this.waitrooms) {
+      socket.join(username);
+      this.playrooms[username] = this.waitrooms[username];
+      this.playrooms[username].push(socket.id);
+      delete this.waitrooms[username];
+      this.players[socket.id] = new Player(socket.id, username, x, y, side);
+    }
+    else {
+      socket.join(username);
+      this.waitrooms[username] = [];
+      this.waitrooms[username].push(socket.id);
+      this.cameras[username] = new Camera(socket.id, username, x, y, side);
+      this.players[socket.id] = new Player(socket.id, username, x, y, side);
+    }
+    console.log(this.players);
+    console.log("Playrooms:");
+    console.log(this.playrooms);
+    console.log("Waitrooms:");
+    console.log(this.waitrooms);
+    
   }
 
   // Simply remove player from game
@@ -69,6 +92,7 @@ class Game {
   // Send Game over and remove room and players
   removeRoom(roomname, playerIDs) {
     delete this.playrooms[roomname];
+    delete this.cameras[roomname];
     playerIDs.forEach((playerID) => {
       this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER);
       this.removePlayer(this.sockets[playerID]);
@@ -78,21 +102,23 @@ class Game {
   // Acquire presssed key code and its keytype. Call functions to handle these
   // inputs accordingly. Arrowkey is to move the player and space to shot bullet.
   handleKeyInput(socket, keyEvent) {
-    if (this.players[socket.id]) {
+    if (this.players[socket.id] && keyEvent) {
       const player = this.players[socket.id];
+      const camera = this.cameras[player.username];
       const keyType = keyEvent[0];
       const key = keyEvent[1];
-      if (keyType === "keydown") {
+      console.log(key);
+      if (keyType === "keydown"){
         if (key === "Space") {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
         }
-        if (key === "ArrowLeft" || key === "ArrowRight") {
-          player.move(keyEvent);
-        }
+        if (key === "ArrowLeft" || key === "ArrowRight") player.move(key);
+        //if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
       }
       if (keyType === "keyup") {
-        if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent);
+        if (key === "ArrowLeft" || key === "ArrowRight") player.stop();
+        //if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
       }
     }
   }
@@ -100,6 +126,15 @@ class Game {
   handleInput(socket, dir) {
     if (this.players[socket.id]) {
       this.players[socket.id].setFireDirection(dir);
+    }
+  }
+
+  handleCameraMove(socket, mouseXY){
+    if (this.players[socket.id]) {
+      const player = this.players[socket.id];
+      const camera = this.cameras[player.username];
+      if (mouseXY[0] === 0 &&  mouseXY[1] === 0) camera.stop();
+      else camera.move(mouseXY);
     }
   }
 
@@ -124,10 +159,13 @@ class Game {
     // Update each player
     Object.keys(this.sockets).forEach((playerID) => {
       const player = this.players[playerID];
-      const newBullet = player.update(dt);
-      if (newBullet) {
-        this.bullets.push(newBullet);
-      }
+      if (player) player.update(dt);
+    });
+
+    //
+    Object.keys(this.cameras).forEach((username) => {
+      const camera = this.cameras[username];
+      camera.update(dt);
     });
 
     // Apply collisions, give players score for hitting bullets
@@ -157,6 +195,8 @@ class Game {
     if (this.shouldSendUpdate) {
       const leaderboard = this.getLeaderboard();
 
+
+
       // Update for players in waitroom
       Object.keys(this.waitrooms).forEach((roomname) => {
         const playerIDs = this.waitrooms[roomname];
@@ -165,8 +205,8 @@ class Game {
           const player = this.players[playerID];
           socket.emit(
             Constants.MSG_TYPES.GAME_UPDATE,
-            this.createRoomUpdate(playerIDs, player, leaderboard)
-          );
+            this.createRoomUpdate(roomname, playerIDs, leaderboard)
+          )
         });
       });
 
@@ -178,8 +218,8 @@ class Game {
           const player = this.players[playerID];
           socket.emit(
             Constants.MSG_TYPES.GAME_UPDATE,
-            this.createRoomUpdate(playerIDs, player, leaderboard)
-          );
+            this.createRoomUpdate(roomname, playerIDs, leaderboard)
+          )
         });
       });
 
@@ -195,20 +235,23 @@ class Game {
       .slice(0, 5)
       .map((p) => ({ username: p.username, score: Math.round(p.score) }));
   }
-
-  // Only create update object within the room
-  createRoomUpdate(playerIDs, player, leaderboard) {
-    const playerInRoom = playerIDs.map((playerID) => this.players[playerID]);
+  
+  // Only create update object within the room 
+  createRoomUpdate(roomname,playerIDs, leaderboard) {
+    const camera = this.cameras[roomname];
+    const playerInRoom = playerIDs.map(
+      (playerID)=>(this.players[playerID])
+    );
 
     const bulletInRoom = this.bullets.filter(
       (b) =>
-        b.distanceTo(player) <= Constants.MAP_SIZE_LENGTH / 2 &&
+        b.distanceTo(camera) <= Constants.MAP_SIZE_LENGTH / 2 &&
         playerIDs.includes(b._parent.id)
     );
 
     return {
       t: Date.now(),
-      me: player.serializeForUpdate(),
+      me: camera.serializeForUpdate(),
       others: playerInRoom.map((p) => p.serializeForUpdate()),
       bullets: bulletInRoom.map((b) => b.serializeForUpdate()),
       leaderboard,
