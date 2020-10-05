@@ -32,14 +32,24 @@ class Player extends ObjectClass {
       this.friction = 0;
     }
     // Make sure the player stays in bounds
-    if(this.side)
-      this.x = Math.max(Math.max(Constants.MAP_SIZE_LENGTH / 2, this.startx - this.movearea),
-                        Math.min(Constants.MAP_SIZE_LENGTH, this.x, this.startx + this.movearea));
+    if (this.side)
+      this.x = Math.max(
+        Math.max(Constants.MAP_SIZE_LENGTH / 2, this.startx - this.movearea),
+        Math.min(Constants.MAP_SIZE_LENGTH, this.x, this.startx + this.movearea)
+      );
     else
-      this.x = Math.max(Math.max(0, this.startx - this.movearea),
-                        Math.min(Constants.MAP_SIZE_LENGTH / 2, this.x, this.startx + this.movearea));
-    this.y = (Constants.MAP[Math.floor(this.x / 10)] * (10 - this.x % 10) +
-              Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) / 10;
+      this.x = Math.max(
+        Math.max(0, this.startx - this.movearea),
+        Math.min(
+          Constants.MAP_SIZE_LENGTH / 2,
+          this.x,
+          this.startx + this.movearea
+        )
+      );
+    this.y =
+      (Constants.MAP[Math.floor(this.x / 10)] * (10 - (this.x % 10)) +
+        Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) /
+      10;
 
     this.fireCooldown -= dt;
     if (this.fireCooldown <= 0) {
@@ -49,20 +59,39 @@ class Player extends ObjectClass {
     return null;
   }
 
-  setstartx(val){
+  setstartx(val) {
     this.startx = val;
   }
 
   // Receive keyboard input and move character
   move(e) {
     if (e === "ArrowLeft") {
-      if(Constants.MAP[Math.floor(this.x / 10)] < Constants.MAP[Math.floor(this.x / 10 + 1)])
-        this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10)] - Constants.MAP[Math.floor(this.x / 10 + 1)]) / 10);
+      if (
+        Constants.MAP[Math.floor(this.x / 10)] <
+        Constants.MAP[Math.floor(this.x / 10 + 1)]
+      )
+        this.direction = Math.atan(
+          (Constants.MAP[Math.floor(this.x / 10)] -
+            Constants.MAP[Math.floor(this.x / 10 + 1)]) /
+            10
+        );
       else
-        this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10) + 1] - Constants.MAP[Math.floor(this.x / 10)]) / 10) - Math.PI / 2;
+        this.direction =
+          Math.atan(
+            (Constants.MAP[Math.floor(this.x / 10) + 1] -
+              Constants.MAP[Math.floor(this.x / 10)]) /
+              10
+          ) -
+          Math.PI / 2;
     }
     if (e === "ArrowRight") {
-      this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10 + 1)] - Constants.MAP[Math.floor(this.x / 10)]) / 10) + Math.PI / 2;
+      this.direction =
+        Math.atan(
+          (Constants.MAP[Math.floor(this.x / 10 + 1)] -
+            Constants.MAP[Math.floor(this.x / 10)]) /
+            10
+        ) +
+        Math.PI / 2;
     }
     this.speed = Constants.PLAYER_SPEED;
   }
@@ -96,10 +125,10 @@ class Player extends ObjectClass {
   }
 
   setFireDirection(dir) {
-    if (dir < Constants.FIRE_RANGE_MIN) {
-      this.fireDirection = Constants.FIRE_RANGE_MIN;
-    } else if (dir > Constants.FIRE_RANGE_MAX) {
-      this.fireDirection = Constants.FIRE_RANGE_MAX;
+    if (dir < -Math.PI / 2) {
+      this.fireDirection = -Math.PI / 2;
+    } else if (dir > Math.PI / 2) {
+      this.fireDirection = Math.PI / 2;
     } else {
       this.fireDirection = dir;
     }

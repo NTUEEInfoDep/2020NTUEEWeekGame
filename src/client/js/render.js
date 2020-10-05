@@ -9,11 +9,13 @@ const Constants = require("../../shared/constants");
 
 const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
 
+//
 //  delete BELOW after characters are ready
 //
 const styleNum = Math.random();
 //
 //  remove ABOVE after characters are ready
+//
 
 // Get the canvas graphics context
 const canvas = document.getElementById("game-canvas");
@@ -32,26 +34,7 @@ setCanvasDimensions();
 window.addEventListener("resize", debounce(40, setCanvasDimensions));
 
 function renderBackground() {
-  //  const backgroundX = MAP_SIZE_LENGTH / 2 - x + canvas.width / 2;
-  //  const backgroundY = MAP_SIZE_WIDTH / 2 - y + canvas.height / 2;
-  //  const backgroundGradient = context.createRadialGradient(
-  //    backgroundX,
-  //    backgroundY,
-  //    MAP_SIZE_LENGTH / 10,
-  //    backgroundX,
-  //    backgroundY,
-  //    MAP_SIZE_WIDTH / 2
-  //  );
-  //  backgroundGradient.addColorStop(0, "black");
-  //  backgroundGradient.addColorStop(1, "gray");
-  //  context.fillStyle = backgroundGradient;
-  if (styleNum < 1 / 3) {
-    context.fillStyle = "white";
-  } else if (styleNum < 2 / 3) {
-    context.fillStyle = "gray";
-  } else {
-    context.fillStyle = "black";
-  }
+  context.fillStyle = "black";
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -67,6 +50,10 @@ function renderPlayer(me, player) {
   if (direction < 0) {
     context.scale(-1, 1);
   }
+
+  //
+  //  delete BELOW after characters are ready
+  //
   let playerStyle = "bullet.svg";
   if (styleNum < 1 / 4) {
     playerStyle = "num1.png";
@@ -77,6 +64,10 @@ function renderPlayer(me, player) {
   } else {
     playerStyle = "num4.png";
   }
+  //
+  //  remove ABOVE after characters are ready
+  //
+
   context.drawImage(
     getAsset(playerStyle),
     -PLAYER_RADIUS,
@@ -87,11 +78,8 @@ function renderPlayer(me, player) {
   context.restore();
 
   // Draw health bar
-  if (styleNum < 1 / 3) {
-    context.fillStyle = "gray";
-  } else {
-    context.fillStyle = "white";
-  }
+
+  context.fillStyle = "white";
   context.fillRect(
     canvasX - PLAYER_RADIUS,
     canvasY + PLAYER_RADIUS + 8,
@@ -110,21 +98,11 @@ function renderPlayer(me, player) {
   context.save();
   context.translate(canvasX, canvasY);
   context.beginPath();
-  context.arc(
-    0,
-    0,
-    PLAYER_RADIUS * 2.5,
-    Constants.FIRE_RANGE_MIN - Math.PI / 2,
-    Constants.FIRE_RANGE_MAX - Math.PI / 2,
-    false
-  );
-  context.lineWidth = PLAYER_RADIUS / 5;
+  context.arc(0, 0, PLAYER_RADIUS * 2, 0, Math.PI, true);
+  context.lineWidth = PLAYER_RADIUS / 20;
   context.lineCap = "round";
-  if (styleNum < 1 / 3) {
-    context.strokeStyle = "gray";
-  } else {
-    context.strokeStyle = "white";
-  }
+  context.strokeStyle = "white";
+  context.setLineDash([PLAYER_RADIUS / 10, PLAYER_RADIUS / 5]);
   context.stroke();
   context.restore();
 
@@ -132,30 +110,22 @@ function renderPlayer(me, player) {
   context.save();
   context.translate(canvasX, canvasY);
   context.rotate(fireDirection - Math.PI);
-  if (styleNum < 1 / 3) {
-    context.strokeStyle = "tomato";
-    context.lineWidth = 2;
-    context.setLineDash([2, 2]);
+  if (styleNum < 1 / 2) {
+    context.strokeStyle = "white";
+    context.lineWidth = PLAYER_RADIUS / 20;
     context.beginPath();
-    context.moveTo(0, PLAYER_RADIUS);
-    context.lineTo(0, PLAYER_RADIUS * 5);
-    context.stroke();
-  } else if (styleNum < 2 / 3) {
-    context.strokeStyle = "lightblue";
-    context.lineWidth = 1;
-    context.beginPath();
-    context.moveTo(-PLAYER_RADIUS / 4, PLAYER_RADIUS);
-    context.lineTo(-PLAYER_RADIUS / 4, PLAYER_RADIUS * 5);
-    context.moveTo(PLAYER_RADIUS / 4, PLAYER_RADIUS);
-    context.lineTo(PLAYER_RADIUS / 4, PLAYER_RADIUS * 5);
+    context.moveTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
+    context.lineTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
+    context.moveTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
+    context.lineTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
     context.stroke();
   } else {
-    context.fillStyle = "LawnGreen";
+    context.fillStyle = "white";
     context.fillRect(
-      -PLAYER_RADIUS / 3,
-      PLAYER_RADIUS * 2,
-      (BULLET_RADIUS * 2) / 3,
-      PLAYER_RADIUS
+      -PLAYER_RADIUS / 20,
+      PLAYER_RADIUS * 1.75,
+      PLAYER_RADIUS / 10,
+      PLAYER_RADIUS / 2
     );
   }
   context.restore();
@@ -164,6 +134,9 @@ function renderPlayer(me, player) {
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
 
+  //
+  //  delete BELOW after characters are ready
+  //
   let bulletStyle = "bullet.svg";
   if (styleNum < 1 / 4) {
     bulletStyle = "bullet1.png";
@@ -174,6 +147,10 @@ function renderBullet(me, bullet) {
   } else {
     bulletStyle = "bullet4.png";
   }
+  //
+  //  remove ABOVE after characters are ready
+  //
+
   context.drawImage(
     getAsset(bulletStyle),
     canvas.width / 2 + x - me.x - BULLET_RADIUS,
@@ -201,26 +178,6 @@ function render() {
   // Draw background
   renderBackground(me.x, me.y);
 
-  //
-  // REMOVE the below after map is ready!!!
-  //
-  // Draw boundaries
-  // if (styleNum < 1 / 3) {
-  //   context.strokeStyle = "gray";
-  // } else {
-  //   context.strokeStyle = "white";
-  // }
-  // context.lineWidth = 10;
-  // context.strokeRect(
-  //   canvas.width / 2 - me.x,
-  //   canvas.height / 2 - me.y,
-  //   MAP_SIZE_LENGTH,
-  //   MAP_SIZE_WIDTH
-  // );
-  //
-  // REMOVE the above after map is ready!!!
-  //
-
   // // TODO: Draw map
   context.drawImage(
     getAsset("map1.png"),
@@ -235,7 +192,7 @@ function render() {
   bullets.forEach(renderBullet.bind(null, me));
 
   // Draw all players
-  //renderPlayer(me, me);
+  // renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
 }
 
