@@ -7,15 +7,6 @@ const app = new PIXI.Application();
 
 function loadOver() {
   console.log("Images loaded successfully!");
-  const num1 = new Sprite(resources["/assets/num1.png"].texture);
-  const num2 = new Sprite(resources["/assets/num2.png"].texture);
-  const num3 = new Sprite(resources["/assets/num3.png"].texture);
-  const num4 = new Sprite(resources["/assets/num4.png"].texture);
-  const bullet1 = new Sprite(resources["/assets/bullet1.png"].texture);
-  const bullet2 = new Sprite(resources["/assets/bullet1.png"].texture);
-  const bullet3 = new Sprite(resources["/assets/bullet1.png"].texture);
-  const bullet4 = new Sprite(resources["/assets/bullet1.png"].texture);
-  const arrow = new Sprite(resources["/assets/icon64.png"].texture);
 }
 
 function placePlayer(player, playerNum) {
@@ -135,3 +126,12 @@ loader
     "/assets/icon64.png",
   ])
   .load(loadOver);
+const num1 = new Sprite(resources["/assets/num1.png"].texture);
+const num2 = new Sprite(resources["/assets/num2.png"].texture);
+const num3 = new Sprite(resources["/assets/num3.png"].texture);
+const num4 = new Sprite(resources["/assets/num4.png"].texture);
+const bullet1 = new Sprite(resources["/assets/bullet1.png"].texture);
+const bullet2 = new Sprite(resources["/assets/bullet1.png"].texture);
+const bullet3 = new Sprite(resources["/assets/bullet1.png"].texture);
+const bullet4 = new Sprite(resources["/assets/bullet1.png"].texture);
+const arrow = new Sprite(resources["/assets/icon64.png"].texture);
