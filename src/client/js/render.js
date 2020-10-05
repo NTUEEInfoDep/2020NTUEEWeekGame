@@ -223,7 +223,7 @@ function render() {
 
   // // TODO: Draw map
   context.drawImage(
-    getAsset("map1.png"),
+    getAsset(`map${Constants.MAP_NUM + 1}.png`),
     canvas.width / 2 - me.x,
     canvas.height / 2 - me.y,
     MAP_SIZE_LENGTH,

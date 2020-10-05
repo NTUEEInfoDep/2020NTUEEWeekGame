@@ -1,6 +1,7 @@
 const ObjectClass = require("./object");
 const Bullet = require("./bullet");
 const Constants = require("../shared/constants");
+const num = Constants.MAP_NUM
 // const { plugins } = require("../../webpack.config");
 
 class Player extends ObjectClass {
@@ -38,8 +39,8 @@ class Player extends ObjectClass {
     else
       this.x = Math.max(Math.max(0, this.startx - this.movearea),
                         Math.min(Constants.MAP_SIZE_LENGTH / 2, this.x, this.startx + this.movearea));
-    this.y = (Constants.MAP[Math.floor(this.x / 10)] * (10 - this.x % 10) +
-              Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) / 10;
+    this.y = (Constants.MAP[num][Math.floor(this.x / 10)] * (10 - this.x % 10) +
+              Constants.MAP[num][Math.floor(this.x / 10 + 1)] * (this.x % 10)) / 10;
 
     this.fireCooldown -= dt;
     if (this.fireCooldown <= 0) {
@@ -56,13 +57,13 @@ class Player extends ObjectClass {
   // Receive keyboard input and move character
   move(e) {
     if (e[1] === "ArrowLeft") {
-      if(Constants.MAP[Math.floor(this.x / 10)] < Constants.MAP[Math.floor(this.x / 10 + 1)])
-        this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10)] - Constants.MAP[Math.floor(this.x / 10 + 1)]) / 10);
+      if(Constants.MAP[num][Math.floor(this.x / 10)] < Constants.MAP[num][Math.floor(this.x / 10 + 1)])
+        this.direction = Math.atan((Constants.MAP[num][Math.floor(this.x / 10)] - Constants.MAP[num][Math.floor(this.x / 10 + 1)]) / 10);
       else
-        this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10) + 1] - Constants.MAP[Math.floor(this.x / 10)]) / 10) - Math.PI / 2;
+        this.direction = Math.atan((Constants.MAP[num][Math.floor(this.x / 10) + 1] - Constants.MAP[num][Math.floor(this.x / 10)]) / 10) - Math.PI / 2;
     }
     if (e[1] === "ArrowRight") {
-      this.direction = Math.atan((Constants.MAP[Math.floor(this.x / 10 + 1)] - Constants.MAP[Math.floor(this.x / 10)]) / 10) + Math.PI / 2;
+      this.direction = Math.atan((Constants.MAP[num][Math.floor(this.x / 10 + 1)] - Constants.MAP[num][Math.floor(this.x / 10)]) / 10) + Math.PI / 2;
     }
     this.speed = Constants.PLAYER_SPEED;
   }

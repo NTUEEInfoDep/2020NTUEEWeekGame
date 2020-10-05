@@ -7,8 +7,10 @@ const ASSET_NAMES = [
   "bullet2.png",
   "bullet3.png",
   "bullet4.png",
-  // map
+  // 
   "map1.png",
+  "map2.png",
+  "flying.png",
   // player
   "num1.png",
   "num2.png",

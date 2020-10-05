@@ -2,6 +2,7 @@ const { join } = require("lodash");
 const Constants = require("../shared/constants");
 const Player = require("./player");
 const applyCollisions = require("./collisions");
+const num = Constants.MAP_NUM
 
 class Game {
   constructor() {
@@ -44,8 +45,8 @@ class Game {
     if(side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);    
     else x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);
     const y =
-        (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
-          Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
+        (Constants.MAP[num][Math.floor(x / 10)] * (x % 10) +
+          Constants.MAP[num][Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
         10;
     this.players[socket.id] = new Player(socket.id, username, x, y, side);
   }
