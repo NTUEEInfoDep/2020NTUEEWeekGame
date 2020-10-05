@@ -20,44 +20,40 @@ class Game {
 
   addPlayer(socket, username) {
     this.sockets[socket.id] = socket;
-    let side = username in this.waitrooms;
+    const side = username in this.waitrooms;
     let x;
-    if(side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);    
+    if (side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);
     else x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);
     const y =
-        (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
-          Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
-        10;
+      (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
+        Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
+      10;
     // Adding player to rooms and store the name. The first player joined
     // goes to waitrooms. The second player will be join and move the room
     // from waitrooms to playrooms. If a third player is coming, it will be blocked.
     // Ridection or alert for this is still needed.
-    if (username === "random"){
+    if (username === "random") {
       console.log("random pair triggered!");
       this.randomrooms.push(socket.id);
-      //this.players[socket.id] = new Player(socket.id, username, x, y, side);
-      if (this.randomrooms.length >= 2){
-        let player1 = this.sockets[this.randomrooms.pop()];
-        let player2 = this.sockets[this.randomrooms.pop()];
+      // this.players[socket.id] = new Player(socket.id, username, x, y, side);
+      if (this.randomrooms.length >= 2) {
+        const player1 = this.sockets[this.randomrooms.pop()];
+        const player2 = this.sockets[this.randomrooms.pop()];
         this.addPlayer(player1, player1.id);
         this.addPlayer(player2, player1.id);
-        //return;
-      }
-      else console.log('Waiting to be paired !!!');
-    }
-    else if (username in this.playrooms) {
-      console.log('The room is too crowd');
+        // return;
+      } else console.log("Waiting to be paired !!!");
+    } else if (username in this.playrooms) {
+      console.log("The room is too crowd");
       delete this.sockets[socket.id];
-      //return;
-    }
-    else if (username in this.waitrooms) {
+      // return;
+    } else if (username in this.waitrooms) {
       socket.join(username);
       this.playrooms[username] = this.waitrooms[username];
       this.playrooms[username].push(socket.id);
       delete this.waitrooms[username];
       this.players[socket.id] = new Player(socket.id, username, x, y, side);
-    }
-    else {
+    } else {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
@@ -69,7 +65,6 @@ class Game {
     console.log(this.playrooms);
     console.log("Waitrooms:");
     console.log(this.waitrooms);
-    
   }
 
   // Simply remove player from game
@@ -106,17 +101,17 @@ class Game {
       const camera = this.cameras[player.username];
       const keyType = keyEvent[0];
       const key = keyEvent[1];
-      if (keyType === "keydown"){
+      if (keyType === "keydown") {
         if (key === "Space") {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
         }
         if (key === "ArrowLeft" || key === "ArrowRight") player.move(key);
-        //if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
+        // if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop();
-        //if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
+        // if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
       }
     }
   }
@@ -127,11 +122,11 @@ class Game {
     }
   }
 
-  handleCameraMove(socket, mouseXY){
+  handleCameraMove(socket, mouseXY) {
     if (this.players[socket.id]) {
       const player = this.players[socket.id];
       const camera = this.cameras[player.username];
-      if (mouseXY[0] === 0 &&  mouseXY[1] === 0) camera.stop();
+      if (mouseXY[0] === 0 && mouseXY[1] === 0) camera.stop();
       else camera.move(mouseXY);
     }
   }
@@ -193,8 +188,6 @@ class Game {
     if (this.shouldSendUpdate) {
       const leaderboard = this.getLeaderboard();
 
-
-
       // Update for players in waitroom
       Object.keys(this.waitrooms).forEach((roomname) => {
         const playerIDs = this.waitrooms[roomname];
@@ -204,7 +197,7 @@ class Game {
           socket.emit(
             Constants.MSG_TYPES.GAME_UPDATE,
             this.createRoomUpdate(roomname, playerIDs, leaderboard)
-          )
+          );
         });
       });
 
@@ -217,7 +210,7 @@ class Game {
           socket.emit(
             Constants.MSG_TYPES.GAME_UPDATE,
             this.createRoomUpdate(roomname, playerIDs, leaderboard)
-          )
+          );
         });
       });
 
@@ -233,13 +226,11 @@ class Game {
       .slice(0, 5)
       .map((p) => ({ username: p.username, score: Math.round(p.score) }));
   }
-  
-  // Only create update object within the room 
-  createRoomUpdate(roomname,playerIDs, leaderboard) {
+
+  // Only create update object within the room
+  createRoomUpdate(roomname, playerIDs, leaderboard) {
     const camera = this.cameras[roomname];
-    const playerInRoom = playerIDs.map(
-      (playerID)=>(this.players[playerID])
-    );
+    const playerInRoom = playerIDs.map((playerID) => this.players[playerID]);
 
     const bulletInRoom = this.bullets.filter(
       (b) =>
