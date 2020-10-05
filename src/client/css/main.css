@@ -70,7 +70,7 @@ canvas {
   line-height: 8rem;
 }
 
-#play-menu #username-input {
+#play-menu #room-id-input {
   margin: 1.5rem 0 0;
   border: none;
   font-size: 23px;
