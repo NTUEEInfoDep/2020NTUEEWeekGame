@@ -52,13 +52,13 @@ class Game {
       this.playrooms[username] = this.waitrooms[username];
       this.playrooms[username].push(socket.id);
       delete this.waitrooms[username];
-      this.players[socket.id] = new Player(socket.id, username, x, y, side);
+      this.players[socket.id] = new Player(socket.id, username, x, y);
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
-      this.cameras[username] = new Camera(socket.id, username, x, y, side);
-      this.players[socket.id] = new Player(socket.id, username, x, y, side);
+      this.cameras[username] = new Camera(socket.id, username, x, y);
+      this.players[socket.id] = new Player(socket.id, username, x, y);
     }
     console.log(this.players);
     console.log("Playrooms:");
@@ -108,19 +108,21 @@ class Game {
         }
         if (key === "ArrowLeft" || key === "ArrowRight") player.move(key);
         // if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
+        if (key === "KeyQ" || key == "KeyE") player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop();
         // if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
+        if (key === "KeyQ" || key === "KeyE") player.fireDirectionStop(key);
       }
     }
   }
 
-  handleInput(socket, dir) {
+  /*handleInput(socket, dir) {
     if (this.players[socket.id]) {
       this.players[socket.id].setFireDirection(dir);
     }
-  }
+  }*/
 
   handleCameraMove(socket, mouseXY) {
     if (this.players[socket.id]) {
