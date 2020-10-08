@@ -7,16 +7,12 @@
 3.  cmd `npm run develop`
 4.  Open browser and go to [127.0.0.1:3000](http://localhost:3000)
 
-### What we have done (9/25)
+### Urgent things to do now (10/8)
 
-1.  client-server connection with socket.io
-2.  a simple entry space
-3.  an object that can shoot bullet when press space and move in control of mouse or direction key
-
-### Todo this week (9/25)
-
-1.  Finish the simplest ver. of game
-2.  Start doing nice looking sprites and making animations
+1. Problem of camera vision out of bound 
+2. Character select page should be shown 
+3. Game over page (to show who won)
+4. Power bar 
 
 ### Develop
 
