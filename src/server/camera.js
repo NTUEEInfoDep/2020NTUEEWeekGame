@@ -26,17 +26,22 @@ class Camera extends ObjectClass {
   }
 
   // Receive keyboard input and move camera
-  move(mouseXY) {
-    if (mouseXY[1] === -1) this.direction = 0;
-    if (mouseXY[1] === 1) this.direction =  Math.PI;
-    if (mouseXY[0] === -1) this.direction = -Math.PI/2;
-    if (mouseXY[0] === 1) this.direction = Math.PI/2;
+  move(key) {
+    if (key === "KeyW") this.direction = 0;
+    if (key === "KeyS") this.direction =  Math.PI;
+    if (key === "KeyA") this.direction = -Math.PI/2;
+    if (key === "KeyD") this.direction = Math.PI/2;
     this.speed = Constants.CAMERA_SPEED;
   }
   
   // Stop the camera's movement
   stop(){
     this.friction = Constants.CAMERA_FRICTION;
+  }
+
+  follow(player){
+    this.x = player.x;
+    this.y = player.y;
   }
 
   serializeForUpdate() {

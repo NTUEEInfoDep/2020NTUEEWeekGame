@@ -105,14 +105,15 @@ class Game {
         if (key === "Space") {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
+          this.cameras[player.username].follow(player);
         }
         if (key === "ArrowLeft" || key === "ArrowRight") player.move(key);
-        // if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
+        if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
         if (key === "KeyQ" || key == "KeyE") player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop();
-        // if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
+        if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
         if (key === "KeyQ" || key === "KeyE") player.fireDirectionStop(key);
       }
     }
@@ -123,7 +124,7 @@ class Game {
       this.players[socket.id].setFireDirection(dir);
     }
   }*/
-
+  /*
   handleCameraMove(socket, mouseXY) {
     if (this.players[socket.id]) {
       const player = this.players[socket.id];
@@ -132,6 +133,7 @@ class Game {
       else camera.move(mouseXY);
     }
   }
+  */
 
   update() {
     // Calculate time elapsed
