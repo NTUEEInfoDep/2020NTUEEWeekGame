@@ -34,14 +34,14 @@ export const connect = (onGameOver) =>
   });
 
 export const play = (username) => {
-  socket.emit(Constants.MSG_TYPES.JOIN_GAME, username);
+  socket.emit(Constants.MSG_TYPES.JOIN_GAME, [username,[window.innerWidth, window.innerHeight]]);
 };
 
-export const updateDirection = throttle(20, (dir) => {
+export const updateDirection = throttle(10, (dir) => {
   socket.emit(Constants.MSG_TYPES.INPUT, dir);
 });
 
-export const updateMovement = throttle(20, (movement) => {
+export const updateMovement = throttle(10, (movement) => {
   socket.emit(Constants.MSG_TYPES.KEY_INPUT, movement);
 });
 

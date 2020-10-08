@@ -3,10 +3,11 @@ const Constants = require("../shared/constants");
 const { plugins } = require("../../webpack.config");
 
 class Camera extends ObjectClass {
-  constructor(id, username, x, y) {
+  constructor(id, username, x, y, windowSize) {
     super(id, x, y, Math.random() * 2 * Math.PI, 0);
     this.username = username;
     this.friction = 0;
+    this.windowSize = windowSize;
   }
 
   // Returns a newly created bullet, or null.
@@ -19,8 +20,8 @@ class Camera extends ObjectClass {
       this.friction = 0;
     }
     // Make sure the player stays in bounds
-    this.x = Math.max(0, Math.min(Constants.MAP_SIZE_LENGTH, this.x));
-    this.y = Math.max(0, Math.min(Constants.MAP_SIZE_WIDTH, this.y));
+    this.x = Math.max(this.windowSize[0]/2, Math.min(Constants.MAP_SIZE_LENGTH - this.windowSize[0]/2, this.x));
+    this.y = Math.max(this.windowSize[1]/2, Math.min(Constants.MAP_SIZE_WIDTH - this.windowSize[1]/2, this.y));
     
     return null;
   }
