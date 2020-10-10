@@ -18,8 +18,9 @@ class Game {
     setInterval(this.update.bind(this), 1000 / 60);
   }
 
-  addPlayer(socket, username) {
+  addPlayer(socket, userinfo) {
     this.sockets[socket.id] = socket;
+    const username = userinfo[0];
     const side = username in this.waitrooms;
     let x;
     if (side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);
@@ -32,6 +33,7 @@ class Game {
     // goes to waitrooms. The second player will be join and move the room
     // from waitrooms to playrooms. If a third player is coming, it will be blocked.
     // Ridection or alert for this is still needed.
+
     if (username === "random") {
       console.log("random pair triggered!");
       this.randomrooms.push(socket.id);
@@ -57,7 +59,7 @@ class Game {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
-      this.cameras[username] = new Camera(socket.id, username, x, y);
+      this.cameras[username] = new Camera(socket.id, username, x, y, userinfo[1]);
       this.players[socket.id] = new Player(socket.id, username, x, y);
     }
     console.log(this.players);
@@ -106,30 +108,19 @@ class Game {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
         }
-        if (key === "ArrowLeft" || key === "ArrowRight") player.move(key);
-        // if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
+        if (key === "ArrowLeft" || key === "ArrowRight") {
+          player.move(key);
+          this.cameras[player.username].follow(player);
+        }
+        if (key === "ShiftLeft") this.cameras[player.username].follow(player);
+        if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
         if (key === "KeyQ" || key == "KeyE") player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop();
-        // if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
+        if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
         if (key === "KeyQ" || key === "KeyE") player.fireDirectionStop(key);
       }
-    }
-  }
-
-  /*handleInput(socket, dir) {
-    if (this.players[socket.id]) {
-      this.players[socket.id].setFireDirection(dir);
-    }
-  }*/
-
-  handleCameraMove(socket, mouseXY) {
-    if (this.players[socket.id]) {
-      const player = this.players[socket.id];
-      const camera = this.cameras[player.username];
-      if (mouseXY[0] === 0 && mouseXY[1] === 0) camera.stop();
-      else camera.move(mouseXY);
     }
   }
 
