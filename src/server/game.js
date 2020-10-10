@@ -54,12 +54,13 @@ class Game {
       this.playrooms[username] = this.waitrooms[username];
       this.playrooms[username].push(socket.id);
       delete this.waitrooms[username];
-      this.players[socket.id] = new Player(socket.id, username, x, y);
+      this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1]);
+      this.players[socket.id] = new Player(socket.id, username, x, y);      
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
-      this.cameras[username] = new Camera(socket.id, username, x, y, userinfo[1]);
+      this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1]);
       this.players[socket.id] = new Player(socket.id, username, x, y);
     }
     console.log(this.players);
@@ -100,7 +101,7 @@ class Game {
   handleKeyInput(socket, keyEvent) {
     if (this.players[socket.id] && keyEvent) {
       const player = this.players[socket.id];
-      const camera = this.cameras[player.username];
+      const camera = this.cameras[socket.id];
       const keyType = keyEvent[0];
       const key = keyEvent[1];
       if (keyType === "keydown") {
@@ -110,9 +111,9 @@ class Game {
         }
         if (key === "ArrowLeft" || key === "ArrowRight") {
           player.move(key);
-          this.cameras[player.username].follow(player);
+          //camera.follow(player);
         }
-        if (key === "ShiftLeft") this.cameras[player.username].follow(player);
+        if (key === "ShiftLeft") camera.follow(player);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
         if (key === "KeyQ" || key == "KeyE") player.fireDirectionMove(key);
       }
@@ -149,8 +150,8 @@ class Game {
     });
 
     //
-    Object.keys(this.cameras).forEach((username) => {
-      const camera = this.cameras[username];
+    Object.keys(this.cameras).forEach((id) => {
+      const camera = this.cameras[id];
       camera.update(dt);
     });
 
@@ -189,7 +190,7 @@ class Game {
           const player = this.players[playerID];
           socket.emit(
             Constants.MSG_TYPES.GAME_UPDATE,
-            this.createRoomUpdate(roomname, playerIDs, leaderboard)
+            this.createRoomUpdate(socket.id, playerIDs, leaderboard)
           );
         });
       });
@@ -202,7 +203,7 @@ class Game {
           const player = this.players[playerID];
           socket.emit(
             Constants.MSG_TYPES.GAME_UPDATE,
-            this.createRoomUpdate(roomname, playerIDs, leaderboard)
+            this.createRoomUpdate(socket.id, playerIDs, leaderboard)
           );
         });
       });
@@ -221,8 +222,8 @@ class Game {
   }
 
   // Only create update object within the room
-  createRoomUpdate(roomname, playerIDs, leaderboard) {
-    const camera = this.cameras[roomname];
+  createRoomUpdate(id, playerIDs, leaderboard) {
+    const camera = this.cameras[id];
     const playerInRoom = playerIDs.map((playerID) => this.players[playerID]);
 
     const bulletInRoom = this.bullets.filter(
