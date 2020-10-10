@@ -19,90 +19,82 @@
     <!-- <meta property="og:title" content="An example .io game" /> -->
     <!-- <meta property="og:image" content="../../../public/assets/icon1200.png" /> -->
   </head>
-
+  
   <body>
     <canvas id="game-canvas"></canvas>
 
-    <div class="hidden" id="play-menu">
-      <div id="subtitle">ntu&nbsp;EE&nbsp;week&nbsp;&nbsp;2020.10.19~23</div>
-      <div id="title">TEnET</div>
-      <input
-        type="text"
-        id="room-id-input"
-        maxlength="25"
-        placeholder="Room ID"
-      />
-      <button class="button1" id="play-menu-enter">Enter</button>
-    </div>
-
-    <div class="hidden" id="mode-menu">
-      <div id="header">
-        <div id="title">CHOOSE&nbsp;A&nbsp;CHARACTER</div>
-      </div>
-
-      <div id="character-table">
-        <div class="characterContainer" id="character-container-1">
-          <div id="character-pic-1">
-            <img src="/assets/num1.png" class="characterPic" />
-          </div>
-          <div id="character-name-1">CHARACTER&nbsp;1</div>
+      <div class="hidden" id="play-menu">
+        <div id="subtitle">ntu&nbsp;EE&nbsp;week&nbsp;&nbsp;2020.10.19~23</div>
+        <div id="title">TEnET</div>
+        <div>
+          <input
+            type="text"
+            id="room-id-input"
+            maxlength="25"
+            placeholder="Room ID"
+          />
         </div>
-
-        <div class="characterContainer" id="character-container-2">
-          <div id="character-pic-2">
-            <img src="/assets/num2.png" class="characterPic" />
-          </div>
-          <div id="character-name-2">CHARACTER&nbsp;2</div>
-        </div>
-
-        <div class="characterContainer" id="character-container-3">
-          <div id="character-pic-3">
-            <img src="/assets/num3.png" class="characterPic" />
-          </div>
-          <div id="character-name-3">CHARACTER&nbsp;3</div>
-        </div>
-
-        <div class="characterContainer" id="character-container-4">
-          <div id="character-pic-4">
-            <img src="/assets/num4.png" class="characterPic" />
-          </div>
-          <div id="character-name-4">CHARACTER&nbsp;4</div>
-        </div>
-
-        <div class="characterContainer" id="character-container-random">
-          <div id="character-pic-random">
-            <img src="/assets/randomCharacter.png" class="characterPic" />
-          </div>
-          <div id="character-name-random">RANDOM</div>
+        <div>
+          <button class="button1" id="play-menu-enter">Enter</button>
         </div>
       </div>
+      <div class="hidden" id="mode-menu">
+        <div id="header">
+          <div id="chose-title">Choose&nbsp;your&nbsp;character!</div>
+        </div>
+        <div id="character-table">
+          <div class="characterContainer" id="character-container-1">
+            <div id="character-pic-1">
+              <img src="/assets/num1.png" class="characterPic" />
+            </div>
+            <div id="character-name-1">CHARACTER&nbsp;1</div>
+          </div>
 
-      <div id="mode-select">
-        <button class="button2" id="random-button" \>Random&nbsp;Game</button>
-        <button class="button2" id="create-room-button" \>
-          Create&nbsp;A&nbsp;Room
-        </button>
-        <button class="button2" id="join-room-button">
-          Join&nbsp;A&nbsp;Room
-        </button>
+          <div class="characterContainer" id="character-container-2">
+            <div id="character-pic-2">
+              <img src="/assets/num2.png" class="characterPic" />
+            </div>
+            <div id="character-name-2">CHARACTER&nbsp;2</div>
+          </div>
+  
+          <div class="characterContainer" id="character-container-3">
+            <div id="character-pic-3">
+              <img src="/assets/num3.png" class="characterPic" />
+            </div>
+            <div id="character-name-3">CHARACTER&nbsp;3</div>
+          </div>
+  
+          <div class="characterContainer" id="character-container-4">
+            <div id="character-pic-4">
+              <img src="/assets/num4.png" class="characterPic" />
+            </div>
+            <div id="character-name-4">CHARACTER&nbsp;4</div>
+          </div>
+  
+          <div class="characterContainer" id="character-container-random">
+            <div id="character-pic-random">
+              <img src="/assets/randomCharacter.png" class="characterPic" />
+            </div>
+            <div id="character-name-random">RANDOM</div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="hidden" id="instructions">
-      <p>
-        <b>Stay alive and shoot other players!!!</b>
-        <br />
-        Press "left" and "right" to move, "up" and "down" to adjust the angle.
-        <br />
-        Hold "space" to control the shooting strength.
-      </p>
-      <div class="blink" id="enter-game">Press "enter" to start</div>
-    </div>
+      <div class="hidden" id="instructions">
+        <p>
+          <b>Stay alive and shoot other players!!!</b>
+          <br />
+          Press "left" and "right" to move, use "q" and "e" to adjust the angle.
+          <br />
+          Hold "space" to control the shooting strength.
+        </p>
+        <div class="blink" id="enter-game">Press "enter" to start</div>
+      </div>
 
-    <div class="hidden" id="disconnect-modal">
-      <div>
-        <h2>Disconnected from Server</h2>
-        <button class="button1" id="reconnect-button">RECONNECT</button>
+      <div class="hidden" id="disconnect-modal">
+        <div>
+          <h2>Disconnected from Server</h2>
+          <button class="button1" id="reconnect-button">RECONNECT</button>
+        </div>
       </div>
-    </div>
   </body>
 </html>
