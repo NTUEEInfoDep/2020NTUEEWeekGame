@@ -15,11 +15,11 @@ import "../css/main.css";
 
 const playMenu = document.getElementById("play-menu");
 const modeMenu = document.getElementById("mode-menu");
-const playInstructions = document.getElementById("instructions");
+const gameRule = document.getElementById("game-rule");
 const playButton = document.getElementById("play-menu-enter");
-const roomIDInput = document.getElementById("room-id-input");
+const roomIDInput = document.getElementById("room-id");
 const characters = document.getElementsByClassName("characterContainer");
-var characterSelected = 0;
+let characterSelected = 0;
 
 function onGameOver() {
   stopCapturingInput();
@@ -28,39 +28,40 @@ function onGameOver() {
   setLeaderboardHidden(true);
 }
 
+function characterSelect(char) {
+  if (char !== 5) {
+    characterSelected = char;
+    characters[characterSelected - 1].style = "background-color: #ff7f50";
+  } else {
+    characterSelected = Math.floor(Math.random() * 4) + 1;
+    characters[characterSelected - 1].style = "background-color: #ff7f50";
+  }
+  modeMenu.classList.add("hidden");
+  gameRule.classList.remove("hidden");
+}
+
 function gameStart() {
   playMenu.classList.add("hidden");
+
   // Select a role
   modeMenu.classList.remove("hidden");
-  characters[0].onclick= () => characterSelect(1);
-  characters[1].onclick= () => characterSelect(2);
-  characters[2].onclick= () => characterSelect(3);
-  characters[3].onclick= () => characterSelect(4);
-  characters[4].onclick= () => characterSelect(5);
-  // Display instructions
-  document.addEventListener('keyup',event => {
-    if (event.keyCode === 13) {
-      playInstructions.classList.add("hidden");
-    }
-  })
+  characters[0].onclick = () => characterSelect(1);
+  characters[1].onclick = () => characterSelect(2);
+  characters[2].onclick = () => characterSelect(3);
+  characters[3].onclick = () => characterSelect(4);
+  characters[4].onclick = () => characterSelect(5);
+
+  // Display rule
+  document.addEventListener("keyup", () => {
+    gameRule.classList.add("hidden");
+  });
+
   // Play!
   play(roomIDInput.value);
   initState();
   startCapturingInput();
   startRendering();
   setLeaderboardHidden(false);
-}
-
-function characterSelect(char) {
-  if (char !== 5){
-    characterSelected = char;
-    characters[characterSelected-1].style = "background-color: #ff7f50";
-  } else {
-    characterSelected = Math.floor(Math.random() * 4)+1;
-    characters[characterSelected-1].style = "background-color: #ff7f50"; 
-  }
-  modeMenu.classList.add("hidden");
-  playInstructions.classList.remove("hidden"); 
 }
 
 Promise.all([connect(onGameOver), downloadAssets()])
