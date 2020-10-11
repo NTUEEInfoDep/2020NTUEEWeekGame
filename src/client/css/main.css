@@ -107,6 +107,7 @@ canvas {
 
 #mode-menu {
   position: fixed;
+  width: 80%;
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
@@ -200,6 +201,27 @@ canvas {
   text-align: center;
 }
 
+.gameover-board {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.gameover-board div {
+  font-size: 45px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  padding: 25px 30px;
+  background-color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
 .button1 {
   border: none;
   border-radius: 5px;
@@ -209,7 +231,7 @@ canvas {
   color: black !important;
   background-color: white;
   font-size: 30px;
-  font-family: "AstronBoy";
+  font-family: "Nest";
   text-transform: uppercase;
   text-decoration: none;
   transition: all 0.4s ease 0s;

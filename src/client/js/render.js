@@ -4,6 +4,7 @@ import { debounce } from "throttle-debounce";
 import { MAP_SIZE_LENGTH, MAP_SIZE_WIDTH } from "../../shared/constants";
 import { getAsset } from "./assets";
 import { getCurrentState } from "./state";
+import { getRole } from "./index.js";
 
 const Constants = require("../../shared/constants");
 
@@ -12,7 +13,7 @@ const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
 //
 //  delete BELOW after characters are ready
 //
-const styleNum = Math.random();
+const styleNum = Math.floor(Math.random() * 4)+1;
 //
 //  remove ABOVE after characters are ready
 //
@@ -55,11 +56,12 @@ function renderPlayer(me, player) {
   //  delete BELOW after characters are ready
   //
   let playerStyle = "bullet.svg";
-  if (styleNum < 1 / 4) {
+  //console.log("styleNum = " + styleNum);
+  if (styleNum === 1) {
     playerStyle = "num1.png";
-  } else if (styleNum < 2 / 4) {
+  } else if (styleNum === 2) {
     playerStyle = "num2.png";
-  } else if (styleNum < 3 / 4) {
+  } else if (styleNum === 3) {
     playerStyle = "num3.png";
   } else {
     playerStyle = "num4.png";
@@ -110,7 +112,7 @@ function renderPlayer(me, player) {
   context.save();
   context.translate(canvasX, canvasY);
   context.rotate(fireDirection - Math.PI);
-  if (styleNum < 1 / 2) {
+  if (styleNum <= 2) {
     context.strokeStyle = "white";
     context.lineWidth = PLAYER_RADIUS / 20;
     context.beginPath();
@@ -138,11 +140,11 @@ function renderBullet(me, bullet) {
   //  delete BELOW after characters are ready
   //
   let bulletStyle = "bullet.svg";
-  if (styleNum < 1 / 4) {
+  if (styleNum === 1) {
     bulletStyle = "bullet1.png";
-  } else if (styleNum < 2 / 4) {
+  } else if (styleNum === 2) {
     bulletStyle = "bullet2.png";
-  } else if (styleNum < 3 / 4) {
+  } else if (styleNum === 3) {
     bulletStyle = "bullet3.png";
   } else {
     bulletStyle = "bullet4.png";

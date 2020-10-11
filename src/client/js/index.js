@@ -19,25 +19,18 @@ const playInstructions = document.getElementById("instructions");
 const playButton = document.getElementById("play-menu-enter");
 const roomIDInput = document.getElementById("room-id-input");
 const characters = document.getElementsByClassName("characterContainer");
-var characterSelected = 0;
 
 function onGameOver() {
   stopCapturingInput();
   stopRendering();
   playMenu.classList.remove("hidden");
+
   setLeaderboardHidden(true);
 }
 
 function gameStart() {
-  playMenu.classList.add("hidden");
-  // Select a role
-  modeMenu.classList.remove("hidden");
-  characters[0].onclick= () => characterSelect(1);
-  characters[1].onclick= () => characterSelect(2);
-  characters[2].onclick= () => characterSelect(3);
-  characters[3].onclick= () => characterSelect(4);
-  characters[4].onclick= () => characterSelect(5);
-  // Display instructions
+  roleSelect();
+    // Display instructions
   document.addEventListener('keyup',event => {
     if (event.keyCode === 13) {
       playInstructions.classList.add("hidden");
@@ -51,16 +44,38 @@ function gameStart() {
   setLeaderboardHidden(false);
 }
 
+function roleSelect() { 
+  playMenu.classList.add("hidden");
+  modeMenu.classList.remove("hidden");
+  characters[0].onclick= () => characterSelect(1),
+  characters[1].onclick= () => characterSelect(2),
+  characters[2].onclick= () => characterSelect(3),
+  characters[3].onclick= () => characterSelect(4),
+  characters[4].onclick= () => characterSelect(5)
+}
+
 function characterSelect(char) {
+  var role = 0;
   if (char !== 5){
-    characterSelected = char;
-    characters[characterSelected-1].style = "background-color: #ff7f50";
+    role = char;
   } else {
-    characterSelected = Math.floor(Math.random() * 4)+1;
-    characters[characterSelected-1].style = "background-color: #ff7f50"; 
+    role = Math.floor(Math.random() * 4)+1;
   }
   modeMenu.classList.add("hidden");
   playInstructions.classList.remove("hidden"); 
+}
+
+export function getRole() {
+  return role;
+}
+
+function replaySetup() {
+  play(roomIDInput.value);
+  gameoverBoard.classList.add('hidden');
+  initState();
+  startCapturingInput();
+  startRendering();
+  setLeaderboardHidden(false);
 }
 
 Promise.all([connect(onGameOver), downloadAssets()])
