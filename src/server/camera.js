@@ -32,6 +32,7 @@ class Camera extends ObjectClass {
     if (key === "KeyS") this.direction =  Math.PI;
     if (key === "KeyA") this.direction = -Math.PI/2;
     if (key === "KeyD") this.direction = Math.PI/2;
+    this.friction = 0;
     this.speed = Constants.CAMERA_SPEED;
   }
   
