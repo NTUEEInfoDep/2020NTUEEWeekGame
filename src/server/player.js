@@ -78,6 +78,7 @@ class Player extends ObjectClass {
         ) +
         Math.PI / 2;
     }
+    this.friction = 0
     this.speed = Constants.PLAYER_SPEED;
   }
 
