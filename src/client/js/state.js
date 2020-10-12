@@ -71,7 +71,7 @@ function currentServerTime() {
 // current server time, or -1 if N/A.
 function getBaseUpdate() {
   const serverTime = currentServerTime();
-  for (let i = gameUpdates.length - 1; i >= 0; i--) {
+  for (let i = gameUpdates.length - 1; i >= 0; i -= 1) {
     if (gameUpdates[i].t <= serverTime) {
       return i;
     }

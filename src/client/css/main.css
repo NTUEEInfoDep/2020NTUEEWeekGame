@@ -2,7 +2,7 @@
   margin: 0;
   border: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: content-box;
   text-decoration: none;
   overflow: hidden;
   line-height: normal;
@@ -12,6 +12,8 @@
 html, body {
   background-color: black;
 }
+
+/* Font Face */
 
 @font-face {
   font-family: "Pdark";
@@ -24,8 +26,8 @@ html, body {
 }
 
 /* @font-face {
-  font-family: "Nest";
-  src: url("../../../public/fonts/Nest.otf") format("truetype");
+  font-family: "Monoton";
+  src: url("../../../public/fonts/Monoton.otf") format("truetype");
 } */
 
 @keyframes blink {
@@ -37,30 +39,37 @@ html, body {
   }
 }
 
+/* Canvas */
+
 canvas {
   width: 100%;
   height: 100%;
 }
 
+/* Play Menu */
+
 #play-menu {
-  padding: 3rem;
-  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  max-height: 80%;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
+  width: fit-content;
+  height: fit-content;
+  min-width: fit-content;
+  min-height: fit-content;
+  padding: 3rem;
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border-radius: 1%;
   background-color: white;
   color: black;
 }
 
 #play-menu #subtitle {
   font-size: 1rem;
-  font-family: serif;
+  font-family: "Arvo";
 }
 
 #play-menu #title {
@@ -70,119 +79,116 @@ canvas {
   line-height: 8rem;
 }
 
-#play-menu #room-id-input {
+#play-menu #room-id {
   margin: 1.5rem 0 0;
   border: none;
-  font-size: 23px;
-  border-bottom: 1px solid black;
-  margin-bottom: 5px;
-  padding: 3px;
+  font-size: 1.5rem;
+  border-bottom: 0.1rem solid black;
   text-align: center;
 }
 
 #play-menu button {
-  border-radius: 10%;
-  padding: 2% 10% 0;
-  /* due to bad font */
-  display: inline-block;
-  color: black !important;
+  color: black;
   background-color: white;
-  font-size: 30px;
-  font-family: "AstronBoy";
+  font-size: 2rem;
+  font-family: "Righteous";
   text-transform: uppercase;
   text-decoration: none;
   transition: all 0.4s ease 0s;
+  /* border-radius: 10%; */
+  /* padding: 2% 10% 0; */
+  /* due to bad font */
+  /* display: inline-block; */
+  /* font-family: "AstronBoy"; */
 }
 
 #play-menu button:hover {
-  letter-spacing: 0.2rem;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+  letter-spacing: 3rem;
+  margin-right: -3rem;
   transition: all 0.4s ease 0s;
 }
 
+/* Mode Menu */
+
 #mode-menu {
-  position: fixed;
-  width: 92%;
-  height: 80%;
   top: 50%;
   left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  padding: px;
-  background-color: white;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 5px;
-  max-height: 85%;
-  text-align: center;
-  font-size: 5rem;
-  padding-top: 10px;
-  font-family: "AstronBoy";
+  border-radius: 30px;
+  padding: 3rem;
+  background-color: white;
+  font-size: 2rem;
+  font-family: "Permanent Marker";
 }
 
-#mode-menu #title {
-  margin-top: 10px;
-}
-
-#mode-menu #character-table {
-  font-size: 1.5rem;
+#mode-menu #character-containers {
   display: flex;
-  padding: 40px;
-  font-family: "Nest";
   flex-direction: row;
   align-items: center;
 }
 
-#instructions {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  padding: 70px;
-  background-color: white;
+.characterContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 0.6rem;
+  border-top: 0.5rem solid white;
+  border-bottom: 0.5rem solid white;
+  padding: 0 0.6rem;
+  font-family: "Kalam";
+}
+
+.characterContainer:hover {
+  transition: all 0.4s ease 0s;
+  border-top: 0.5rem solid black;
+  border-bottom: 0.5rem solid black;
+}
+
+.characterContainer img {
+  width: 8rem;
+  padding: 1rem 1.5rem;
+}
+
+.characterContainer p {
+  font-size: 1.5rem;
+}
+
+/* Game Rule */
+
+#game-rule {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
   max-height: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  margin-bottom: 0;
-  font-family: "Nest";
+  border-radius: 30px;
+  padding: 2rem 3rem 1rem;
+  background-color: white;
   font-size: 1.5rem;
   line-height: 3rem;
 }
 
-#instructions #enter-game {
+#game-rule p {
+  font-family: "Kalam";
+}
+
+#game-rule #enter-game {
   text-transform: uppercase;
-  margin-bottom: 0;
-  font-family: "Nest";
   font-size: 2rem;
   line-height: 3rem;
-  letter-spacing: 3px;
 }
 
-#leaderboard {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 10px;
-  border-radius: 5px;
-}
+/* Disconnect Window */
 
-#leaderboard th {
-  text-align: center;
-  padding: 2px 5px;
-}
-
-#leaderboard td {
-  text-align: center;
-  padding: 2px 5px;
-}
-
-#disconnect-modal {
+#disconnect-window {
   position: fixed;
   top: 0;
   left: 0;
@@ -191,60 +197,23 @@ canvas {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-#disconnect-modal>div {
-  position: fixed;
+#disconnect-window>div {
   top: 50%;
   left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  padding: 15px 20px;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
+  padding: 15rem 20rem;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 30px;
   text-align: center;
 }
 
-.button1 {
-  border: none;
-  border-radius: 5px;
-  /* padding: 10px 20px 4px 20px; */
-  display: inline-block;
-  color: black !important;
+#disconnect-window button {
+  color: black;
   background-color: white;
-  font-size: 30px;
-  font-family: "AstronBoy";
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: all 0.4s ease 0s;
 }
 
-.button1:hover {
-  letter-spacing: 0.2rem;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
-  transition: all 0.4s ease 0s;
-  /* background: coral; */
-}
-
-.button2 {
-  width: 300px;
-  font-size: 25px;
-  margin: 5px;
-  color: black !important;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 10px 20px 4px 20px;
-  border-radius: 5px;
-  display: inline-block;
-  border: solid;
-  transition: all 0.4s ease 0s;
-  font-family: "AstronBoy";
-}
-
-.button2:hover {
-  /* background-color: coral; */
-  letter-spacing: 3px;
-  transition: all 0.4s ease 0s;
-}
+/* Other Stuff */
 
 .hidden {
   display: none !important;
@@ -258,55 +227,15 @@ canvas {
   animation-timing-function: ease-in-out;
 }
 
-.characterPic {
-  width: 80%;
-  padding: 10px 0px;
-  font-size: 2rem;
-}
+/* Mobile Devises */
 
-.characterContainer {
-  flex: 1;
-  border-style: solid;
-  border-color: black;
-  margin: 1px;
-  padding: 30px 1px 30px 1px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.characterContainer:hover {
-  /* background-color: coral; */
-  letter-spacing: 3px;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
-  transition: all 0.4s ease 0s;
-}
-
-@media screen and (max-width: 640px) {
-  h1 {
-    font-size: 2rem;
-  }
-  h2 {
-    font-size: 1.75rem;
-  }
+@media screen and (max-width: 90%) {
   #play-menu {
     padding: 10px 15px;
     min-width: 280px;
   }
-  #disconnect-modal>div {
+  #disconnect-window>div {
     padding: 10px;
     min-width: 280px;
-  }
-  #leaderboard th {
-    padding: 0 3px;
-  }
-  #leaderboard td {
-    padding: 0 3px;
-  }
-  #leaderboard table {
-    font-size: 14px;
   }
 }

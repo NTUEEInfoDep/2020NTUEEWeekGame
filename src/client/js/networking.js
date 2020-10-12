@@ -1,5 +1,6 @@
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#4-client-networking
+
 import io from "socket.io-client";
 import { throttle } from "throttle-debounce";
 import { processGameUpdate } from "./state";
@@ -26,15 +27,18 @@ export const connect = (onGameOver) =>
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on("disconnect", () => {
       console.log("Disconnected from server.");
-      document.getElementById("disconnect-modal").classList.remove("hidden");
+      document.getElementById("disconnect-window").classList.remove("hidden");
       document.getElementById("reconnect-button").onclick = () => {
         window.location.reload();
       };
     });
   });
 
-export const play = (username) => {
-  socket.emit(Constants.MSG_TYPES.JOIN_GAME, [username,[window.innerWidth, window.innerHeight]]);
+export const play = (roomName) => {
+  socket.emit(Constants.MSG_TYPES.JOIN_GAME, [
+    roomName,
+    [window.innerWidth, window.innerHeight],
+  ]);
 };
 
 export const updateDirection = throttle(10, (dir) => {
