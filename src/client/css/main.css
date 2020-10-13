@@ -20,15 +20,6 @@ html, body {
   src: url("../../../public/fonts/pdark.ttf") format("truetype");
 }
 
-@keyframes blink {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
 /* Canvas */
 
 canvas {
@@ -228,6 +219,15 @@ canvas {
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-timing-function: ease-in-out;
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 /* Mobile Devises */
