@@ -3,11 +3,12 @@ const Constants = require("../shared/constants");
 const { plugins } = require("../../webpack.config");
 
 class Camera extends ObjectClass {
-  constructor(id, username, x, y, windowSize) {
+  constructor(id, username, x, y, windowSize, role) {
     super(id, x, y, Math.random() * 2 * Math.PI, 0);
     this.username = username;
     this.friction = 0;
     this.windowSize = windowSize;
+    this.role = role;
   }
 
   // Returns a newly created bullet, or null.
@@ -57,6 +58,7 @@ class Camera extends ObjectClass {
       ...super.serializeForUpdate(),
       direction: this.direction,
       hp: this.hp,
+      role: this.role,
     };
   }
 }
