@@ -78,7 +78,7 @@ class Player extends ObjectClass {
         ) +
         Math.PI / 2;
     }
-    this.friction = 0
+    this.friction = 0;
     this.speed = Constants.PLAYER_SPEED;
   }
 
@@ -87,21 +87,23 @@ class Player extends ObjectClass {
     this.friction = Constants.PLAYER_FRICTION;
   }
 
-  fireDirectionMove(e){
-    if(e === "KeyQ"){
-      if(this.fireDirection <= -Math.PI / 2) this.angleSpeed = 0;
-      else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+  fireDirectionMove(e) {
+    if (e === "KeyQ") {
+      if (this.fireDirection <= -Math.PI / 2) {
+        this.fireDirection = -Math.PI / 2;
+        this.angleSpeed = 0;
+      } else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+    } else if (e === "KeyE") {
+      if (this.fireDirection >= Math.PI / 2) {
+        this.fireDirection = Math.PI / 2;
+        this.angleSpeed = 0;
+      } else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
     }
-    else{
-      if(this.fireDirection >= Math.PI / 2) this.angleSpeed = 0;
-      else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
-    }
-  }
-  
-  fireDirectionStop(e){
-    this.angleSpeed = 0;
   }
 
+  fireDirectionStop(e) {
+    this.angleSpeed = 0;
+  }
 
   // Fire a bullet with cooldown limit
   fire() {
@@ -125,16 +127,6 @@ class Player extends ObjectClass {
   onDealtDamage() {
     this.score += Constants.SCORE_BULLET_HIT;
   }
-
-  /*setFireDirection(dir) {
-    if (dir < -Math.PI / 2) {
-      this.fireDirection = -Math.PI / 2;
-    } else if (dir > Math.PI / 2) {
-      this.fireDirection = Math.PI / 2;
-    } else {
-      this.fireDirection = dir;
-    }
-  }*/
 
   serializeForUpdate() {
     return {

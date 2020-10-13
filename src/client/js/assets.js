@@ -1,15 +1,16 @@
 const ASSET_NAMES = [
-  "ship.svg",
-  "bullet.svg",
-
   // bullet
+  "bullet.svg",
   "bullet1.png",
   "bullet2.png",
   "bullet3.png",
   "bullet4.png",
+
   // map
   "map1.png",
-  // player
+
+  // character
+  "ship.svg",
   "num1.png",
   "num2.png",
   "num3.png",

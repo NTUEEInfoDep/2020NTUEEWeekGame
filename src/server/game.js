@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const { join } = require("lodash");
 const Constants = require("../shared/constants");
 const Cat = require("./roles");
@@ -51,7 +52,7 @@ class Game {
         // return;
       } else console.log("Waiting to be paired !!!");
     } else if (username in this.playrooms) {
-      console.log("The room is too crowd");
+      console.log("The room is too crowded");
       delete this.sockets[socket.id];
       // return;
     } else if (username in this.waitrooms) {
@@ -59,22 +60,42 @@ class Game {
       this.playrooms[username] = this.waitrooms[username];
       this.playrooms[username].push(socket.id);
       delete this.waitrooms[username];
-      this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1]);
-      if (character === 1) this.players[socket.id] = new Cat(socket.id, username, x, y);
-      else if (character === 2) this.players[socket.id] = new PinkAss(socket.id, username, x, y);
-      else if (character === 3) this.players[socket.id] = new Pudding(socket.id, username, x, y);
-      else if (character === 4) this.players[socket.id] = new Banana(socket.id, username, x, y);
+      this.cameras[socket.id] = new Camera(
+        socket.id,
+        username,
+        x,
+        y,
+        userinfo[1]
+      );
+      if (character === 1)
+        this.players[socket.id] = new Cat(socket.id, username, x, y);
+      else if (character === 2)
+        this.players[socket.id] = new PinkAss(socket.id, username, x, y);
+      else if (character === 3)
+        this.players[socket.id] = new Pudding(socket.id, username, x, y);
+      else if (character === 4)
+        this.players[socket.id] = new Banana(socket.id, username, x, y);
       socket.emit(Constants.MSG_TYPES.SELECT_CHARACTER, userinfo[2]);
-      // this.players[socket.id] = new Player(socket.id, username, x, y);      
+      // this.players[socket.id] = new Player(socket.id, username, x, y);
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
-      this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1]);
-      if (character === 1) this.players[socket.id] = new Cat(socket.id, username, x, y);
-      else if (character === 2) this.players[socket.id] = new PinkAss(socket.id, username, x, y);
-      else if (character === 3) this.players[socket.id] = new Pudding(socket.id, username, x, y);
-      else if (character === 4) this.players[socket.id] = new Banana(socket.id, username, x, y);
+      this.cameras[socket.id] = new Camera(
+        socket.id,
+        username,
+        x,
+        y,
+        userinfo[1]
+      );
+      if (character === 1)
+        this.players[socket.id] = new Cat(socket.id, username, x, y);
+      else if (character === 2)
+        this.players[socket.id] = new PinkAss(socket.id, username, x, y);
+      else if (character === 3)
+        this.players[socket.id] = new Pudding(socket.id, username, x, y);
+      else if (character === 4)
+        this.players[socket.id] = new Banana(socket.id, username, x, y);
       socket.emit(Constants.MSG_TYPES.SELECT_CHARACTER, userinfo[2]);
       // this.players[socket.id] = new Player(socket.id, username, x, y);
     }
@@ -126,11 +147,11 @@ class Game {
         }
         if (key === "ArrowLeft" || key === "ArrowRight") {
           player.move(key);
-          //camera.follow(player);
+          // camera.follow(player);
         }
         if (key === "ShiftLeft") camera.follow(player);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
-        if (key === "KeyQ" || key == "KeyE") player.fireDirectionMove(key);
+        if (key === "KeyQ" || key === "KeyE") player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop();
