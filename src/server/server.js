@@ -29,6 +29,7 @@ console.log(`Server listening on port ${port}`);
 const game = new Game();
 
 function joinGame(userinfo) {
+  // console.log(userinfo);
   game.addPlayer(this, userinfo);
 }
 

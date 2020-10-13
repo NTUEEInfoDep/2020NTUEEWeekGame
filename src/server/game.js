@@ -1,5 +1,9 @@
 const { join } = require("lodash");
 const Constants = require("../shared/constants");
+const Cat = require("./roles");
+const PinkAss = require("./roles");
+const Pudding = require("./roles");
+const Banana = require("./roles");
 const Player = require("./player");
 const Camera = require("./camera");
 const applyCollisions = require("./collisions");
@@ -21,6 +25,7 @@ class Game {
   addPlayer(socket, userinfo) {
     this.sockets[socket.id] = socket;
     const username = userinfo[0];
+    const character = userinfo[2];
     const side = username in this.waitrooms;
     let x;
     if (side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);
@@ -55,13 +60,23 @@ class Game {
       this.playrooms[username].push(socket.id);
       delete this.waitrooms[username];
       this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1]);
-      this.players[socket.id] = new Player(socket.id, username, x, y);      
+      if (character === 1) this.players[socket.id] = new Cat(socket.id, username, x, y);
+      else if (character === 2) this.players[socket.id] = new PinkAss(socket.id, username, x, y);
+      else if (character === 3) this.players[socket.id] = new Pudding(socket.id, username, x, y);
+      else if (character === 4) this.players[socket.id] = new Banana(socket.id, username, x, y);
+      socket.emit(Constants.MSG_TYPES.SELECT_CHARACTER, userinfo[2]);
+      // this.players[socket.id] = new Player(socket.id, username, x, y);      
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
       this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1]);
-      this.players[socket.id] = new Player(socket.id, username, x, y);
+      if (character === 1) this.players[socket.id] = new Cat(socket.id, username, x, y);
+      else if (character === 2) this.players[socket.id] = new PinkAss(socket.id, username, x, y);
+      else if (character === 3) this.players[socket.id] = new Pudding(socket.id, username, x, y);
+      else if (character === 4) this.players[socket.id] = new Banana(socket.id, username, x, y);
+      socket.emit(Constants.MSG_TYPES.SELECT_CHARACTER, userinfo[2]);
+      // this.players[socket.id] = new Player(socket.id, username, x, y);
     }
     console.log(this.players);
     console.log("Playrooms:");

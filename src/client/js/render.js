@@ -12,7 +12,8 @@ const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
 //
 //  delete BELOW after characters are ready
 //
-const styleNum = Math.random();
+// const styleNum = Math.random();
+let styleNum;
 //
 //  remove ABOVE after characters are ready
 //
@@ -54,16 +55,11 @@ function renderPlayer(me, player) {
   //
   //  delete BELOW after characters are ready
   //
-  let playerStyle = "bullet.svg";
-  if (styleNum < 1 / 4) {
-    playerStyle = "num1.png";
-  } else if (styleNum < 2 / 4) {
-    playerStyle = "num2.png";
-  } else if (styleNum < 3 / 4) {
-    playerStyle = "num3.png";
-  } else {
-    playerStyle = "num4.png";
-  }
+  let playerStyle = "num1.png";
+  if (styleNum === 1) playerStyle = "num1.png";
+  else if(styleNum === 2) playerStyle = "num2.png";
+  else if(styleNum === 3) playerStyle = "num3.png";
+  else playerStyle = "num4.png";
   //
   //  remove ABOVE after characters are ready
   //
@@ -131,6 +127,7 @@ function renderPlayer(me, player) {
   context.restore();
 }
 
+
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
 
@@ -138,11 +135,11 @@ function renderBullet(me, bullet) {
   //  delete BELOW after characters are ready
   //
   let bulletStyle = "bullet.svg";
-  if (styleNum < 1 / 4) {
+  if (styleNum === 1) {
     bulletStyle = "bullet1.png";
-  } else if (styleNum < 2 / 4) {
+  } else if (styleNum === 2) {
     bulletStyle = "bullet2.png";
-  } else if (styleNum < 3 / 4) {
+  } else if (styleNum === 3) {
     bulletStyle = "bullet3.png";
   } else {
     bulletStyle = "bullet4.png";
@@ -194,6 +191,10 @@ function render() {
   // Draw all players
   // renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
+}
+
+export function character(val) {
+  styleNum = val;
 }
 
 // Replaces main menu rendering with game rendering.

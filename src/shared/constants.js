@@ -2,8 +2,8 @@ module.exports = Object.freeze({
   PLAYER_RADIUS: 60,
   PLAYER_MAX_HP: 100,
   PLAYER_FRICTION: 400,
-  PLAYER_SPEED: 200,
-  PLAYER_FIRE_COOLDOWN: 0.2,
+  PLAYER_SPEED: 100,
+  PLAYER_FIRE_COOLDOWN: 0.5,
   // PLAYER_MOVE_AREA: 500,
   PLAYER_ANGLE_SPEED: 1,
 
@@ -27,6 +27,7 @@ module.exports = Object.freeze({
     KEY_INPUT: "key_input",
     GAME_OVER: "dead",
     MOVE_CAMERA: "move_camera",
+    SELECT_CHARACTER: "select character",
   },
   MAP: [
     936.0,
