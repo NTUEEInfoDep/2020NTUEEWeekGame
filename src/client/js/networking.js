@@ -15,6 +15,7 @@ const socket = io(`${socketProtocol}://${window.location.host}`, {
 });
 const connectedPromise = new Promise((resolve) => {
   socket.on("connect", () => {
+    // eslint-disable-next-line no-console
     console.log("Connected to server!");
     resolve();
   });
@@ -26,6 +27,7 @@ export const connect = (onGameOver) =>
     socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on("disconnect", () => {
+      // eslint-disable-next-line no-console
       console.log("Disconnected from server.");
       document.getElementById("disconnect-window").classList.remove("hidden");
       document.getElementById("reconnect-button").onclick = () => {
@@ -34,10 +36,11 @@ export const connect = (onGameOver) =>
     });
   });
 
-export const play = (roomName) => {
+export const play = (roomName, characterSelected) => {
   socket.emit(Constants.MSG_TYPES.JOIN_GAME, [
     roomName,
     [window.innerWidth, window.innerHeight],
+    characterSelected,
   ]);
 };
 
