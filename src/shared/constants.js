@@ -27,7 +27,6 @@ module.exports = Object.freeze({
     KEY_INPUT: "key_input",
     GAME_OVER: "dead",
     MOVE_CAMERA: "move_camera",
-    SELECT_CHARACTER: "select character",
   },
   MAP: [
     936.0,

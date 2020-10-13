@@ -9,14 +9,8 @@ const Constants = require("../../shared/constants");
 
 const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
 
-//
-//  delete BELOW after characters are ready
-//
-// const styleNum = Math.random();
 let characterNum;
-//
-//  remove ABOVE after characters are ready
-//
+let characterid;
 
 // Get the canvas graphics context
 const canvas = document.getElementById("game-canvas");
@@ -41,10 +35,9 @@ function renderBackground() {
 
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
-  const { x, y, direction, fireDirection } = player;
+  const { x, y, direction, fireDirection, role } = player;
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
-
   // Draw player
   context.save();
   context.translate(canvasX, canvasY);
@@ -52,17 +45,11 @@ function renderPlayer(me, player) {
     context.scale(-1, 1);
   }
 
-  //
-  //  delete BELOW after characters are ready
-  //
-  let playerStyle = "num1.png";
-  if (characterNum === 1) playerStyle = "num1.png";
-  else if (characterNum === 2) playerStyle = "num2.png";
-  else if (characterNum === 3) playerStyle = "num3.png";
+  let playerStyle;
+  if (role === 1) playerStyle = "num1.png";
+  else if (role === 2) playerStyle = "num2.png";
+  else if (role === 3) playerStyle = "num3.png";
   else playerStyle = "num4.png";
-  //
-  //  remove ABOVE after characters are ready
-  //
 
   context.drawImage(
     getAsset(playerStyle),
@@ -97,13 +84,13 @@ function renderPlayer(me, player) {
   context.arc(0, 0, PLAYER_RADIUS * 2, 0, Math.PI, true);
   context.lineWidth = PLAYER_RADIUS / 20;
   context.lineCap = "round";
-  if (characterNum === 1) {
+  if (role === 1) {
     context.strokeStyle = "#c3b6b0";
-  } else if (characterNum === 2) {
+  } else if (role === 2) {
     context.strokeStyle = "#ff9fc1";
-  } else if (characterNum === 3) {
+  } else if (role === 3) {
     context.strokeStyle = "#e89b1a";
-  } else if (characterNum === 4) {
+  } else if (role === 4) {
     context.strokeStyle = "#fff9dd";
   }
   context.setLineDash([PLAYER_RADIUS / 10, PLAYER_RADIUS / 5]);
@@ -135,24 +122,18 @@ function renderPlayer(me, player) {
 }
 
 function renderBullet(me, bullet) {
-  const { x, y } = bullet;
+  const { x, y, role } = bullet;
 
-  //
-  //  delete BELOW after characters are ready
-  //
   let bulletStyle = "bullet.svg";
-  if (characterNum === 1) {
+  if (role === 1) {
     bulletStyle = "bullet1.png";
-  } else if (characterNum === 2) {
+  } else if (role === 2) {
     bulletStyle = "bullet2.png";
-  } else if (characterNum === 3) {
+  } else if (role === 3) {
     bulletStyle = "bullet3.png";
   } else {
     bulletStyle = "bullet4.png";
   }
-  //
-  //  remove ABOVE after characters are ready
-  //
 
   context.drawImage(
     getAsset(bulletStyle),
@@ -197,10 +178,6 @@ function render() {
   // Draw all players
   // renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
-}
-
-export function character(val) {
-  characterNum = val;
 }
 
 // Replaces main menu rendering with game rendering.
