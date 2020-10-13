@@ -9,9 +9,6 @@ const Constants = require("../../shared/constants");
 
 const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
 
-let characterNum;
-let characterid;
-
 // Get the canvas graphics context
 const canvas = document.getElementById("game-canvas");
 const context = canvas.getContext("2d");
@@ -61,7 +58,6 @@ function renderPlayer(me, player) {
   context.restore();
 
   // Draw health bar
-
   context.fillStyle = "white";
   context.fillRect(
     canvasX - PLAYER_RADIUS,
@@ -70,12 +66,30 @@ function renderPlayer(me, player) {
     2
   );
   context.fillStyle = "red";
-  context.fillRect(
-    canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / PLAYER_MAX_HP,
-    canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
-    2
-  );
+  if (role === 1){
+    context.fillRect(
+      canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 9),
+      canvasY + PLAYER_RADIUS + 8,
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 9)),
+      2
+    );  
+  }
+  else if (role === 2){
+    context.fillRect(
+      canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 2),
+      canvasY + PLAYER_RADIUS + 8,
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 2)),
+      2
+    );
+  }
+  else{
+    context.fillRect(
+      canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / PLAYER_MAX_HP,
+      canvasY + PLAYER_RADIUS + 8,
+      PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
+      2
+    );
+  }
 
   // Draw fire range
   context.save();
@@ -101,7 +115,6 @@ function renderPlayer(me, player) {
   context.save();
   context.translate(canvasX, canvasY);
   context.rotate(fireDirection - Math.PI);
-  // barrel style 1
   context.strokeStyle = "white";
   context.lineWidth = PLAYER_RADIUS / 20;
   context.beginPath();
@@ -110,7 +123,7 @@ function renderPlayer(me, player) {
   context.moveTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
   context.lineTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
   context.stroke();
-  // barrel style 2
+  // // another style
   //   context.fillStyle = "white";
   //   context.fillRect(
   //     -PLAYER_RADIUS / 20,
@@ -162,7 +175,7 @@ function render() {
   // Draw background
   renderBackground(me.x, me.y);
 
-  // // TODO: Draw map
+  // Draw map
   context.drawImage(
     getAsset("map1.png"),
     canvas.width / 2 - me.x,
@@ -170,14 +183,13 @@ function render() {
     MAP_SIZE_LENGTH,
     MAP_SIZE_WIDTH
   );
-  // //
 
   // Draw all bullets
   bullets.forEach(renderBullet.bind(null, me));
 
   // Draw all players
-  // renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
+  // renderPlayer(me, me);
 }
 
 // Replaces main menu rendering with game rendering.

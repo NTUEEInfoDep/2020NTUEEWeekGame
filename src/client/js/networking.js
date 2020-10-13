@@ -4,7 +4,7 @@
 import io from "socket.io-client";
 import { throttle } from "throttle-debounce";
 import { processGameUpdate } from "./state";
-import { character as characterNum } from "./render";
+import { getCharacterNum } from "./render";
 
 const Constants = require("../../shared/constants");
 

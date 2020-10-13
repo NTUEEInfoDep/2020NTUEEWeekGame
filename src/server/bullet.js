@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const shortid = require("shortid");
 const ObjectClass = require("./object");
 const Constants = require("../shared/constants");
@@ -32,7 +33,10 @@ class Bullet extends ObjectClass {
       this.x < 0 ||
       this.x > Constants.MAP_SIZE_LENGTH ||
       this.y < 0 ||
-      this.y > (Constants.MAP[Math.floor(this.x / 10)] * (10 - this.x % 10) + Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) / 10
+      this.y >
+        (Constants.MAP[Math.floor(this.x / 10)] * (10 - (this.x % 10)) +
+          Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) /
+          10
     );
   }
   serializeForUpdate() {

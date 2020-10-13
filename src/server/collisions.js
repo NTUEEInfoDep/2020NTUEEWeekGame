@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-underscore-dangle */
 const Constants = require("../shared/constants");
 
 // Returns an array of bullets to be destroyed.
@@ -16,7 +18,7 @@ function applyCollisions(players, bullets) {
         bullet.username === player.username
       ) {
         destroyedBullets.push(bullet);
-	// judge by role instance
+        // judge by role instance
         player.takeBulletDamage(bullet._parent);
         break;
       }

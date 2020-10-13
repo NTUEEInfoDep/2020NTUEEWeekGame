@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const { join } = require("lodash");
 const Constants = require("../shared/constants");
 const Cat = require("./role1");
@@ -52,7 +53,7 @@ class Game {
         // return;
       } else console.log("Waiting to be paired !!!");
     } else if (username in this.playrooms) {
-      console.log("The room is too crowd");
+      console.log("The room is too crowded");
       delete this.sockets[socket.id];
       // return;
     } else if (username in this.waitrooms) {
@@ -109,17 +110,17 @@ class Game {
     Object.keys(this.playrooms).forEach((roomname) => {
       const playerIDs = this.playrooms[roomname];
       if (playerIDs.includes(socket.id)) {
-        this.removeRoom(roomname, playerIDs);
+        this.removeRoom(roomname, playerIDs, ["win", "win"]);
       }
     });
   }
 
   // Send Game over and remove room and players
-  removeRoom(roomname, playerIDs) {
+  removeRoom(roomname, playerIDs, reason) {
     delete this.playrooms[roomname];
     delete this.cameras[roomname];
-    playerIDs.forEach((playerID) => {
-      this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER);
+    playerIDs.forEach((playerID, index) => {
+      this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER, reason[index]);
       this.removePlayer(this.sockets[playerID]);
     });
   }
@@ -139,11 +140,11 @@ class Game {
         }
         if (key === "ArrowLeft" || key === "ArrowRight") {
           player.move(key);
-          //camera.follow(player);
+          // camera.follow(player);
         }
         if (key === "ShiftLeft") camera.follow(player);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
-        if (key === "KeyQ" || key == "KeyE") player.fireDirectionMove(key);
+        if (key === "KeyQ" || key === "KeyE") player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop();
@@ -202,7 +203,8 @@ class Game {
       const playerIDs = this.playrooms[roomname];
       const hps = playerIDs.map((playerID) => this.players[playerID].hp);
       if (hps[0] <= 0 || hps[1] <= 0) {
-        this.removeRoom(roomname, playerIDs);
+        const reason = hps[0] < hps[1] ? ["lose", "win"] : ["win", "lose"];
+        this.removeRoom(roomname, playerIDs, reason);
       }
     });
 
