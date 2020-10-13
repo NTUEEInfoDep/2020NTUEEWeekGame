@@ -18,12 +18,17 @@ const gameRule = document.getElementById("game-rule");
 const playButton = document.getElementById("play-menu-enter");
 const roomIDInput = document.getElementById("room-id");
 const characters = document.getElementsByClassName("characterContainer");
+const gameover = document.getElementById("gameover");
 
 let characterSelected = 0;
 
-function onGameOver() {
+function onGameOver(reason) {
   stopCapturingInput();
   stopRendering();
+  gameover.className = reason;
+  gameover.onclick = () => {
+    gameover.classList.add("invisible");
+  };
   playMenu.classList.remove("hidden");
 }
 
@@ -61,6 +66,7 @@ function step2() {
 
 function step1() {
   // Show roomID input
+  gameover.classList.add("invisible");
   playMenu.classList.remove("hidden");
 
   roomIDInput.focus();

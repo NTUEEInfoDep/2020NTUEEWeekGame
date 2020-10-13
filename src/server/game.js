@@ -117,17 +117,17 @@ class Game {
     Object.keys(this.playrooms).forEach((roomname) => {
       const playerIDs = this.playrooms[roomname];
       if (playerIDs.includes(socket.id)) {
-        this.removeRoom(roomname, playerIDs);
+        this.removeRoom(roomname, playerIDs, ["win", "win"]);
       }
     });
   }
 
   // Send Game over and remove room and players
-  removeRoom(roomname, playerIDs) {
+  removeRoom(roomname, playerIDs, reason) {
     delete this.playrooms[roomname];
     delete this.cameras[roomname];
-    playerIDs.forEach((playerID) => {
-      this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER);
+    playerIDs.forEach((playerID, index) => {
+      this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER, reason[index]);
       this.removePlayer(this.sockets[playerID]);
     });
   }
@@ -210,7 +210,8 @@ class Game {
       const playerIDs = this.playrooms[roomname];
       const hps = playerIDs.map((playerID) => this.players[playerID].hp);
       if (hps[0] <= 0 || hps[1] <= 0) {
-        this.removeRoom(roomname, playerIDs);
+        const reason = hps[0] < hps[1] ? ["lose", "win"] : ["win", "lose"];
+        this.removeRoom(roomname, playerIDs, reason);
       }
     });
 

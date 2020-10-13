@@ -15,6 +15,10 @@ const ASSET_NAMES = [
   "num2.png",
   "num3.png",
   "num4.png",
+
+  // gameover
+  "lose.png",
+  "win.png",
 ];
 
 const assets = {};
