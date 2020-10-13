@@ -32,19 +32,11 @@ function joinGame(userinfo) {
   game.addPlayer(this, userinfo);
 }
 
-/*function handleInput(dir) {
-  game.handleInput(this, dir);
-}*/
-
-// Handle keyboard input 
+// Handle keyboard input
 function handleKeyInput(keyEvent) {
-  game.handleKeyInput(this, keyEvent); 
+  game.handleKeyInput(this, keyEvent);
 }
-/*
-function handleCamera(mouseXY){
-  game.handleCameraMove(this, mouseXY);
-}
-*/
+
 function onDisconnect() {
   game.removeDisconnectedPlayer(this);
 }
@@ -57,8 +49,8 @@ io.on("connection", (socket) => {
   console.log(`\nPlayer connected! (id: ${socket.id})`);
 
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
-  //socket.on(Constants.MSG_TYPES.INPUT, handleInput);
   socket.on(Constants.MSG_TYPES.KEY_INPUT, handleKeyInput);
-  //socket.on(Constants.MSG_TYPES.MOVE_CAMERA, handleCamera);
   socket.on("disconnect", onDisconnect);
+  // socket.on(Constants.MSG_TYPES.INPUT, handleInput);
+  // socket.on(Constants.MSG_TYPES.MOVE_CAMERA, handleCamera);
 });

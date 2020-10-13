@@ -10,13 +10,7 @@ const Constants = require("../../shared/constants");
 
 const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
 
-//
-//  delete BELOW after characters are ready
-//
-const styleNum = Math.floor(Math.random() * 4)+1;
-//
-//  remove ABOVE after characters are ready
-//
+let characterNum = Math.random() * 4 + 1;
 
 // Get the canvas graphics context
 const canvas = document.getElementById("game-canvas");
@@ -52,26 +46,15 @@ function renderPlayer(me, player) {
     context.scale(-1, 1);
   }
 
-  //
-  //  delete BELOW after characters are ready
-  //
-  let playerStyle = "bullet.svg";
-  //console.log("styleNum = " + styleNum);
-  if (styleNum === 1) {
-    playerStyle = "num1.png";
-  } else if (styleNum === 2) {
-    playerStyle = "num2.png";
-  } else if (styleNum === 3) {
-    playerStyle = "num3.png";
-  } else {
-    playerStyle = "num4.png";
-  }
-  //
-  //  remove ABOVE after characters are ready
-  //
+  let playerFile;
+  if (characterNum === 1) playerFile = "num1.png";
+  else if (characterNum === 2) playerFile = "num2.png";
+  else if (characterNum === 3) playerFile = "num3.png";
+  else if (characterNum === 4) playerFile = "num4.png";
+  else playerFile = "ship.svg";
 
   context.drawImage(
-    getAsset(playerStyle),
+    getAsset(playerFile),
     -PLAYER_RADIUS,
     -PLAYER_RADIUS,
     PLAYER_RADIUS * 2,
@@ -80,7 +63,6 @@ function renderPlayer(me, player) {
   context.restore();
 
   // Draw health bar
-
   context.fillStyle = "white";
   context.fillRect(
     canvasX - PLAYER_RADIUS,
@@ -103,7 +85,11 @@ function renderPlayer(me, player) {
   context.arc(0, 0, PLAYER_RADIUS * 2, 0, Math.PI, true);
   context.lineWidth = PLAYER_RADIUS / 20;
   context.lineCap = "round";
-  context.strokeStyle = "white";
+  if (characterNum === 1) context.strokeStyle = "#c3b6b0";
+  else if (characterNum === 2) context.strokeStyle = "#ff9fc1";
+  else if (characterNum === 3) context.strokeStyle = "#e89b1a";
+  else if (characterNum === 4) context.strokeStyle = "#fff9dd";
+
   context.setLineDash([PLAYER_RADIUS / 10, PLAYER_RADIUS / 5]);
   context.stroke();
   context.restore();
@@ -112,49 +98,37 @@ function renderPlayer(me, player) {
   context.save();
   context.translate(canvasX, canvasY);
   context.rotate(fireDirection - Math.PI);
-  if (styleNum <= 2) {
-    context.strokeStyle = "white";
-    context.lineWidth = PLAYER_RADIUS / 20;
-    context.beginPath();
-    context.moveTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
-    context.lineTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
-    context.moveTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
-    context.lineTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
-    context.stroke();
-  } else {
-    context.fillStyle = "white";
-    context.fillRect(
-      -PLAYER_RADIUS / 20,
-      PLAYER_RADIUS * 1.75,
-      PLAYER_RADIUS / 10,
-      PLAYER_RADIUS / 2
-    );
-  }
+  context.strokeStyle = "white";
+  context.lineWidth = PLAYER_RADIUS / 20;
+  context.beginPath();
+  context.moveTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
+  context.lineTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
+  context.moveTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
+  context.lineTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
+  context.stroke();
+  // // another style
+  //   context.fillStyle = "white";
+  //   context.fillRect(
+  //     -PLAYER_RADIUS / 20,
+  //     PLAYER_RADIUS * 1.75,
+  //     PLAYER_RADIUS / 10,
+  //     PLAYER_RADIUS / 2
+  //   );
   context.restore();
 }
 
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
 
-  //
-  //  delete BELOW after characters are ready
-  //
-  let bulletStyle = "bullet.svg";
-  if (styleNum === 1) {
-    bulletStyle = "bullet1.png";
-  } else if (styleNum === 2) {
-    bulletStyle = "bullet2.png";
-  } else if (styleNum === 3) {
-    bulletStyle = "bullet3.png";
-  } else {
-    bulletStyle = "bullet4.png";
-  }
-  //
-  //  remove ABOVE after characters are ready
-  //
+  let bulletFile;
+  if (characterNum === 1) bulletFile = "bullet1.png";
+  else if (characterNum === 2) bulletFile = "bullet2.png";
+  else if (characterNum === 3) bulletFile = "bullet3.png";
+  else if (characterNum === 4) bulletFile = "bullet4.png";
+  else bulletFile = "bullet.svg";
 
   context.drawImage(
-    getAsset(bulletStyle),
+    getAsset(bulletFile),
     canvas.width / 2 + x - me.x - BULLET_RADIUS,
     canvas.height / 2 + y - me.y - BULLET_RADIUS,
     BULLET_RADIUS * 2,
@@ -180,7 +154,7 @@ function render() {
   // Draw background
   renderBackground(me.x, me.y);
 
-  // // TODO: Draw map
+  // Draw map
   context.drawImage(
     getAsset("map1.png"),
     canvas.width / 2 - me.x,
@@ -188,14 +162,17 @@ function render() {
     MAP_SIZE_LENGTH,
     MAP_SIZE_WIDTH
   );
-  // //
 
   // Draw all bullets
   bullets.forEach(renderBullet.bind(null, me));
 
   // Draw all players
-  // renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
+  // renderPlayer(me, me);
+}
+
+export function getCharacterNum(val) {
+  characterNum = val;
 }
 
 // Replaces main menu rendering with game rendering.

@@ -1,5 +1,10 @@
+/* eslint-disable no-underscore-dangle */
 const { join } = require("lodash");
 const Constants = require("../shared/constants");
+const Cat = require("./roles");
+const PinkAss = require("./roles");
+const Pudding = require("./roles");
+const Banana = require("./roles");
 const Player = require("./player");
 const Camera = require("./camera");
 const applyCollisions = require("./collisions");
@@ -21,6 +26,7 @@ class Game {
   addPlayer(socket, userinfo) {
     this.sockets[socket.id] = socket;
     const username = userinfo[0];
+    const character = userinfo[2];
     const side = username in this.waitrooms;
     let x;
     if (side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);
@@ -46,7 +52,7 @@ class Game {
         // return;
       } else console.log("Waiting to be paired !!!");
     } else if (username in this.playrooms) {
-      console.log("The room is too crowd");
+      console.log("The room is too crowded");
       delete this.sockets[socket.id];
       // return;
     } else if (username in this.waitrooms) {
@@ -54,14 +60,44 @@ class Game {
       this.playrooms[username] = this.waitrooms[username];
       this.playrooms[username].push(socket.id);
       delete this.waitrooms[username];
-      this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1]);
-      this.players[socket.id] = new Player(socket.id, username, x, y);      
+      this.cameras[socket.id] = new Camera(
+        socket.id,
+        username,
+        x,
+        y,
+        userinfo[1]
+      );
+      if (character === 1)
+        this.players[socket.id] = new Cat(socket.id, username, x, y);
+      else if (character === 2)
+        this.players[socket.id] = new PinkAss(socket.id, username, x, y);
+      else if (character === 3)
+        this.players[socket.id] = new Pudding(socket.id, username, x, y);
+      else if (character === 4)
+        this.players[socket.id] = new Banana(socket.id, username, x, y);
+      socket.emit(Constants.MSG_TYPES.SELECT_CHARACTER, userinfo[2]);
+      // this.players[socket.id] = new Player(socket.id, username, x, y);
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
-      this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1]);
-      this.players[socket.id] = new Player(socket.id, username, x, y);
+      this.cameras[socket.id] = new Camera(
+        socket.id,
+        username,
+        x,
+        y,
+        userinfo[1]
+      );
+      if (character === 1)
+        this.players[socket.id] = new Cat(socket.id, username, x, y);
+      else if (character === 2)
+        this.players[socket.id] = new PinkAss(socket.id, username, x, y);
+      else if (character === 3)
+        this.players[socket.id] = new Pudding(socket.id, username, x, y);
+      else if (character === 4)
+        this.players[socket.id] = new Banana(socket.id, username, x, y);
+      socket.emit(Constants.MSG_TYPES.SELECT_CHARACTER, userinfo[2]);
+      // this.players[socket.id] = new Player(socket.id, username, x, y);
     }
     console.log(this.players);
     console.log("Playrooms:");
@@ -81,17 +117,17 @@ class Game {
     Object.keys(this.playrooms).forEach((roomname) => {
       const playerIDs = this.playrooms[roomname];
       if (playerIDs.includes(socket.id)) {
-        this.removeRoom(roomname, playerIDs);
+        this.removeRoom(roomname, playerIDs, ["win", "win"]);
       }
     });
   }
 
   // Send Game over and remove room and players
-  removeRoom(roomname, playerIDs) {
+  removeRoom(roomname, playerIDs, reason) {
     delete this.playrooms[roomname];
     delete this.cameras[roomname];
-    playerIDs.forEach((playerID) => {
-      this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER);
+    playerIDs.forEach((playerID, index) => {
+      this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER, reason[index]);
       this.removePlayer(this.sockets[playerID]);
     });
   }
@@ -111,11 +147,11 @@ class Game {
         }
         if (key === "ArrowLeft" || key === "ArrowRight") {
           player.move(key);
-          //camera.follow(player);
+          // camera.follow(player);
         }
         if (key === "ShiftLeft") camera.follow(player);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
-        if (key === "KeyQ" || key == "KeyE") player.fireDirectionMove(key);
+        if (key === "KeyQ" || key === "KeyE") player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop();
@@ -174,7 +210,8 @@ class Game {
       const playerIDs = this.playrooms[roomname];
       const hps = playerIDs.map((playerID) => this.players[playerID].hp);
       if (hps[0] <= 0 || hps[1] <= 0) {
-        this.removeRoom(roomname, playerIDs);
+        const reason = hps[0] < hps[1] ? ["lose", "win"] : ["win", "lose"];
+        this.removeRoom(roomname, playerIDs, reason);
       }
     });
 
