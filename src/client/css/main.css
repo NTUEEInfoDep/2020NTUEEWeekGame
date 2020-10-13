@@ -160,29 +160,51 @@ canvas {
   line-height: 3rem;
 }
 
+/* Game Over */
+
 #gameover {
   position: fixed;
-  top: 15%;
-  left: 15%;
-  width: 70%;
-  height: 70%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  transition: 0.3s;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
-#gameover.invisible {
-  opacity: 0;
-  visibility: hidden;
+#gameover div {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
+  width: fit-content;
+  height: fit-content;
+  min-width: fit-content;
+  min-height: fit-content;
+  padding: 3rem;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  transition: all 0.4s ease 0s;
 }
 
-#gameover.win {
-  background-image: url("../../../public/assets/win.png");
+#gameover div:hover p {
+  letter-spacing: 3rem;
+  margin-right: -3rem;
+  transition: all 0.4s ease 0s;
 }
 
-#gameover.lose {
-  background-image: url("../../../public/assets/lose.png");
+#gameover p {
+  color: black;
+  font-size: 2rem;
+  font-family: "Arvo";
+  text-transform: uppercase;
+}
+
+#gameover img {
+  width: 8rem;
 }
 
 /* Disconnect Window */
