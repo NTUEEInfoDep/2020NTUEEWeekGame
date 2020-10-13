@@ -4,7 +4,7 @@
 import io from "socket.io-client";
 import { throttle } from "throttle-debounce";
 import { processGameUpdate } from "./state";
-import { character } from "./render";
+import { character as characterNum } from "./render";
 
 const Constants = require("../../shared/constants");
 
@@ -25,7 +25,7 @@ const connectedPromise = new Promise((resolve) => {
 export const connect = (onGameOver) =>
   connectedPromise.then(() => {
     // Register callbacks
-    socket.on(Constants.MSG_TYPES.SELECT_CHARACTER, character);
+    socket.on(Constants.MSG_TYPES.SELECT_CHARACTER, characterNum);
     socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on("disconnect", () => {

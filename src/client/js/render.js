@@ -13,7 +13,7 @@ const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
 //  delete BELOW after characters are ready
 //
 // const styleNum = Math.random();
-let styleNum;
+let characterNum;
 //
 //  remove ABOVE after characters are ready
 //
@@ -56,9 +56,9 @@ function renderPlayer(me, player) {
   //  delete BELOW after characters are ready
   //
   let playerStyle = "num1.png";
-  if (styleNum === 1) playerStyle = "num1.png";
-  else if(styleNum === 2) playerStyle = "num2.png";
-  else if(styleNum === 3) playerStyle = "num3.png";
+  if (characterNum === 1) playerStyle = "num1.png";
+  else if (characterNum === 2) playerStyle = "num2.png";
+  else if (characterNum === 3) playerStyle = "num3.png";
   else playerStyle = "num4.png";
   //
   //  remove ABOVE after characters are ready
@@ -97,7 +97,15 @@ function renderPlayer(me, player) {
   context.arc(0, 0, PLAYER_RADIUS * 2, 0, Math.PI, true);
   context.lineWidth = PLAYER_RADIUS / 20;
   context.lineCap = "round";
-  context.strokeStyle = "white";
+  if (characterNum === 1) {
+    context.strokeStyle = "#c3b6b0";
+  } else if (characterNum === 2) {
+    context.strokeStyle = "#ff9fc1";
+  } else if (characterNum === 3) {
+    context.strokeStyle = "#e89b1a";
+  } else if (characterNum === 4) {
+    context.strokeStyle = "#fff9dd";
+  }
   context.setLineDash([PLAYER_RADIUS / 10, PLAYER_RADIUS / 5]);
   context.stroke();
   context.restore();
@@ -106,27 +114,25 @@ function renderPlayer(me, player) {
   context.save();
   context.translate(canvasX, canvasY);
   context.rotate(fireDirection - Math.PI);
-  if (styleNum < 1 / 2) {
-    context.strokeStyle = "white";
-    context.lineWidth = PLAYER_RADIUS / 20;
-    context.beginPath();
-    context.moveTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
-    context.lineTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
-    context.moveTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
-    context.lineTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
-    context.stroke();
-  } else {
-    context.fillStyle = "white";
-    context.fillRect(
-      -PLAYER_RADIUS / 20,
-      PLAYER_RADIUS * 1.75,
-      PLAYER_RADIUS / 10,
-      PLAYER_RADIUS / 2
-    );
-  }
+  // barrel style 1
+  context.strokeStyle = "white";
+  context.lineWidth = PLAYER_RADIUS / 20;
+  context.beginPath();
+  context.moveTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
+  context.lineTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
+  context.moveTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
+  context.lineTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
+  context.stroke();
+  // barrel style 2
+  //   context.fillStyle = "white";
+  //   context.fillRect(
+  //     -PLAYER_RADIUS / 20,
+  //     PLAYER_RADIUS * 1.75,
+  //     PLAYER_RADIUS / 10,
+  //     PLAYER_RADIUS / 2
+  //   );
   context.restore();
 }
-
 
 function renderBullet(me, bullet) {
   const { x, y } = bullet;
@@ -135,11 +141,11 @@ function renderBullet(me, bullet) {
   //  delete BELOW after characters are ready
   //
   let bulletStyle = "bullet.svg";
-  if (styleNum === 1) {
+  if (characterNum === 1) {
     bulletStyle = "bullet1.png";
-  } else if (styleNum === 2) {
+  } else if (characterNum === 2) {
     bulletStyle = "bullet2.png";
-  } else if (styleNum === 3) {
+  } else if (characterNum === 3) {
     bulletStyle = "bullet3.png";
   } else {
     bulletStyle = "bullet4.png";
@@ -194,7 +200,7 @@ function render() {
 }
 
 export function character(val) {
-  styleNum = val;
+  characterNum = val;
 }
 
 // Replaces main menu rendering with game rendering.

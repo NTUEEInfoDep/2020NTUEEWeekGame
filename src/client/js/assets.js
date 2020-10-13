@@ -18,12 +18,14 @@ const ASSET_NAMES = [
 
 const assets = {};
 
+// eslint-disable-next-line no-use-before-define
 const downloadPromise = Promise.all(ASSET_NAMES.map(downloadAsset));
 
 function downloadAsset(assetName) {
   return new Promise((resolve) => {
     const asset = new Image();
     asset.onload = () => {
+      // eslint-disable-next-line no-console
       console.log(`Downloaded ${assetName}`);
       assets[assetName] = asset;
       resolve();
