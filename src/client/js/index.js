@@ -19,17 +19,25 @@ const playButton = document.getElementById("play-menu-enter");
 const roomIDInput = document.getElementById("room-id");
 const characters = document.getElementsByClassName("characterContainer");
 const gameover = document.getElementById("gameover");
+const win = document.getElementById("win");
+const lose = document.getElementById("lose");
 
 let characterSelected = 0;
 
 function onGameOver(reason) {
-  stopCapturingInput();
-  stopRendering();
-  gameover.className = reason;
+  gameover.classList.remove("hidden");
+  if (reason === "win") win.classList.remove("hidden");
+  else if (reason === "lose") lose.classList.remove("hidden");
+
   gameover.onclick = () => {
-    gameover.classList.add("invisible");
+    stopCapturingInput();
+    stopRendering();
+
+    gameover.classList.add("hidden");
+    win.classList.add("hidden");
+    lose.classList.add("hidden");
+    playMenu.classList.remove("hidden");
   };
-  playMenu.classList.remove("hidden");
 }
 
 function gameStart() {

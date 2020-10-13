@@ -104,6 +104,8 @@ export function getCurrentState() {
 }
 
 export function processGameUpdate(update) {
+  console.log("update");
+  console.log(update);
   if (!firstServerTimestamp) {
     firstServerTimestamp = update.t;
     gameStart = Date.now();

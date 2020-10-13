@@ -4,10 +4,11 @@ const ObjectClass = require("./object");
 const Constants = require("../shared/constants");
 
 class Bullet extends ObjectClass {
-  constructor(_parent, x, y, dir, username) {
+  constructor(_parent, x, y, dir, username, role) {
     super(shortid(), x, y, dir, Constants.BULLET_SPEED);
     this._parent = _parent;
     this.username = username;
+    this.role = role;
   }
 
   // Returns true if the bullet should be destroyed
@@ -37,6 +38,12 @@ class Bullet extends ObjectClass {
           Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) /
           10
     );
+  }
+  serializeForUpdate() {
+    return {
+      ...super.serializeForUpdate(),
+      role:this.role,
+    };
   }
 }
 
