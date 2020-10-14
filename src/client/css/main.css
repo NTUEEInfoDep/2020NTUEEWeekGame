@@ -296,6 +296,11 @@ canvas {
   display: none !important;
 }
 
+.transparent {
+  width: 0;
+  height: 0;
+}
+
 .blink {
   animation-duration: 1s;
   animation-name: blink;

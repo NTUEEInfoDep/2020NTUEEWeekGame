@@ -13,34 +13,33 @@ import "../css/bootstrap-reboot.css";
 import "../css/main.css";
 
 const playMenu = document.getElementById("play-menu");
-const characterMenu = document.getElementById("mode-menu");
-const gameRule = document.getElementById("game-rule");
-const playButton = document.getElementById("play-menu-enter");
 const roomIDInput = document.getElementById("room-id");
+const playButton = document.getElementById("play-menu-enter");
+const characterMenu = document.getElementById("mode-menu");
+const characterInput = document.getElementById("crt-input");
 const characters = document.getElementsByClassName("characterContainer");
+const gameRule = document.getElementById("game-rule");
+const ruleInput = document.getElementById("rule-input");
 const gameover = document.getElementById("gameover");
+const gameoverInput = document.getElementById("gameover-input");
 const win = document.getElementById("win");
 const lose = document.getElementById("lose");
 
 let characterSelected = 0;
 
-function onGameOver(reason) {
-  gameover.classList.remove("hidden");
-  if (reason === "win") win.classList.remove("hidden");
-  else if (reason === "lose") lose.classList.remove("hidden");
-
-  gameover.onclick = () => {
-    stopCapturingInput();
-    stopRendering();
-
-    gameover.classList.add("hidden");
-    win.classList.add("hidden");
-    lose.classList.add("hidden");
-    playMenu.classList.remove("hidden");
-  };
-}
+//
+// function replaySetup() {
+//   play(roomIDInput.value);
+//   gameover.classList.add("hidden");
+//   initState();
+//   startCapturingInput();
+//   startRendering();
+// }
+//
 
 function gameStart() {
+  gameRule.classList.add("hidden");
+
   play(roomIDInput.value, characterSelected);
   initState();
   startCapturingInput();
@@ -54,10 +53,9 @@ function step3(n) {
   characterMenu.classList.add("hidden");
   gameRule.classList.remove("hidden");
 
-  gameRule.onclick = () => {
-    gameRule.classList.add("hidden");
-    gameStart();
-  };
+  ruleInput.focus();
+  ruleInput.onkeydown = gameStart;
+  gameRule.onclick = gameStart;
 }
 
 function step2() {
@@ -65,6 +63,15 @@ function step2() {
   playMenu.classList.add("hidden");
   characterMenu.classList.remove("hidden");
 
+  characterInput.focus();
+  characterInput.onkeydown = (e) => {
+    if (e.code === "Digit1") step3(1);
+    else if (e.code === "Digit2") step3(2);
+    else if (e.code === "Digit3") step3(3);
+    else if (e.code === "Digit4") step3(4);
+    else if (e.code === "Digit5") step3(Math.floor(4 * Math.random()) + 1);
+    else if (e.code === "Enter") step3(Math.floor(4 * Math.random()) + 1);
+  };
   characters[0].onclick = () => step3(1);
   characters[1].onclick = () => step3(2);
   characters[2].onclick = () => step3(3);
@@ -74,25 +81,41 @@ function step2() {
 
 function step1() {
   // Show roomID input
-  gameover.classList.add("invisible");
   playMenu.classList.remove("hidden");
 
   roomIDInput.focus();
+  roomIDInput.onkeydown = (e) => {
+    if (e.code === "Enter") step2();
+  };
   playButton.onclick = step2;
 }
 
-export function getRole() {
-  return role;
+function onGameOver(reason) {
+  gameover.classList.remove("hidden");
+  if (reason === "win") win.classList.remove("hidden");
+  else if (reason === "lose") lose.classList.remove("hidden");
+
+  function gameoverHandler() {
+    stopCapturingInput();
+    stopRendering();
+
+    gameover.classList.add("hidden");
+    win.classList.add("hidden");
+    lose.classList.add("hidden");
+
+    step1();
+  }
+
+  gameoverInput.focus();
+  gameoverInput.onkeydown = gameoverHandler;
+  gameover.onclick = gameoverHandler;
 }
 
-function replaySetup() {
-  play(roomIDInput.value);
-  gameoverBoard.classList.add('hidden');
-  initState();
-  startCapturingInput();
-  startRendering();
-  setLeaderboardHidden(false);
-}
+//
+// export function getRole() {
+//   return role;
+// }
+//
 
 Promise.all([connect(onGameOver), downloadAssets()])
   .then(() => {
