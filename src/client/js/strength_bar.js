@@ -78,7 +78,7 @@ const HP_MAX = 128;
         app.stage.removeChild(healthBar);
         console.log('strength =',strength);
         s = 0;
-        return ;
+        return;
         }
     })
       }
