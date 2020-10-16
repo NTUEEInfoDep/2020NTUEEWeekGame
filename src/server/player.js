@@ -11,9 +11,11 @@ class Player extends ObjectClass {
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireDirection = 0;
     this.fireCooldown = 0;
+    this.fireCooldowntime=0;
     this.friction = 0;
     this.score = 0;
     this.angleSpeed = 0;
+    this.playerSpeed=0;
   }
 
   // Returns a newly created bullet, or null.
@@ -79,12 +81,14 @@ class Player extends ObjectClass {
         Math.PI / 2;
     }
     this.friction = 0;
-    this.speed = Constants.PLAYER_SPEED;
+    this.speed = this.playerSpeed;
   }
 
   // Stop the player's movement
   stop(e) {
-    this.friction = Constants.PLAYER_FRICTION;
+    if ((e === "ArrowRight" && this.direction >0)|| (e === "ArrowLeft" && this.direction<0)){
+      this.friction = Constants.PLAYER_FRICTION;
+    }
   }
 
   fireDirectionMove(e) {
@@ -108,7 +112,8 @@ class Player extends ObjectClass {
   // Fire a bullet with cooldown limit
   fire() {
     if (this.fireCooldown <= 0) {
-      this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
+      this.fireCooldown = this.fireCooldowntime;
+      console.log(this.fireCooldown);
       return new Bullet(
         this,
         this.x,
