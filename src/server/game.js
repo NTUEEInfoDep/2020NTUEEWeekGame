@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+const socketio = require("socket.io");
 const { join } = require("lodash");
 const Constants = require("../shared/constants");
 const Cat = require("./role1");
@@ -14,8 +15,7 @@ class Game {
     this.randomrooms = [];
     this.playrooms = {};
     this.waitrooms = {};
-    this.roles = {},
-    this.sockets = {};
+    (this.roles = {}), (this.sockets = {});
     this.players = {};
     this.cameras = {};
     this.bullets = [];
@@ -25,7 +25,7 @@ class Game {
   }
 
   addPlayer(socket, userinfo) {
-    this.sockets[socket.id] = socket;    
+    this.sockets[socket.id] = socket;
     this.roles[socket.id] = userinfo[2];
     const username = userinfo[0];
     const side = username in this.waitrooms;
@@ -43,18 +43,21 @@ class Game {
 
     if (username === "random") {
       console.log("random pair triggered!");
-      this.randomrooms.push(socket.id);
+      this.randomrooms.push([socket.id, userinfo]);
       // this.players[socket.id] = new Player(socket.id, username, x, y, side);
       if (this.randomrooms.length >= 2) {
-        const player1 = this.sockets[this.randomrooms.pop()];
-        const player2 = this.sockets[this.randomrooms.pop()];
+        const pop1 = this.randomrooms.pop();
+        const pop2 = this.randomrooms.pop();
+        const player1 = this.sockets[pop1[0]];
+        const player2 = this.sockets[pop2[0]];
         this.sockets[player1.id].emit(Constants.MSG_TYPES.QUEUE_END);
         this.sockets[player2.id].emit(Constants.MSG_TYPES.QUEUE_END);
-        this.addPlayer(player1, player1.id);
-        this.addPlayer(player2, player1.id);
+        pop1[1][0] = player1.id;
+        pop2[1][0] = player1.id;
+        this.addPlayer(player1, pop1[1]);
+        this.addPlayer(player2, pop2[1]);
         // return;
       } else {
-        
         console.log("Waiting to be paired !!!");
       }
     } else if (username in this.playrooms) {
@@ -66,34 +69,42 @@ class Game {
       this.playrooms[username] = this.waitrooms[username];
       this.playrooms[username].push(socket.id);
       delete this.waitrooms[username];
-      this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1], userinfo[2]);
-      if (this.roles[socket.id] === 1){
+      this.cameras[socket.id] = new Camera(
+        socket.id,
+        username,
+        x,
+        y,
+        userinfo[1],
+        userinfo[2]
+      );
+      if (this.roles[socket.id] === 1) {
         this.players[socket.id] = new Cat(socket.id, username, x, y);
-      }
-      else if (this.roles[socket.id] === 2){
+      } else if (this.roles[socket.id] === 2) {
         this.players[socket.id] = new PinkAss(socket.id, username, x, y);
-      }
-      else if (this.roles[socket.id] === 3) {
+      } else if (this.roles[socket.id] === 3) {
         this.players[socket.id] = new Pudding(socket.id, username, x, y);
-      }
-      else if (this.roles[socket.id] === 4) {
+      } else if (this.roles[socket.id] === 4) {
         this.players[socket.id] = new Banana(socket.id, username, x, y);
-      }      
+      }
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
       this.waitrooms[username].push(socket.id);
-      this.cameras[socket.id] = new Camera(socket.id, username, x, y, userinfo[1], userinfo[2]);
-      if (this.roles[socket.id] === 1){
+      this.cameras[socket.id] = new Camera(
+        socket.id,
+        username,
+        x,
+        y,
+        userinfo[1],
+        userinfo[2]
+      );
+      if (this.roles[socket.id] === 1) {
         this.players[socket.id] = new Cat(socket.id, username, x, y);
-      }
-      else if (this.roles[socket.id] === 2){
+      } else if (this.roles[socket.id] === 2) {
         this.players[socket.id] = new PinkAss(socket.id, username, x, y);
-      }
-      else if (this.roles[socket.id] === 3) {
+      } else if (this.roles[socket.id] === 3) {
         this.players[socket.id] = new Pudding(socket.id, username, x, y);
-      }
-      else if (this.roles[socket.id] === 4) {
+      } else if (this.roles[socket.id] === 4) {
         this.players[socket.id] = new Banana(socket.id, username, x, y);
       }
     }
@@ -276,11 +287,13 @@ class Game {
     };
   }
 
-  checkRoomname(roomname){
-    if (roomname in this.playrooms){
-      socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, this.playrooms[roomname].length);
-    }
-    else{
+  checkRoomname(roomname) {
+    if (roomname in this.playrooms) {
+      socket.emit(
+        Constants.MSG_TYPES.CHECK_ROOMNAME,
+        this.playrooms[roomname].length
+      );
+    } else {
       socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, 0);
     }
   }

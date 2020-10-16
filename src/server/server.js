@@ -42,7 +42,7 @@ function onDisconnect() {
   game.removeDisconnectedPlayer(this);
 }
 
-function checkRoomname(roomname){
+function checkRoomname(roomname) {
   game.checkRoomname(roomname);
 }
 // Setup socket.io

@@ -45,6 +45,14 @@ export const play = (roomName, characterSelected) => {
   ]);
 };
 
+export const queueEnd = new Promise((resolve) => {
+  socket.on(Constants.MSG_TYPES.QUEUE_END, () => {
+    // eslint-disable-next-line no-console
+    console.log("QE!");
+    resolve();
+  });
+});
+
 export const updateDirection = throttle(20, (dir) => {
   socket.emit(Constants.MSG_TYPES.INPUT, dir);
 });

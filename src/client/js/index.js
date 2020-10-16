@@ -1,6 +1,6 @@
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#3-client-entrypoints
-import { connect, play } from "./networking";
+import { connect, play, queueEnd } from "./networking";
 import { startRendering, stopRendering } from "./render";
 import { startCapturingInput, stopCapturingInput } from "./input";
 import { downloadAssets } from "./assets";
@@ -40,7 +40,6 @@ let characterSelected = 0;
 function gameStart() {
   gameRule.classList.add("hidden");
 
-  play(roomIDInput.value, characterSelected);
   initState();
   startCapturingInput();
   startRendering();
@@ -48,14 +47,26 @@ function gameStart() {
 
 function step3(n) {
   characterSelected = n;
+  play(roomIDInput.value, characterSelected);
 
   // Show game rule
   characterMenu.classList.add("hidden");
   gameRule.classList.remove("hidden");
 
-  ruleInput.focus();
-  ruleInput.onkeydown = gameStart;
-  gameRule.onclick = gameStart;
+  // ruleInput.focus();
+  // ruleInput.onkeydown = gameStart;
+  // gameRule.onclick = gameStart;
+
+  // Promise.all([queueEnd])
+  //   .then((result) => {
+  //     if (result) gameStart();
+  //   })
+  //   // eslint-disable-next-line no-console
+  //   .catch(console.error);
+
+  queueEnd.then(() => {
+    gameStart();
+  });
 }
 
 function step2() {
