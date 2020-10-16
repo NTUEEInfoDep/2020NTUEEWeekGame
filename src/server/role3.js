@@ -8,7 +8,7 @@ class Pudding extends Player {
 		super(id, username, x, y);
 		this.role = 3;
 		// life
-		this.hp = Constants.PLAYER_MAX_HP * 0.8;
+		this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP.Pudding;
 		// force
 		this.bulletDamage = 0.7 * Constants.BULLET_DAMAGE;
 		//speed

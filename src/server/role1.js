@@ -8,7 +8,7 @@ class Cat extends Player {
         super(id, username, x, y);
 		this.role = 1;
 		// life
-		this.hp = Constants.PLAYER_MAX_HP * 1.5;
+		this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP.Cat;
 		// force
 		this.bulletDamage = 0.8 * Constants.BULLET_DAMAGE;
 		//speed

@@ -8,7 +8,7 @@ import { getCurrentState } from "./state";
 
 const Constants = require("../../shared/constants");
 
-const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS } = Constants;
+const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, PLAYER_HP } = Constants;
 
 // Get the canvas graphics context
 const canvas = document.getElementById("game-canvas");
@@ -71,25 +71,34 @@ function renderPlayer(me, player) {
     context.fillRect(
       canvasX -
         PLAYER_RADIUS +
-        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 9),
+        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.Cat),
       canvasY + PLAYER_RADIUS + 8,
-      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 9)),
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * PLAYER_HP.Cat)),
       2
     );
   } else if (role === 2) {
     context.fillRect(
       canvasX -
         PLAYER_RADIUS +
-        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 2),
+        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * (PLAYER_HP.PinkAss)),
       canvasY + PLAYER_RADIUS + 8,
-      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 2)),
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * (PLAYER_HP.PinkAss))),
+      2
+    );
+  } else if (role === 3) {
+    context.fillRect(
+      canvasX -
+        PLAYER_RADIUS +
+        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * (PLAYER_HP.Pudding)),
+      canvasY + PLAYER_RADIUS + 8,
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * (PLAYER_HP.Pudding))),
       2
     );
   } else {
     context.fillRect(
-      canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / PLAYER_MAX_HP,
+      canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.Banana),
       canvasY + PLAYER_RADIUS + 8,
-      PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * PLAYER_HP.Banana)),
       2
     );
   }

@@ -8,7 +8,7 @@ class PinkAss extends Player {
 		super(id, username, x, y);
 		this.role = 2;
 		// life
-		this.hp = Constants.PLAYER_MAX_HP * 1.3;
+		this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP.PinkAss;
 		// force
 		this.bulletDamage = 2 * Constants.BULLET_DAMAGE;
 		//speed

@@ -8,7 +8,7 @@ class Banana extends Player {
 		super(id, username, x, y);
 		this.role = 4;
 		// life
-		this.hp = Constants.PLAYER_MAX_HP * 1;
+		this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP.Banana;
 		// force
 		this.bulletDamage =1 * Constants.BULLET_DAMAGE;
 		//speed
