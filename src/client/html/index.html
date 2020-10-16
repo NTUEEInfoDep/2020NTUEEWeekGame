@@ -8,7 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
     <link
       href="https://fonts.googleapis.com/css?family=Righteous|Permanent+Marker|Arvo|Kalam"
       rel="stylesheet"
@@ -21,6 +21,8 @@
   <body>
     <!-- Game Canvas -->
     <canvas id="game-canvas"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.2/pixi.min.js"></script>
+    <script src="../js/strengthBar.js"></script>
 
     <!-- Play Menu -->
     <div class="hidden" id="play-menu">
@@ -41,35 +43,35 @@
       <div id="character-containers">
         <div class="characterContainer" id="character-container-1">
           <div id="character-pic-1">
-            <img src="/assets/num1.png" class="characterPic" />
+            <img src="/public/assets/num1.png" class="characterPic" />
           </div>
           <!-- <p class="character-name" id="character-name-1">Cat</p> -->
         </div>
 
         <div class="characterContainer" id="character-container-2">
           <div id="character-pic-2">
-            <img src="/assets/num2.png" class="characterPic" />
+            <img src="/public/assets/num2.png" class="characterPic" />
           </div>
           <!-- <p class="character-name" id="character-name-2">Pink Ass</p> -->
         </div>
 
         <div class="characterContainer" id="character-container-3">
           <div id="character-pic-3">
-            <img src="/assets/num3.png" class="characterPic" />
+            <img src="/public/assets/num3.png" class="characterPic" />
           </div>
           <!-- <p class="character-name" id="character-name-3">Pudding</p> -->
         </div>
 
         <div class="characterContainer" id="character-container-4">
           <div id="character-pic-4">
-            <img src="/assets/num4.png" class="characterPic" />
+            <img src="/public/assets/num4.png" class="characterPic" />
           </div>
           <!-- <p class="character-name" id="character-name-4">Banana</p> -->
         </div>
 
         <div class="characterContainer" id="character-container-random">
           <div id="character-pic-random">
-            <img src="/assets/randomCharacter.png" class="characterPic" />
+            <img src="/public/assets/randomCharacter.png" class="characterPic" />
           </div>
           <!-- <p class="character-name" id="character-name-random">RANDOM</p> -->
         </div>
@@ -101,11 +103,11 @@
     <div class="hidden" id="gameover">
       <div class="hidden" id="win">
         <p>WINNER</p>
-        <img src="/assets/win.png" />
+        <img src="/public/assets/win.png" />
       </div>
       <div class="hidden" id="lose">
         <p>LOSER</p>
-        <img src="/assets/lose.png" />
+        <img src="/public/assets/lose.png" />
       </div>
       <input class="transparent" id="gameover-input" />
     </div>
