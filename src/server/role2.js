@@ -14,9 +14,9 @@ class PinkAss extends Player {
 		//speed
 		this.playerSpeed= 0.8 * Constants.PLAYER_SPEED;
 		//firespeed
-		this.fireCooldowntime= 1.7 * Constants.PLAYER_FIRE_COOLDOWN;
+		this.fireCooldowntime= 1.3 * Constants.PLAYER_FIRE_COOLDOWN;
 		//power
-		this.bulletSpeed=1* Constants.bulletSpeed;
+		this.bulletSpeed=1* Constants.BULLET_SPEED;
 	}
 	fire() {
 		if (this.fireCooldown <= 0) {
@@ -27,7 +27,8 @@ class PinkAss extends Player {
 			this.y,
 			this.fireDirection,
 			this.username,
-			this.role
+			this.role,
+			this.bulletSpeed
 		  );
 		}
 		return null;

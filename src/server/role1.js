@@ -10,13 +10,13 @@ class Cat extends Player {
 		// life
 		this.hp = Constants.PLAYER_MAX_HP * 1.5;
 		// force
-		this.bulletDamage = 0.7 * Constants.BULLET_DAMAGE;
+		this.bulletDamage = 0.8 * Constants.BULLET_DAMAGE;
 		//speed
-		this.playerSpeed= 1 * Constants.PLAYER_SPEED;
+		this.playerSpeed= 1.2 * Constants.PLAYER_SPEED;
 		//firespeed
 		this.fireCooldowntime=1 * Constants.PLAYER_FIRE_COOLDOWN;
 		//power
-		this.bulletSpeed=1* Constants.bulletSpeed;
+		this.bulletSpeed=1* Constants.BULLET_SPEED;
     }
     stop(e) {
 	this.friction = Constants.PLAYER_FRICTION / 2;
