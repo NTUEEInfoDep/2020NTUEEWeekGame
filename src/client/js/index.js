@@ -112,9 +112,12 @@ function onGameOver(reason) {
     step1();
   }
 
-  gameoverInput.focus();
-  gameoverInput.onkeydown = gameoverHandler;
-  gameover.onclick = gameoverHandler;
+  // gameoverInput.focus();
+  // gameoverInput.onkeydown = gameoverHandler;
+  // gameover.onclick = gameoverHandler;
+  setTimeout(() => {
+    gameover.onclick = gameoverHandler;
+  }, 3000);
 }
 
 Promise.all([connect(onGameOver), downloadAssets()])

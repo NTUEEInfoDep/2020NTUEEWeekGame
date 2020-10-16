@@ -64,7 +64,7 @@ function renderPlayer(me, player) {
     canvasX - PLAYER_RADIUS,
     canvasY + PLAYER_RADIUS + 8,
     PLAYER_RADIUS * 2,
-    2
+    10
   );
   context.fillStyle = "red";
   if (role === 1) {
@@ -74,7 +74,7 @@ function renderPlayer(me, player) {
         (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 9),
       canvasY + PLAYER_RADIUS + 8,
       PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 9)),
-      2
+      10
     );
   } else if (role === 2) {
     context.fillRect(
@@ -83,16 +83,23 @@ function renderPlayer(me, player) {
         (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 2),
       canvasY + PLAYER_RADIUS + 8,
       PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 2)),
-      2
+      10
     );
   } else {
     context.fillRect(
       canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / PLAYER_MAX_HP,
       canvasY + PLAYER_RADIUS + 8,
       PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
-      2
+      10
     );
   }
+  context.font = "20px sans-serif";
+  context.fillStyle = "white";
+  context.fillText(
+    Math.floor(player.hp),
+    canvasX - PLAYER_RADIUS,
+    canvasY + PLAYER_RADIUS + 5
+  );
 
   // Draw fire range
   context.save();
