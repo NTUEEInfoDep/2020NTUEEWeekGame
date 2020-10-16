@@ -86,7 +86,9 @@ class Player extends ObjectClass {
 
   // Stop the player's movement
   stop(e) {
-    this.friction = Constants.PLAYER_FRICTION;
+    if ((e === "ArrowRight" && this.direction >0)|| (e === "ArrowLeft" && this.direction<0)){
+      this.friction = Constants.PLAYER_FRICTION;
+    }
   }
 
   fireDirectionMove(e) {

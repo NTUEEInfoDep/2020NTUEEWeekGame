@@ -110,14 +110,21 @@ class Game {
     Object.keys(this.playrooms).forEach((roomname) => {
       const playerIDs = this.playrooms[roomname];
       if (playerIDs.includes(socket.id)) {
-        this.removeRoom(roomname, playerIDs, ["win", "win"]);
+        this.removeRoom(roomname, playerIDs, ["win", "win"], "play");
+      }
+    });
+    Object.keys(this.waitrooms).forEach((roomname) => {
+      const playerIDs = this.waitrooms[roomname];
+      if (playerIDs.includes(socket.id)) {
+        this.removeRoom(roomname, playerIDs, ["win", "win"], "wait");
       }
     });
   }
 
   // Send Game over and remove room and players
-  removeRoom(roomname, playerIDs, reason) {
-    delete this.playrooms[roomname];
+  removeRoom(roomname, playerIDs, reason, roomType) {
+    if (roomType === "play") delete this.playrooms[roomname];
+    else if (roomType === "wait") delete this.waitrooms[roomname];
     delete this.cameras[roomname];
     playerIDs.forEach((playerID, index) => {
       this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER, reason[index]);
@@ -147,7 +154,7 @@ class Game {
         if (key === "KeyQ" || key === "KeyE") player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
-        if (key === "ArrowLeft" || key === "ArrowRight") player.stop();
+        if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent[1]);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
         if (key === "KeyQ" || key === "KeyE") player.fireDirectionStop(key);
       }
