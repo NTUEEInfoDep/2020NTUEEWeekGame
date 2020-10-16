@@ -34,8 +34,6 @@ function renderBackground() {
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
   const { x, y, direction, fireDirection, role } = player;
-  console.log("player");
-  console.log(player);
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
   // Draw player
@@ -76,7 +74,7 @@ function renderPlayer(me, player) {
         (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.Cat),
       canvasY + PLAYER_RADIUS + 8,
       PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * PLAYER_HP.Cat)),
-      2
+      10
     );
   } else if (role === 2) {
     context.fillRect(
@@ -85,7 +83,7 @@ function renderPlayer(me, player) {
         (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.PinkAss),
       canvasY + PLAYER_RADIUS + 8,
       PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * PLAYER_HP.PinkAss)),
-      2
+      10
     );
   } else if (role === 3) {
     context.fillRect(
@@ -94,7 +92,7 @@ function renderPlayer(me, player) {
         (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.Pudding),
       canvasY + PLAYER_RADIUS + 8,
       PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * PLAYER_HP.Pudding)),
-      2
+      10
     );
   } else {
     context.fillRect(
@@ -103,7 +101,7 @@ function renderPlayer(me, player) {
         (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.Banana),
       canvasY + PLAYER_RADIUS + 8,
       PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * PLAYER_HP.Banana)),
-      2
+      10
     );
   }
   context.font = "20px sans-serif";

@@ -139,7 +139,9 @@ class Game {
 
   // Send Game over and remove room and players
   removeRoom(roomname, playerIDs, reason, roomType) {
-    if (roomType === "play") delete this.playrooms[roomname];
+    if (roomType === "play" || roomType === "game_end"){
+      delete this.playrooms[roomname];
+    }
     else if (roomType === "wait") delete this.waitrooms[roomname];
     delete this.cameras[roomname];
     playerIDs.forEach((playerID, index) => {
@@ -227,7 +229,7 @@ class Game {
       const hps = playerIDs.map((playerID) => this.players[playerID].hp);
       if (hps[0] <= 0 || hps[1] <= 0) {
         const reason = hps[0] < hps[1] ? ["lose", "win"] : ["win", "lose"];
-        this.removeRoom(roomname, playerIDs, reason);
+        this.removeRoom(roomname, playerIDs, reason, "game_end");
       }
     });
 

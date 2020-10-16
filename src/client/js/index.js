@@ -97,8 +97,12 @@ function step1() {
 }
 
 function onGameOver(reason) {
+  console.log(reason);
   gameover.classList.remove("hidden");
-  if (reason === "win") win.classList.remove("hidden");
+  if (reason === "win"){
+    win.classList.remove("hidden");
+    console.log("this player win");
+  }
   else if (reason === "lose") lose.classList.remove("hidden");
 
   function gameoverHandler() {
