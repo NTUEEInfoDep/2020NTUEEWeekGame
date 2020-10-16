@@ -2,9 +2,11 @@ const HP_MAX = 128;
       let t = HP_MAX;
       let flag = 1;
       let val;
-      let app = new PIXI.Application();
+      let app = new PIXI.Application({
+        view: document.getElementById('game-canvas'),
+      });
 
-      document.body.appendChild(app.view);
+     // document.body.appendChild(app.view);
       //app.stage.addChild(PIXI.Sprite.from('map1.png'));
       //let healthBar;
       let colour;
@@ -39,7 +41,7 @@ const HP_MAX = 128;
       let state = 0;
       
   
-      export function backandforthBar(s,x_value,y_value){
+      function backandforthBar(s ,x_value,y_value){
         let strength;
         let healthBar;
       app.ticker.add((delta) => {
@@ -77,7 +79,6 @@ const HP_MAX = 128;
         s = 2;
         app.stage.removeChild(healthBar);
         console.log('strength =',strength);
-        s = 0;
         return;
         }
     })
