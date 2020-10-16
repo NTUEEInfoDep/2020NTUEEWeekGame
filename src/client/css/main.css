@@ -84,6 +84,12 @@ canvas {
   transition: all 0.4s ease 0s;
 }
 
+#play-menu #or {
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  font-family: "Arvo";
+}
+
 /* Mode Menu */
 
 #mode-menu {
@@ -156,9 +162,10 @@ canvas {
   font-family: "Kalam";
 }
 
-#game-rule #enter-game {
+#game-rule #blinker {
   text-transform: uppercase;
   font-size: 2rem;
+  font-family: "Kalam";
   line-height: 3rem;
 }
 
@@ -191,7 +198,6 @@ canvas {
   background-color: white;
   transition: all 0.4s ease 0s;
 }
-
 
 #gameover div:hover p {
   letter-spacing: 3rem;
@@ -262,18 +268,6 @@ canvas {
   text-align: center;
 }
 
-.button1 {
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  /* padding: 10px 20px 4px 20px; */
-  display: inline-block;
-  color: black !important;
-  background-color: white;
-  font-size: 30px;
-  font-family: "Nest";
-}
-
 #disconnect-window button {
   color: black;
   background-color: white;
@@ -291,6 +285,10 @@ canvas {
 }
 
 /* Other Stuff */
+
+p span {
+  text-decoration: line-through;
+}
 
 .hidden {
   display: none !important;
