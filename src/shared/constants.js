@@ -26,6 +26,8 @@ module.exports = Object.freeze({
     KEY_INPUT: "key_input",
     GAME_OVER: "dead",
     MOVE_CAMERA: "move_camera",
+    CHECK_ROOMNAME: "check_roomname",
+    QUEUE_END: "queue_end",
   },
   MAP: [
     936.0,

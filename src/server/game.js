@@ -48,10 +48,15 @@ class Game {
       if (this.randomrooms.length >= 2) {
         const player1 = this.sockets[this.randomrooms.pop()];
         const player2 = this.sockets[this.randomrooms.pop()];
+        this.sockets[player1.id].emit(Constants.MSG_TYPES.QUEUE_END);
+        this.sockets[player2.id].emit(Constants.MSG_TYPES.QUEUE_END);
         this.addPlayer(player1, player1.id);
         this.addPlayer(player2, player1.id);
         // return;
-      } else console.log("Waiting to be paired !!!");
+      } else {
+        
+        console.log("Waiting to be paired !!!");
+      }
     } else if (username in this.playrooms) {
       console.log("The room is too crowded");
       delete this.sockets[socket.id];
@@ -269,6 +274,15 @@ class Game {
       bullets: bulletInRoom.map((b) => b.serializeForUpdate()),
       leaderboard,
     };
+  }
+
+  checkRoomname(roomname){
+    if (roomname in this.playrooms){
+      socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, this.playrooms[roomname].length);
+    }
+    else{
+      socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, 0);
+    }
   }
 }
 
