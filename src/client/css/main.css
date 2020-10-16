@@ -84,6 +84,12 @@ canvas {
   transition: all 0.4s ease 0s;
 }
 
+#play-menu #or {
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  font-family: "Arvo";
+}
+
 /* Mode Menu */
 
 #mode-menu {
@@ -146,20 +152,28 @@ canvas {
   align-items: center;
   text-align: center;
   border-radius: 30px;
-  padding: 2rem 3rem 1rem;
+  padding: 3rem 3rem 0;
   background-color: white;
-  font-size: 1.5rem;
-  line-height: 3rem;
 }
 
-#game-rule p {
+#game-rule #rule-title {
+  font-size: 3rem;
+  line-height: 2rem;
   font-family: "Kalam";
 }
 
-#game-rule #enter-game {
+#game-rule p {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-family: "Kalam";
+}
+
+#game-rule #blinker {
+  padding: 1rem 0 0;
+  color: crimson;
   text-transform: uppercase;
   font-size: 2rem;
-  line-height: 3rem;
+  font-family: "Kalam";
 }
 
 /* Game Over */
@@ -192,22 +206,18 @@ canvas {
   transition: all 0.4s ease 0s;
 }
 
-
-#gameover div:hover p {
-  letter-spacing: 3rem;
-  margin-right: -3rem;
-  transition: all 0.4s ease 0s;
-}
-
 #gameover p {
   color: black;
-  font-size: 2rem;
-  font-family: "Arvo";
+  font-size: 5rem;
+  font-family: "Pdark";
+  letter-spacing: 3rem;
+  margin-right: -3rem;
   text-transform: uppercase;
+  padding: 1rem;
 }
 
 #gameover img {
-  width: 8rem;
+  width: 20rem;
 }
 
 /* Disconnect Window */
@@ -262,18 +272,6 @@ canvas {
   text-align: center;
 }
 
-.button1 {
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  /* padding: 10px 20px 4px 20px; */
-  display: inline-block;
-  color: black !important;
-  background-color: white;
-  font-size: 30px;
-  font-family: "Nest";
-}
-
 #disconnect-window button {
   color: black;
   background-color: white;
@@ -291,6 +289,10 @@ canvas {
 }
 
 /* Other Stuff */
+
+p span {
+  text-decoration: line-through;
+}
 
 .hidden {
   display: none !important;

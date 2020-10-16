@@ -66,7 +66,7 @@ function renderPlayer(me, player) {
     canvasX - PLAYER_RADIUS,
     canvasY + PLAYER_RADIUS + 8,
     PLAYER_RADIUS * 2,
-    2
+    10
   );
   context.fillStyle = "red";
   if (role === 1) {
@@ -82,28 +82,37 @@ function renderPlayer(me, player) {
     context.fillRect(
       canvasX -
         PLAYER_RADIUS +
-        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * (PLAYER_HP.PinkAss)),
+        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.PinkAss),
       canvasY + PLAYER_RADIUS + 8,
-      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * (PLAYER_HP.PinkAss))),
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * PLAYER_HP.PinkAss)),
       2
     );
   } else if (role === 3) {
     context.fillRect(
       canvasX -
         PLAYER_RADIUS +
-        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * (PLAYER_HP.Pudding)),
+        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.Pudding),
       canvasY + PLAYER_RADIUS + 8,
-      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * (PLAYER_HP.Pudding))),
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * PLAYER_HP.Pudding)),
       2
     );
   } else {
     context.fillRect(
-      canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.Banana),
+      canvasX -
+        PLAYER_RADIUS +
+        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * PLAYER_HP.Banana),
       canvasY + PLAYER_RADIUS + 8,
       PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * PLAYER_HP.Banana)),
       2
     );
   }
+  context.font = "20px sans-serif";
+  context.fillStyle = "white";
+  context.fillText(
+    Math.floor(player.hp),
+    canvasX - PLAYER_RADIUS,
+    canvasY + PLAYER_RADIUS + 5
+  );
 
   // Draw fire range
   context.save();

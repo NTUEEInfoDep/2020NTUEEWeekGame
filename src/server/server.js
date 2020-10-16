@@ -6,6 +6,7 @@ const socketio = require("socket.io");
 const Constants = require("../shared/constants");
 const Game = require("./game");
 const webpackConfig = require("../../webpack.config.js");
+const { check } = require("prettier");
 
 // Setup an Express server
 const app = express();
@@ -41,6 +42,9 @@ function onDisconnect() {
   game.removeDisconnectedPlayer(this);
 }
 
+function checkRoomname(roomname) {
+  game.checkRoomname(this, roomname);
+}
 // Setup socket.io
 const io = socketio(server);
 
@@ -51,6 +55,7 @@ io.on("connection", (socket) => {
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
   socket.on(Constants.MSG_TYPES.KEY_INPUT, handleKeyInput);
   socket.on("disconnect", onDisconnect);
+  socket.on(Constants.MSG_TYPES.CHECK_ROOMNAME, checkRoomname);
   // socket.on(Constants.MSG_TYPES.INPUT, handleInput);
   // socket.on(Constants.MSG_TYPES.MOVE_CAMERA, handleCamera);
 });

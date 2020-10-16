@@ -4,7 +4,7 @@
 import io from "socket.io-client";
 import { throttle } from "throttle-debounce";
 import { processGameUpdate } from "./state";
-import { getCharacterNum } from "./render";
+// import { getCharacterNum } from "./render";
 
 const Constants = require("../../shared/constants");
 
@@ -43,6 +43,26 @@ export const play = (roomName, characterSelected) => {
     [window.innerWidth, window.innerHeight],
     characterSelected,
   ]);
+};
+
+export const queueEnd = new Promise((resolve) => {
+  socket.on(Constants.MSG_TYPES.QUEUE_END, () => {
+    // eslint-disable-next-line no-console
+    console.log("QE!");
+    resolve();
+  });
+});
+
+export const roomNA = (roomID) => {
+  socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, roomID);
+  socket.on(Constants.MSG_TYPES.CHECK_ROOMNAME, (num) => {
+    //
+    //
+    // eslint-disable-next-line no-alert
+    // alert(`There are ${num} players in this room.`);
+    // Redesign if possible
+    //
+  });
 };
 
 export const updateDirection = throttle(20, (dir) => {
