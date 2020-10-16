@@ -34,6 +34,8 @@ function renderBackground() {
 // Renders a ship at the given coordinates
 function renderPlayer(me, player) {
   const { x, y, direction, fireDirection, role } = player;
+  console.log("player");
+  console.log(player);
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
   // Draw player
@@ -107,7 +109,11 @@ function renderPlayer(me, player) {
   context.save();
   context.translate(canvasX, canvasY);
   context.beginPath();
-  context.arc(0, 0, PLAYER_RADIUS * 2, 0, Math.PI, true);
+  if (direction >= 0){
+    context.arc(0, 0, PLAYER_RADIUS * 2, 0, -Math.PI / 2, true);
+  } else{
+    context.arc(0, 0, PLAYER_RADIUS * 2, -Math.PI / 2, -Math.PI, true);
+  }
   context.lineWidth = PLAYER_RADIUS / 20;
   context.lineCap = "round";
   if (role === 1) {

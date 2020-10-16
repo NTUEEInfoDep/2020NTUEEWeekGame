@@ -4,7 +4,7 @@ module.exports = Object.freeze({
   PLAYER_FRICTION: 400,
   PLAYER_SPEED: 100,
   PLAYER_FIRE_COOLDOWN: 0.5,
-  PLAYER_ANGLE_SPEED: 1,
+  PLAYER_ANGLE_SPEED: 2,
   PLAYER_HP: {
     Cat: 1.5,
     PinkAss: 1.3,
