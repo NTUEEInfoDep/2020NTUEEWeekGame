@@ -1,6 +1,6 @@
 // Learn more about this file at:
 // https://victorzhou.com/blog/build-an-io-game-part-1/#3-client-entrypoints
-import { connect, play, queueEnd } from "./networking";
+import { connect, play, queueEnd, roomNA } from "./networking";
 import { startRendering, stopRendering } from "./render";
 import { startCapturingInput, stopCapturingInput } from "./input";
 import { downloadAssets } from "./assets";
@@ -45,15 +45,9 @@ function step3(n) {
   characterMenu.classList.add("hidden");
   gameRule.classList.remove("hidden");
 
-  // ruleInput.focus();
-  // ruleInput.onkeydown = gameStart;
-  // gameRule.onclick = gameStart;
-
   if (roomIDInput.value === "random") {
     blinker.innerHTML = "Waiting for Others";
-    queueEnd.then(() => {
-      gameStart();
-    });
+    queueEnd.then(gameStart);
   } else {
     blinker.innerHTML = "Click to Start";
     ruleInput.focus();
@@ -66,6 +60,8 @@ function step2() {
   if (roomIDInput.value === "") {
     roomIDInput.value = "random";
   }
+
+  roomNA(roomIDInput.value);
 
   // Show character table
   playMenu.classList.add("hidden");
@@ -120,12 +116,6 @@ function onGameOver(reason) {
   gameoverInput.onkeydown = gameoverHandler;
   gameover.onclick = gameoverHandler;
 }
-
-//
-// export function getRole() {
-//   return role;
-// }
-//
 
 Promise.all([connect(onGameOver), downloadAssets()])
   .then(() => {

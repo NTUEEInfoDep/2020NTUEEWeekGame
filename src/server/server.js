@@ -43,7 +43,7 @@ function onDisconnect() {
 }
 
 function checkRoomname(roomname) {
-  game.checkRoomname(roomname);
+  game.checkRoomname(this, roomname);
 }
 // Setup socket.io
 const io = socketio(server);

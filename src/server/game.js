@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const socketio = require("socket.io");
-const { join } = require("lodash");
+const { join, includes } = require("lodash");
 const Constants = require("../shared/constants");
 const Cat = require("./role1");
 const PinkAss = require("./role2");
@@ -270,7 +270,7 @@ class Game {
   // Only create update object within the room
   createRoomUpdate(id, playerIDs, leaderboard) {
     const camera = this.cameras[id];
-    //const playerInRoom = playerIDs.map((playerID) => this.players[playerID]);
+    // const playerInRoom = playerIDs.map((playerID) => this.players[playerID]);
     const playerInRoom = playerIDs.map((playerID) => this.players[playerID]);
     const bulletInRoom = this.bullets.filter(
       (b) =>
@@ -287,12 +287,15 @@ class Game {
     };
   }
 
-  checkRoomname(roomname) {
-    if (roomname in this.playrooms) {
-      socket.emit(
-        Constants.MSG_TYPES.CHECK_ROOMNAME,
-        this.playrooms[roomname].length
-      );
+  checkRoomname(socket, roomname) {
+    console.log(Object.keys(this.playrooms));
+    console.log(Object.keys(this.waitrooms));
+    console.log(roomname);
+    console.log(Object.keys(this.waitrooms).includes(roomname));
+    if (Object.keys(this.playrooms).includes(roomname)) {
+      socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, 2);
+    } else if (Object.keys(this.waitrooms).includes(roomname)) {
+      socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, 1);
     } else {
       socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, 0);
     }
