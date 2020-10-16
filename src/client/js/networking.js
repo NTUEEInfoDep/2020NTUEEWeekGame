@@ -59,7 +59,7 @@ export const roomNA = (roomID) => {
     //
     //
     // eslint-disable-next-line no-alert
-    alert(`There are ${num} players in this room.`);
+    // alert(`There are ${num} players in this room.`);
     // Redesign if possible
     //
   });
