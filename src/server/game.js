@@ -83,9 +83,6 @@ class Game {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
         }
-<<<<<<< Updated upstream
-        if (key === "ArrowLeft" || key === "ArrowRight") player.move(keyEvent);
-=======
 
         // Emit big skill
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
@@ -105,7 +102,6 @@ class Game {
         if (key === "ShiftLeft") camera.follow(player);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
         if (key === "KeyQ" || key === "KeyE") player.fireDirectionMove(key);
->>>>>>> Stashed changes
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent);

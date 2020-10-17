@@ -13,8 +13,6 @@ class Player extends ObjectClass {
     this.fireCooldown = 0;
     this.friction = 0;
     this.score = 0;
-<<<<<<< Updated upstream
-=======
     this.angleSpeed = 0;
     this.bigSkillTimes = 2;
     this.mode = 'normal';
@@ -26,7 +24,6 @@ class Player extends ObjectClass {
     }
     */
     this.sufferFrom = [];
->>>>>>> Stashed changes
   }
 
   // Returns a newly created bullet, or null.
@@ -56,17 +53,6 @@ class Player extends ObjectClass {
 
   // According to mode(big skill emitted)
   // Receive keyboard input and move character
-<<<<<<< Updated upstream
-  move(e) {
-    if (e[1] === "ArrowLeft") {
-      this.direction = -Math.PI / 2;
-    }
-    if (e[1] === "ArrowRight") {
-      this.direction = Math.PI / 2;
-    }
-    this.speed = Constants.PLAYER_SPEED;
-  }
-=======
 	move(e) {
 		if (this.mode === 'fart'){
 			// Reverse direction
@@ -114,15 +100,12 @@ class Player extends ObjectClass {
 		  this.speed = Constants.PLAYER_SPEED;
     }
 
->>>>>>> Stashed changes
 
   // Stop the player's movement
   stop(e) {
     this.friction = Constants.PLAYER_FRICTION;
   }
 
-<<<<<<< Updated upstream
-=======
   // According to mode(big skill emitted)
   fireDirectionMove(e) {
     // Reverse direction
@@ -155,7 +138,6 @@ class Player extends ObjectClass {
     this.angleSpeed = 0;
   }
 
->>>>>>> Stashed changes
   // Fire a bullet with cooldown limit
   fire() {
     if (this.fireCooldown <= 0) {
