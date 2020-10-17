@@ -8,9 +8,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
     <link
-      href="https://fonts.googleapis.com/css?family=Righteous|Permanent+Marker|Arvo|Kalam"
+      href="https://fonts.googleapis.com/css?family=Arvo|Kalam|Righteous"
       rel="stylesheet"
       type="text/css"
     />
@@ -26,12 +25,10 @@
     <div class="hidden" id="play-menu">
       <div id="subtitle">ntu&nbsp;EE&nbsp;week&nbsp;&nbsp;2020.10.19~23</div>
       <div id="title">TEnET</div>
-      <div>
-        <input type="text" id="room-id" maxlength="25" placeholder="Room ID" />
-      </div>
-      <div>
-        <button id="play-menu-enter">enter</button>
-      </div>
+      <input type="text" id="room-id" maxlength="25" placeholder="Room ID" />
+      <button id="play-menu-enter">enter</button>
+      <p id="or">or</p>
+      <button id="play-menu-random">random</button>
     </div>
 
     <!-- Mode Menu -->
@@ -80,9 +77,9 @@
 
     <!-- Game Rule -->
     <div class="hidden" id="game-rule">
+      <div id="rule-title">
       <p>
         <b>Stay alive and shoot other players!!!</b>
-        <br />
         <br />
         "left" and "right" for movement
         <br />
@@ -95,10 +92,10 @@
         </span>
         <br />
       </p>
-      <div class="blink" id="enter-game"><p>Start</p></div>
+      <div class="blink" id="blinker"><p>===</p></div>
       <input class="transparent" id="rule-input" />
     </div>
-
+  </div>
     <!-- Game Over -->
     <div class="hidden" id="gameover">
       <div class="hidden" id="win">
@@ -115,9 +112,9 @@
     <!-- Disconnect Window -->
     <div class="hidden" id="disconnect-window">
       <div>
-        <h2>Disconnected from Server</h2>
+        <h2 id="disconnect-title">Disconnected from Server</h2>
         <button id="reconnect-button">RECONNECT</button>
       </div>
-    </div>
+
   </body>
 </html>

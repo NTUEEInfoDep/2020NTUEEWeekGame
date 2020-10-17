@@ -4,12 +4,12 @@ module.exports = Object.freeze({
   PLAYER_FRICTION: 400,
   PLAYER_SPEED: 100,
   PLAYER_FIRE_COOLDOWN: 0.5,
-  PLAYER_ANGLE_SPEED: 1,
-  PLAYER_HP: {
+  PLAYER_ANGLE_SPEED: 2,
+  PLAYER_HP_COEF: {
     Cat: 1.5,
     PinkAss: 1.3,
     Pudding: 0.8,
-    Banana: 1
+    Banana: 1,
   },
 
   CAMERA_SPEED: 300,
@@ -32,6 +32,8 @@ module.exports = Object.freeze({
     KEY_INPUT: "key_input",
     GAME_OVER: "dead",
     MOVE_CAMERA: "move_camera",
+    CHECK_ROOMNAME: "check_roomname",
+    QUEUE_END: "queue_end",
   },
   MAP: [
     936.0,

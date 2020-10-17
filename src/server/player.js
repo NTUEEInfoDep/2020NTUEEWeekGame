@@ -43,16 +43,26 @@ class Player extends ObjectClass {
       this.fireCooldown = 0;
     }
     this.fireDirection += this.angleSpeed * dt;
-    this.fireDirection = Math.max(
-      Math.max(-Math.PI / 2, this.fireDirection + this.angleSpeed * dt),
-      Math.min(Math.PI / 2, this.fireDirection + this.angleSpeed * dt)
-    );
+    if (this.direction >= 0){
+      this.fireDirection = Math.max(
+        0,
+        Math.min(Math.PI / 2, this.fireDirection)
+      );
+    } else{
+      this.fireDirection = Math.max(
+        -Math.PI / 2,
+        Math.min(0, this.fireDirection)
+      );
+    }
     return null;
   }
 
   // Receive keyboard input and move character
   move(e) {
     if (e === "ArrowLeft") {
+      if (this.fireDirection > 0){
+        this.fireDirection = -this.fireDirection;
+      }
       if (
         Constants.MAP[Math.floor(this.x / 10)] <
         Constants.MAP[Math.floor(this.x / 10 + 1)]
@@ -72,6 +82,9 @@ class Player extends ObjectClass {
           Math.PI / 2;
     }
     if (e === "ArrowRight") {
+      if (this.fireDirection < 0){
+        this.fireDirection = -this.fireDirection;
+      }
       this.direction =
         Math.atan(
           (Constants.MAP[Math.floor(this.x / 10 + 1)] -
@@ -86,20 +99,16 @@ class Player extends ObjectClass {
 
   // Stop the player's movement
   stop(e) {
-    this.friction = Constants.PLAYER_FRICTION;
+    if ((e === "ArrowRight" && this.direction >0)|| (e === "ArrowLeft" && this.direction<0)){
+      this.friction = Constants.PLAYER_FRICTION;
+    }
   }
 
   fireDirectionMove(e) {
     if (e === "KeyQ") {
-      if (this.fireDirection <= -Math.PI / 2) {
-        this.fireDirection = -Math.PI / 2;
-        this.angleSpeed = 0;
-      } else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+      this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
     } else if (e === "KeyE") {
-      if (this.fireDirection >= Math.PI / 2) {
-        this.fireDirection = Math.PI / 2;
-        this.angleSpeed = 0;
-      } else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+      this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
     }
   }
 
@@ -111,7 +120,6 @@ class Player extends ObjectClass {
   fire() {
     if (this.fireCooldown <= 0) {
       this.fireCooldown = this.fireCooldowntime;
-      console.log(this.fireCooldown);
       return new Bullet(
         this,
         this.x,

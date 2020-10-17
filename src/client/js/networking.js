@@ -1,10 +1,14 @@
-// Learn more about this file at:
-// https://victorzhou.com/blog/build-an-io-game-part-1/#4-client-networking
-
 import io from "socket.io-client";
 import { throttle } from "throttle-debounce";
 import { processGameUpdate } from "./state";
-import { getCharacterNum } from "./render";
+
+const $id = (element) => {
+  return document.getElementById(element);
+};
+
+const alertPage = $id("disconnect-window");
+const alertTitle = $id("disconnect-title");
+const alertButton = $id("reconnect-button");
 
 const Constants = require("../../shared/constants");
 
@@ -14,6 +18,7 @@ const socketProtocol = window.location.protocol.includes("https")
 const socket = io(`${socketProtocol}://${window.location.host}`, {
   reconnection: false,
 });
+
 const connectedPromise = new Promise((resolve) => {
   socket.on("connect", () => {
     // eslint-disable-next-line no-console
@@ -29,9 +34,9 @@ export const connect = (onGameOver) =>
     socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
     socket.on("disconnect", () => {
       // eslint-disable-next-line no-console
-      console.log("Disconnected from server.");
-      document.getElementById("disconnect-window").classList.remove("hidden");
-      document.getElementById("reconnect-button").onclick = () => {
+      console.log("Disconnected from server...");
+      alertPage.classList.remove("hidden");
+      alertButton.onclick = () => {
         window.location.reload();
       };
     });
@@ -43,6 +48,26 @@ export const play = (roomName, characterSelected) => {
     [window.innerWidth, window.innerHeight],
     characterSelected,
   ]);
+};
+
+export const queueEnd = new Promise((resolve) => {
+  socket.on(Constants.MSG_TYPES.QUEUE_END, () => {
+    resolve();
+  });
+});
+
+export const checkRoom = (roomID) => {
+  socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, roomID);
+  socket.on(Constants.MSG_TYPES.CHECK_ROOMNAME, (num) => {
+    if (`${num}` === "2") {
+      alertPage.classList.remove("hidden");
+      alertTitle.innerHTML = "ROOM FULL ...";
+      alertButton.innerHTML = "Change a Room";
+      alertButton.onclick = () => {
+        window.location.reload();
+      };
+    }
+  });
 };
 
 export const updateDirection = throttle(20, (dir) => {
