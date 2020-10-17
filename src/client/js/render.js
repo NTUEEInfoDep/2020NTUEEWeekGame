@@ -12,7 +12,7 @@ const {
   PLAYER_HP_COEF,
 } = Constants;
 
-const canvas = document.getElementById("game-canvas");
+const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 function setCanvasDimensions() {
@@ -57,10 +57,10 @@ function renderPlayer(me, player) {
   }
 
   let playerStyle;
-  if (role === 1) playerStyle = "num1.png";
-  else if (role === 2) playerStyle = "num2.png";
-  else if (role === 3) playerStyle = "num3.png";
-  else playerStyle = "num4.png";
+  if (role === 1) playerStyle = "crt1.png";
+  else if (role === 2) playerStyle = "crt2.png";
+  else if (role === 3) playerStyle = "crt3.png";
+  else playerStyle = "crt4.png";
 
   ctx.drawImage(
     getAsset(playerStyle),

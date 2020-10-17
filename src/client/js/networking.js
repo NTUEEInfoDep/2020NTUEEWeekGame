@@ -42,11 +42,11 @@ export const connect = (onGameOver) =>
     });
   });
 
-export const play = (roomName, characterSelected) => {
+export const play = (roomName, crtSelected) => {
   socket.emit(Constants.MSG_TYPES.JOIN_GAME, [
     roomName,
     [window.innerWidth, window.innerHeight],
-    characterSelected,
+    crtSelected,
   ]);
 };
 

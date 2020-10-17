@@ -3,14 +3,12 @@ const ASSET_NAMES = [
   "map1.png",
 
   // character
-  "ship.svg",
-  "num1.png",
-  "num2.png",
-  "num3.png",
-  "num4.png",
+  "crt1.png",
+  "crt2.png",
+  "crt3.png",
+  "crt4.png",
 
   // bullet
-  "bullet.svg",
   "bullet1.png",
   "bullet2.png",
   "bullet3.png",

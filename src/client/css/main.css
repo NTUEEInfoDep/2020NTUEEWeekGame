@@ -27,9 +27,9 @@ canvas {
   height: 100%;
 }
 
-/* Play Menu */
+/* Join Page */
 
-#play-menu {
+#join-page {
   top: 50%;
   left: 50%;
   position: fixed;
@@ -48,27 +48,52 @@ canvas {
   color: black;
 }
 
-#play-menu #subtitle {
+#join-page-subtitle {
   font-size: 1rem;
   font-family: "Arvo";
 }
 
-#play-menu #title {
+#join-page-title {
   overflow: visible;
   font-size: 8rem;
   font-family: "Pdark";
   line-height: 8rem;
 }
 
-#play-menu #room-id {
+#room-id-input {
   margin: 1.5rem 0 0;
   border: none;
   font-size: 1.5rem;
-  border-bottom: 0.1rem solid black;
+  font-family: "Arvo";
   text-align: center;
 }
 
-#play-menu button {
+#room-id-input:hover {
+  opacity: 0.5;
+  border-bottom: 0.1rem solid black;
+  letter-spacing: 0.5rem;
+  margin-right: -0.5rem;
+  transition: all 0.4s ease 0s;
+}
+
+#room-id-input:focus {
+  border-bottom: 0.1rem solid black;
+  opacity: 0.5;
+  letter-spacing: 0rem;
+  margin-right: 0rem;
+}
+
+#room-id-input::placeholder {
+  color: black;
+  opacity: 1;
+  background-color: white;
+  font-size: 2rem;
+  font-family: "Righteous";
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+#random-button {
   color: black;
   background-color: white;
   font-size: 2rem;
@@ -78,21 +103,21 @@ canvas {
   transition: all 0.4s ease 0s;
 }
 
-#play-menu button:hover {
-  letter-spacing: 3rem;
-  margin-right: -3rem;
+#random-button:hover {
+  letter-spacing: 1rem;
+  margin-right: -1rem;
   transition: all 0.4s ease 0s;
 }
 
-#play-menu #or {
+#join-page-or {
   padding: 0.5rem 0;
   font-size: 1rem;
   font-family: "Arvo";
 }
 
-/* Mode Menu */
+/* Character Page */
 
-#mode-menu {
+#crt-page {
   position: fixed;
   width: 80%;
   top: 50%;
@@ -105,20 +130,25 @@ canvas {
   border-radius: 30px;
   padding: 3rem;
   background-color: white;
-  font-size: 2rem;
 }
 
-#mode-menu p {
+#crt-page-title {
+  font-size: 3rem;
   font-family: "Kalam";
 }
 
-#mode-menu #character-containers {
+#crt-page p {
+  font-size: 2rem;
+  font-family: "Kalam";
+}
+
+#crt-page #crt-containers {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.characterContainer {
+.crtContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -128,17 +158,17 @@ canvas {
   font-family: "Kalam";
 }
 
-.characterContainer:hover {
+.crtContainer:hover {
   transition: all 0.4s ease 0s;
   border-bottom: 0.5rem solid black;
 }
 
-.characterContainer img {
+.crtContainer img {
   width: 8rem;
   padding: 1rem;
 }
 
-.characterContainer p {
+.crtContainer p {
   font-size: 1.5rem;
 }
 
@@ -326,7 +356,7 @@ p span {
 /* Mobile Devises */
 
 /* @media screen and (max-width: 90%) {
-  #play-menu {
+  #join-page {
     padding: 10px 15px;
     min-width: 280px;
   }

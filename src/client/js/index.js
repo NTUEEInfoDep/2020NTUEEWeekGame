@@ -10,18 +10,18 @@ const $id = (element) => {
   return document.getElementById(element);
 };
 
-const joinPage = $id("play-menu");
-const roomIDInput = $id("room-id");
-const roomIDButton = $id("play-menu-enter");
-const randomButton = $id("play-menu-random");
+const joinPage = $id("join-page");
+const joinInput = $id("join-page-input");
+const roomIDInput = $id("room-id-input");
+const randomButton = $id("random-button");
 
-const chrtPage = $id("mode-menu");
-const chrtInput = $id("crt-input");
-const chrts = document.getElementsByClassName("characterContainer");
+const crtPage = $id("crt-page");
+const crtInput = $id("crt-page-input");
+const crts = document.getElementsByClassName("crtContainer");
 
 const rulePage = $id("game-rule");
+const ruleInput = $id("rule-page-input");
 const ruleBlinker = $id("blinker");
-const ruleInput = $id("rule-input");
 
 const gameoverPage = $id("gameover");
 const winCard = $id("win");
@@ -38,7 +38,7 @@ function gameStart() {
 function step3Rule(n) {
   play(roomIDInput.value, n);
 
-  chrtPage.classList.add("hidden");
+  crtPage.classList.add("hidden");
   rulePage.classList.remove("hidden");
 
   if (roomIDInput.value === "random") {
@@ -73,10 +73,10 @@ function step2() {
   //
 
   joinPage.classList.add("hidden");
-  chrtPage.classList.remove("hidden");
+  crtPage.classList.remove("hidden");
 
-  chrtInput.focus();
-  chrtInput.onkeydown = (e) => {
+  crtInput.focus();
+  crtInput.onkeydown = (e) => {
     if (e.code === "Digit1" || e.code === "Numpad1") step3Rule(1);
     else if (e.code === "Digit2" || e.code === "Numpad2") step3Rule(2);
     else if (e.code === "Digit3" || e.code === "Numpad3") step3Rule(3);
@@ -84,21 +84,24 @@ function step2() {
     else if (e.code === "Digit5" || e.code === "Numpad5" || e.code === "Enter")
       step3Rule(Math.floor(4 * Math.random()) + 1);
   };
-  chrts[0].onclick = () => step3Rule(1);
-  chrts[1].onclick = () => step3Rule(2);
-  chrts[2].onclick = () => step3Rule(3);
-  chrts[3].onclick = () => step3Rule(4);
-  chrts[4].onclick = () => step3Rule(Math.floor(4 * Math.random()) + 1);
+  crts[0].onclick = () => step3Rule(1);
+  crts[1].onclick = () => step3Rule(2);
+  crts[2].onclick = () => step3Rule(3);
+  crts[3].onclick = () => step3Rule(4);
+  crts[4].onclick = () => step3Rule(Math.floor(4 * Math.random()) + 1);
 }
 
 function step1() {
   joinPage.classList.remove("hidden");
 
-  roomIDInput.focus();
+  joinInput.focus();
+  joinInput.onkeydown = (e) => {
+    if (e.code === "Enter") step2();
+  };
+  roomIDInput.value = "";
   roomIDInput.onkeydown = (e) => {
     if (e.code === "Enter") step2();
   };
-  roomIDButton.onclick = step2;
   randomButton.onclick = step2;
 }
 
@@ -121,7 +124,7 @@ function onGameOver(reason) {
 
       step1();
     };
-  }, 10000);
+  }, 3000);
 }
 
 Promise.all([connect(onGameOver), downloadAssets()])

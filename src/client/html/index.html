@@ -13,91 +13,103 @@
       rel="stylesheet"
       type="text/css"
     />
-
-    <!-- <link rel="shortcut icon" href="../../../public/assets/icon64.png" /> -->
   </head>
 
   <body>
-    <!-- Game Canvas -->
-    <canvas id="game-canvas"></canvas>
+    <!-- Canvas -->
+    <canvas id="canvas"></canvas>
 
-    <!-- Play Menu -->
-    <div class="hidden" id="play-menu">
-      <div id="subtitle">ntu&nbsp;EE&nbsp;week&nbsp;&nbsp;2020.10.19~23</div>
-      <div id="title">TEnET</div>
-      <input type="text" id="room-id" maxlength="25" placeholder="Room ID" />
-      <button id="play-menu-enter">enter</button>
-      <p id="or">or</p>
-      <button id="play-menu-random">random</button>
+    <!-- Join Page -->
+    <div class="hidden" id="join-page">
+      <input class="transparent" id="join-page-input" />
+
+      <div id="join-page-subtitle">
+        ntu&nbsp;EE&nbsp;week&nbsp;&nbsp;2020.10.19~23
+      </div>
+      <div id="join-page-title">TEnET</div>
+
+      <input
+        id="room-id-input"
+        type="text"
+        maxlength="18"
+        placeholder="Join a Room"
+      />
+      <div id="join-page-or">or</div>
+      <button id="random-button">Random Pair</button>
     </div>
 
-    <!-- Mode Menu -->
-    <div class="hidden" id="mode-menu">
-      <div id="title">
-        <p>Choose&nbsp;Your&nbsp;Character!</p>
-      </div>
-      <input class="transparent" id="crt-input" />
-      <div id="character-containers">
-        <div class="characterContainer" id="character-container-1">
-          <div id="character-pic-1">
-            <img src="/assets/num1.png" class="characterPic" />
+    <!-- Character Page -->
+    <div class="hidden" id="crt-page">
+      <input class="transparent" id="crt-page-input" />
+
+      <div id="crt-page-title">Choose&nbsp;Your&nbsp;Character!</div>
+
+      <div id="crt-containers">
+        <div class="crtContainer" id="crt-container-1">
+          <div id="crt-pic-1">
+            <img src="/assets/crt1.png" class="crtPic" />
           </div>
-          <!-- <p class="character-name" id="character-name-1">Cat</p> -->
+          <p class="crt-name" id="crt-name-1">Cat</p>
         </div>
 
-        <div class="characterContainer" id="character-container-2">
-          <div id="character-pic-2">
-            <img src="/assets/num2.png" class="characterPic" />
+        <div class="crtContainer" id="crt-container-2">
+          <div id="crt-pic-2">
+            <img src="/assets/crt2.png" class="crtPic" />
           </div>
-          <!-- <p class="character-name" id="character-name-2">Pink Ass</p> -->
+          <p class="crt-name" id="crt-name-2">Pink Ass</p>
         </div>
 
-        <div class="characterContainer" id="character-container-3">
-          <div id="character-pic-3">
-            <img src="/assets/num3.png" class="characterPic" />
+        <div class="crtContainer" id="crt-container-3">
+          <div id="crt-pic-3">
+            <img src="/assets/crt3.png" class="crtPic" />
           </div>
-          <!-- <p class="character-name" id="character-name-3">Pudding</p> -->
+          <p class="crt-name" id="crt-name-3">Pudding</p>
         </div>
 
-        <div class="characterContainer" id="character-container-4">
-          <div id="character-pic-4">
-            <img src="/assets/num4.png" class="characterPic" />
+        <div class="crtContainer" id="crt-container-4">
+          <div id="crt-pic-4">
+            <img src="/assets/crt4.png" class="crtPic" />
           </div>
-          <!-- <p class="character-name" id="character-name-4">Banana</p> -->
+          <p class="crt-name" id="crt-name-4">Banana</p>
         </div>
 
-        <div class="characterContainer" id="character-container-random">
-          <div id="character-pic-random">
-            <img src="/assets/randomCharacter.png" class="characterPic" />
+        <div class="crtContainer">
+          <p class="crt-name">or</p>
+        </div>
+
+        <div class="crtContainer" id="crt-container-random">
+          <div id="crt-pic-random">
+            <img src="/assets/crtRandom.png" class="crtPic" />
           </div>
-          <!-- <p class="character-name" id="character-name-random">RANDOM</p> -->
+          <p class="crt-name" id="crt-name-random">RANDOM</p>
         </div>
       </div>
     </div>
 
     <!-- Game Rule -->
     <div class="hidden" id="game-rule">
+      <input class="transparent" id="rule-page-input" />
       <div id="rule-title">
-      <p>
-        <b>Stay alive and shoot other players!!!</b>
-        <br />
-        "left" and "right" for movement
-        <br />
-        "Q" and "E" for shooting angle
-        <br />
-        "WASD" for view point
-        <br />
-        <span style="text-decoration: line-through">
-          Hold "space" for shooting strength.
-        </span>
-        <br />
-      </p>
-      <div class="blink" id="blinker"><p>===</p></div>
-      <input class="transparent" id="rule-input" />
+        <p>
+          <b>Stay alive and shoot other players!!!</b>
+          <br />
+          "left" and "right" for movement
+          <br />
+          "Q" and "E" for shooting angle
+          <br />
+          "WASD" for view point
+          <br />
+          <span style="text-decoration: line-through">
+            Hold "space" for shooting strength.
+          </span>
+          <br />
+        </p>
+        <div class="blink" id="blinker"><p>===</p></div>
+      </div>
     </div>
-  </div>
     <!-- Game Over -->
     <div class="hidden" id="gameover">
+      <input class="transparent" id="gameover-input" />
       <div class="hidden" id="win">
         <p>WINNER</p>
         <img src="/assets/win.png" />
@@ -106,7 +118,6 @@
         <p>LOSER</p>
         <img src="/assets/lose.png" />
       </div>
-      <input class="transparent" id="gameover-input" />
     </div>
 
     <!-- Disconnect Window -->
@@ -115,6 +126,5 @@
         <h2 id="disconnect-title">Disconnected from Server</h2>
         <button id="reconnect-button">RECONNECT</button>
       </div>
-
   </body>
 </html>
