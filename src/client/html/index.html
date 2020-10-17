@@ -45,50 +45,41 @@
       <div id="crt-page-title">Choose&nbsp;Your&nbsp;Character!</div>
 
       <div id="crt-containers">
-        <div class="crtContainer" id="crt-container-1">
-          <div id="crt-pic-1">
-            <img src="/assets/crt1.png" class="crtPic" />
-          </div>
-          <p class="crt-name" id="crt-name-1">Cat</p>
-        </div>
-
-        <div class="crtContainer" id="crt-container-2">
-          <div id="crt-pic-2">
-            <img src="/assets/crt2.png" class="crtPic" />
-          </div>
-          <p class="crt-name" id="crt-name-2">Pink Ass</p>
-        </div>
-
-        <div class="crtContainer" id="crt-container-3">
-          <div id="crt-pic-3">
-            <img src="/assets/crt3.png" class="crtPic" />
-          </div>
-          <p class="crt-name" id="crt-name-3">Pudding</p>
-        </div>
-
-        <div class="crtContainer" id="crt-container-4">
-          <div id="crt-pic-4">
-            <img src="/assets/crt4.png" class="crtPic" />
-          </div>
-          <p class="crt-name" id="crt-name-4">Banana</p>
+        <div class="crtContainer">
+          <img src="/assets/crt1.png" />
+          <p>Cat</p>
         </div>
 
         <div class="crtContainer">
-          <p class="crt-name">or</p>
+          <img src="/assets/crt2.png" />
+          <p>Pink Ass</p>
         </div>
 
-        <div class="crtContainer" id="crt-container-random">
-          <div id="crt-pic-random">
-            <img src="/assets/crtRandom.png" class="crtPic" />
-          </div>
-          <p class="crt-name" id="crt-name-random">RANDOM</p>
+        <div class="crtContainer">
+          <img src="/assets/crt3.png" />
+          <p>Pudding</p>
+        </div>
+
+        <div class="crtContainer">
+          <img src="/assets/crt4.png" />
+          <p>Banana</p>
+        </div>
+
+        <div class="crtContainer" id="crt-page-or">
+          <p>or</p>
+        </div>
+
+        <div class="crtContainer">
+          <img src="/assets/crtRandom.png" />
+          <p>RANDOM</p>
         </div>
       </div>
     </div>
 
-    <!-- Game Rule -->
-    <div class="hidden" id="game-rule">
+    <!-- Rule Page -->
+    <div class="hidden" id="rule-page">
       <input class="transparent" id="rule-page-input" />
+
       <div id="rule-title">
         <p>
           <b>Stay alive and shoot other players!!!</b>
@@ -97,34 +88,35 @@
           <br />
           "Q" and "E" for shooting angle
           <br />
-          "WASD" for view point
+          "WASD" for sight movement
           <br />
-          <span style="text-decoration: line-through">
-            Hold "space" for shooting strength.
-          </span>
+          <span>Hold "space" for shooting strength.</span>
           <br />
         </p>
         <div class="blink" id="blinker"><p>===</p></div>
       </div>
     </div>
+
     <!-- Game Over -->
-    <div class="hidden" id="gameover">
+    <div class="hidden" id="game-over-page">
       <input class="transparent" id="gameover-input" />
+
       <div class="hidden" id="win">
         <p>WINNER</p>
         <img src="/assets/win.png" />
       </div>
+
       <div class="hidden" id="lose">
         <p>LOSER</p>
         <img src="/assets/lose.png" />
       </div>
     </div>
 
-    <!-- Disconnect Window -->
-    <div class="hidden" id="disconnect-window">
+    <!-- Alert Page -->
+    <div class="hidden" id="alert-page">
       <div>
-        <h2 id="disconnect-title">Disconnected from Server</h2>
-        <button id="reconnect-button">RECONNECT</button>
+        <h2 id="alert-title">Disconnected from Server</h2>
+        <button id="alert-button">RECONNECT</button>
       </div>
   </body>
 </html>

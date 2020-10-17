@@ -19,11 +19,11 @@ const crtPage = $id("crt-page");
 const crtInput = $id("crt-page-input");
 const crts = document.getElementsByClassName("crtContainer");
 
-const rulePage = $id("game-rule");
+const rulePage = $id("rule-page");
 const ruleInput = $id("rule-page-input");
 const ruleBlinker = $id("blinker");
 
-const gameoverPage = $id("gameover");
+const gameOverPage = $id("game-over-page");
 const winCard = $id("win");
 const loseCard = $id("lose");
 
@@ -88,7 +88,7 @@ function step2() {
   crts[1].onclick = () => step3Rule(2);
   crts[2].onclick = () => step3Rule(3);
   crts[3].onclick = () => step3Rule(4);
-  crts[4].onclick = () => step3Rule(Math.floor(4 * Math.random()) + 1);
+  crts[5].onclick = () => step3Rule(Math.floor(4 * Math.random()) + 1);
 }
 
 function step1() {
@@ -97,6 +97,7 @@ function step1() {
   joinInput.focus();
   joinInput.onkeydown = (e) => {
     if (e.code === "Enter") step2();
+    else roomIDInput.focus();
   };
   roomIDInput.value = "";
   roomIDInput.onkeydown = (e) => {
@@ -110,15 +111,15 @@ function onGameOver(reason) {
   console.log(`<><><> This player ${reason}s <><><>`);
 
   stopCapturingInput();
-  gameoverPage.classList.remove("hidden");
+  gameOverPage.classList.remove("hidden");
   if (reason === "win") winCard.classList.remove("hidden");
   else if (reason === "lose") loseCard.classList.remove("hidden");
 
   setTimeout(() => {
-    gameoverPage.onclick = () => {
+    gameOverPage.onclick = () => {
       stopRendering();
 
-      gameoverPage.classList.add("hidden");
+      gameOverPage.classList.add("hidden");
       winCard.classList.add("hidden");
       loseCard.classList.add("hidden");
 

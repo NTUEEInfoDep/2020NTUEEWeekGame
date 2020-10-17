@@ -133,8 +133,10 @@ canvas {
 }
 
 #crt-page-title {
+  padding: 0 0 1rem;
   font-size: 3rem;
   font-family: "Kalam";
+  font-weight: bold;
 }
 
 #crt-page p {
@@ -142,7 +144,7 @@ canvas {
   font-family: "Kalam";
 }
 
-#crt-page #crt-containers {
+#crt-containers {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -155,7 +157,6 @@ canvas {
   border-radius: 0.6rem;
   border-bottom: 0.5rem solid white;
   padding: 0 0.6rem;
-  font-family: "Kalam";
 }
 
 .crtContainer:hover {
@@ -165,16 +166,25 @@ canvas {
 
 .crtContainer img {
   width: 8rem;
-  padding: 1rem;
+  padding: 1rem 1rem 0;
 }
 
 .crtContainer p {
   font-size: 1.5rem;
+  font-family: "Kalam";
 }
 
-/* Game Rule */
+#crt-page-or {
+  border-bottom: none;
+}
 
-#game-rule {
+#crt-page-or p {
+  padding: 2rem;
+}
+
+/* Rule Page */
+
+#rule-page {
   top: 50%;
   left: 50%;
   position: fixed;
@@ -185,23 +195,23 @@ canvas {
   align-items: center;
   text-align: center;
   border-radius: 30px;
-  padding: 3rem 3rem 0;
+  padding: 3rem;
   background-color: white;
 }
 
-#game-rule #rule-title {
+#rule-page #rule-title {
   font-size: 3rem;
   line-height: 2rem;
   font-family: "Kalam";
 }
 
-#game-rule p {
+#rule-page p {
   font-size: 1.5rem;
   line-height: 2rem;
   font-family: "Kalam";
 }
 
-#game-rule #blinker {
+#rule-page #blinker {
   padding: 1rem 0 0;
   color: crimson;
   text-transform: uppercase;
@@ -211,7 +221,7 @@ canvas {
 
 /* Game Over */
 
-#gameover {
+#game-over-page {
   position: fixed;
   top: 0;
   left: 0;
@@ -220,7 +230,7 @@ canvas {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-#gameover div {
+#game-over-page div {
   top: 50%;
   left: 50%;
   position: fixed;
@@ -239,7 +249,7 @@ canvas {
   transition: all 0.4s ease 0s;
 }
 
-#gameover p {
+#game-over-page p {
   color: black;
   font-size: 5rem;
   font-family: "Pdark";
@@ -249,13 +259,13 @@ canvas {
   padding: 1rem;
 }
 
-#gameover img {
+#game-over-page img {
   width: 20rem;
 }
 
-/* Disconnect Window */
+/* Alert Page */
 
-#disconnect-window {
+#alert-page {
   position: fixed;
   top: 0;
   left: 0;
@@ -264,7 +274,7 @@ canvas {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
-#disconnect-window div {
+#alert-page div {
   top: 50%;
   left: 50%;
   position: fixed;
@@ -281,31 +291,11 @@ canvas {
   text-align: center;
   background-color: white;
   color: black;
-  font-family: "Arvo";
+  font-size: 2rem;
+  font-family: "Kalam";
 }
 
-.gameover-board {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-}
-
-.gameover-board div {
-  font-size: 45px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  padding: 25px 30px;
-  background-color: white;
-  border-radius: 5px;
-  text-align: center;
-}
-
-#disconnect-window button {
+#alert-button {
   color: black;
   background-color: white;
   font-size: 2rem;
@@ -315,7 +305,7 @@ canvas {
   transition: all 0.4s ease 0s;
 }
 
-#disconnect-window button:hover {
+#alert-button:hover {
   letter-spacing: 1rem;
   margin-right: -1rem;
   transition: all 0.4s ease 0s;
@@ -337,7 +327,7 @@ p span {
 }
 
 .blink {
-  animation-duration: 1s;
+  animation-duration: 0.8s;
   animation-name: blink;
   animation-iteration-count: infinite;
   animation-direction: alternate;

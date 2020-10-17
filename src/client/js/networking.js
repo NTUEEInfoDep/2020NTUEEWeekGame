@@ -6,9 +6,9 @@ const $id = (element) => {
   return document.getElementById(element);
 };
 
-const alertPage = $id("disconnect-window");
-const alertTitle = $id("disconnect-title");
-const alertButton = $id("reconnect-button");
+const alertPage = $id("alert-page");
+const alertTitle = $id("alert-title");
+const alertButton = $id("alert-button");
 
 const Constants = require("../../shared/constants");
 
@@ -60,8 +60,10 @@ export const checkRoom = (roomID) => {
   socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, roomID);
   socket.on(Constants.MSG_TYPES.CHECK_ROOMNAME, (num) => {
     if (`${num}` === "2") {
+      $id("join-page").classList.add("hidden");
+      $id("crt-page").classList.add("hidden");
       alertPage.classList.remove("hidden");
-      alertTitle.innerHTML = "ROOM FULL ...";
+      alertTitle.innerHTML = "Room Full ...";
       alertButton.innerHTML = "Change a Room";
       alertButton.onclick = () => {
         window.location.reload();
