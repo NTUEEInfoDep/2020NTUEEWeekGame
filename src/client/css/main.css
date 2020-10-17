@@ -106,7 +106,10 @@ canvas {
   padding: 3rem;
   background-color: white;
   font-size: 2rem;
-  font-family: "Permanent Marker";
+}
+
+#mode-menu p {
+  font-family: "Kalam";
 }
 
 #mode-menu #character-containers {
@@ -283,8 +286,8 @@ canvas {
 }
 
 #disconnect-window button:hover {
-  letter-spacing: 3rem;
-  margin-right: -3rem;
+  letter-spacing: 1rem;
+  margin-right: -1rem;
   transition: all 0.4s ease 0s;
 }
 

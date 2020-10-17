@@ -1,10 +1,9 @@
-// Learn more about this file at:
-// https://victorzhou.com/blog/build-an-io-game-part-1/#6-client-input-%EF%B8%8F
 import { updateDirection, updateMovement, updateCamera } from "./networking";
 
 function handleInput(x, y) {
   const dir = Math.atan2(x - window.innerWidth / 2, window.innerHeight / 2 - y);
   updateDirection(dir);
+
   const normalizedX = (x - window.innerWidth / 2) / (window.innerWidth / 2);
   const normalizedY = (y - window.innerHeight / 2) / (window.innerHeight / 2);
   updateCamera([

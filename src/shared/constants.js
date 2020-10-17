@@ -5,11 +5,11 @@ module.exports = Object.freeze({
   PLAYER_SPEED: 100,
   PLAYER_FIRE_COOLDOWN: 0.5,
   PLAYER_ANGLE_SPEED: 2,
-  PLAYER_HP: {
+  PLAYER_HP_COEF: {
     Cat: 1.5,
     PinkAss: 1.3,
     Pudding: 0.8,
-    Banana: 1
+    Banana: 1,
   },
 
   CAMERA_SPEED: 300,
