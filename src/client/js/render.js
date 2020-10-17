@@ -3,6 +3,10 @@
 import { debounce } from "throttle-debounce";
 import { getAsset } from "./assets";
 import { getCurrentState } from "./state";
+<<<<<<< Updated upstream
+=======
+// import { getRole } from "./index.js";
+>>>>>>> Stashed changes
 
 const Constants = require("../../shared/constants");
 const styleNum = Math.random();
@@ -69,12 +73,41 @@ function renderPlayer(me, player) {
     2
   );
   context.fillStyle = "red";
+<<<<<<< Updated upstream
   context.fillRect(
     canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / PLAYER_MAX_HP,
     canvasY + PLAYER_RADIUS + 8,
     PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
     2
   );
+=======
+  if (role === 1) {
+    context.fillRect(
+      canvasX -
+        PLAYER_RADIUS +
+        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 9),
+      canvasY + PLAYER_RADIUS + 8,
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 9)),
+      2
+    );
+  } else if (role === 2) {
+    context.fillRect(
+      canvasX -
+        PLAYER_RADIUS +
+        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 2),
+      canvasY + PLAYER_RADIUS + 8,
+      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 2)),
+      2
+    );
+  } else {
+    context.fillRect(
+      canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / PLAYER_MAX_HP,
+      canvasY + PLAYER_RADIUS + 8,
+      PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
+      2
+    );
+  }
+>>>>>>> Stashed changes
 
   // Draw fire range
   context.save();

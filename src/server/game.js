@@ -2,6 +2,7 @@ const { join } = require("lodash");
 const Constants = require("../shared/constants");
 const Player = require("./player");
 const applyCollisions = require("./collisions");
+const applyBigSkill = require('./applyBigSkill');
 
 class Game {
   constructor() {
@@ -10,6 +11,8 @@ class Game {
     this.sockets = {};
     this.players = {};
     this.bullets = [];
+    //
+    this.skillInfos = [];
     this.lastUpdateTime = Date.now();
     this.shouldSendUpdate = false;
     setInterval(this.update.bind(this), 1000 / 60);
@@ -80,7 +83,29 @@ class Game {
           const newBullet = player.fire();
           if (newBullet) this.bullets.push(newBullet);
         }
+<<<<<<< Updated upstream
         if (key === "ArrowLeft" || key === "ArrowRight") player.move(keyEvent);
+=======
+
+        // Emit big skill
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // Store all big skills emitted by all players
+        if (key === "Enter"){
+          const skillInfo = player.emitBigSkill();
+          // If not null
+          this.skillInfos.push(skillInfo);
+        }
+
+        if (key === "ArrowLeft" || key === "ArrowRight") {
+          player.move(key);
+          // camera.follow(player);
+        }
+        if (key === "ShiftLeft") camera.follow(player);
+        if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
+        if (key === "KeyQ" || key === "KeyE") player.fireDirectionMove(key);
+>>>>>>> Stashed changes
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent);
@@ -134,6 +159,17 @@ class Game {
     this.bullets = this.bullets.filter(
       (bullet) => !destroyedBullets.includes(bullet)
     );
+
+    // Switch mode according to the casted big skill
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    applyBigSkill(
+      Object.values(this.players),
+      this.skillInfos
+    )
+    // Initialize
+    this.skillInfos = [];
 
     // Check if any game ended in the playrooms
     Object.keys(this.playrooms).forEach((roomname) => {

@@ -13,6 +13,20 @@ class Player extends ObjectClass {
     this.fireCooldown = 0;
     this.friction = 0;
     this.score = 0;
+<<<<<<< Updated upstream
+=======
+    this.angleSpeed = 0;
+    this.bigSkillTimes = 2;
+    this.mode = 'normal';
+    // Container for suffered skills' timers
+    /*
+    Format: {
+      mode: string,
+      timer: Promise
+    }
+    */
+    this.sufferFrom = [];
+>>>>>>> Stashed changes
   }
 
   // Returns a newly created bullet, or null.
@@ -40,7 +54,9 @@ class Player extends ObjectClass {
     return null;
   }
 
+  // According to mode(big skill emitted)
   // Receive keyboard input and move character
+<<<<<<< Updated upstream
   move(e) {
     if (e[1] === "ArrowLeft") {
       this.direction = -Math.PI / 2;
@@ -50,12 +66,96 @@ class Player extends ObjectClass {
     }
     this.speed = Constants.PLAYER_SPEED;
   }
+=======
+	move(e) {
+		if (this.mode === 'fart'){
+			// Reverse direction
+			if (e === "ArrowLeft"){
+				e = "ArrowRight";
+			} 
+			
+			if (e === "ArrowRight"){
+				e = "ArrowLeft";
+			}
+		} else if (this.mode === 'snow'){
+		  return;
+    }
+
+		// Move
+		if (e === "ArrowLeft") {
+			if (
+			  Constants.MAP[Math.floor(this.x / 10)] <
+			  Constants.MAP[Math.floor(this.x / 10 + 1)]
+			)
+			  this.direction = Math.atan(
+				(Constants.MAP[Math.floor(this.x / 10)] -
+				  Constants.MAP[Math.floor(this.x / 10 + 1)]) /
+				  10
+			  );
+			else
+			  this.direction =
+				Math.atan(
+				  (Constants.MAP[Math.floor(this.x / 10) + 1] -
+					Constants.MAP[Math.floor(this.x / 10)]) /
+					10
+				) -
+				Math.PI / 2;
+		  }
+		  if (e === "ArrowRight") {
+			this.direction =
+			  Math.atan(
+				(Constants.MAP[Math.floor(this.x / 10 + 1)] -
+				  Constants.MAP[Math.floor(this.x / 10)]) /
+				  10
+			  ) +
+			  Math.PI / 2;
+		  }
+		  this.friction = 0;
+		  this.speed = Constants.PLAYER_SPEED;
+    }
+
+>>>>>>> Stashed changes
 
   // Stop the player's movement
   stop(e) {
     this.friction = Constants.PLAYER_FRICTION;
   }
 
+<<<<<<< Updated upstream
+=======
+  // According to mode(big skill emitted)
+  fireDirectionMove(e) {
+    // Reverse direction
+		if (this.mode === 'fart'){
+			if (e === "KeyQ"){
+				e = "KeyE";
+			} else if (e === "KeyE"){
+				e = "KeyQ";
+			}
+		} else if (this.mode === 'snow'){
+      return
+    }
+
+		if (e === "KeyQ") {
+		  if (this.fireDirection <= -Math.PI / 2) {
+			this.fireDirection = -Math.PI / 2;
+			this.angleSpeed = 0;
+		  } else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+		} else if (e === "KeyE") {
+		  if (this.fireDirection >= Math.PI / 2) {
+			this.fireDirection = Math.PI / 2;
+			this.angleSpeed = 0;
+		  } else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+    }
+  }
+
+
+
+  fireDirectionStop(e) {
+    this.angleSpeed = 0;
+  }
+
+>>>>>>> Stashed changes
   // Fire a bullet with cooldown limit
   fire() {
     if (this.fireCooldown <= 0) {
@@ -71,6 +171,8 @@ class Player extends ObjectClass {
     return null;
   }
 
+  
+
   takeBulletDamage(role) {
     this.hp -= role.bulletDamage;
   }
@@ -79,6 +181,7 @@ class Player extends ObjectClass {
     this.score += Constants.SCORE_BULLET_HIT;
   }
 
+<<<<<<< Updated upstream
   setFireDirection(dir) {
     if (dir < Constants.FIRE_RANGE_MIN) {
       this.fireDirection = Constants.FIRE_RANGE_MIN;
@@ -87,6 +190,17 @@ class Player extends ObjectClass {
     } else {
       this.fireDirection = dir;
     }
+=======
+
+  // Reveive other big skill
+  takeBigSkill(role) {
+    this.mode = role.bigSkillName;
+  }
+
+  // Back to normal
+  restoreToNormal() {
+    this.mode = "mode";
+>>>>>>> Stashed changes
   }
 
   serializeForUpdate() {
@@ -95,6 +209,7 @@ class Player extends ObjectClass {
       direction: this.direction,
       fireDirection: this.fireDirection,
       hp: this.hp,
+
     };
   }
 }
