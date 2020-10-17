@@ -47,15 +47,11 @@
       const HP_MAX = 128;
       let t = HP_MAX;
       let flag = 1;
-      let val;
+      
       let app = new PIXI.Application({
         view: document.getElementById('game-canvas'),
       });
       
-      //document.body.appendChild(app.view);
-      //app.stage.addChild(PIXI.Sprite.from('map1.png'));
-      //let healthBar;
-      let colour;
 
       function createHealthBar(x, y, w, h, hp) {
         hpContainer = new PIXI.Container();
@@ -118,16 +114,10 @@
         healthBar = createHealthBar(x_value, y_value, 150, 10, t);
         //console.log(t)
         strength = t;
-        //console.log(s)
         window.addEventListener(
 			"keydown",function(e){
-        //console.log(e.keyCode);
 			  if (e.keyCode === 32){
         state = 2;
-       // app.stage.removeChild(healthBar);
-       // console.log('relative_strength =',strength/HP_MAX);
-        //state = 0;
-        //return ;
         }
     })
       }
