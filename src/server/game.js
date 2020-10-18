@@ -104,6 +104,8 @@ class Game {
         this.players[socket.id] = new Banana(socket.id, username, x, y);
       }
     }
+    console.log(this.randomrooms);
+    console.log(this.playrooms);
   }
 
   // Simply remove player from game
@@ -114,6 +116,12 @@ class Game {
 
   // Deal with disconnected player and its room
   removeDisconnectedPlayer(socket) {
+    this.randomrooms.forEach((index) => { 
+      if (index[0] === socket.id){
+        let i = this.randomrooms.indexOf(index);
+        this.randomrooms.splice(index, 1);
+      }
+    });
     Object.keys(this.playrooms).forEach((roomname) => {
       const playerIDs = this.playrooms[roomname];
       if (playerIDs.includes(socket.id)) {
