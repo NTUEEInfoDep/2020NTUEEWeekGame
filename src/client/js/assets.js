@@ -1,6 +1,7 @@
 const ASSET_NAMES = [
   // map
   "map1.png",
+  "map2.png",
 
   // character
   "crt1.png",

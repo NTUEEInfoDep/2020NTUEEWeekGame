@@ -36,14 +36,25 @@ function renderBackground() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function renderMap(me) {
-  ctx.drawImage(
-    getAsset("map1.png"),
-    canvas.width / 2 - me.x,
-    canvas.height / 2 - me.y,
-    MAP_SIZE_LENGTH,
-    MAP_SIZE_WIDTH
-  );
+function renderMap(me, map) {
+  if (map === 0) {
+    ctx.drawImage(
+      getAsset("map1.png"),
+      canvas.width / 2 - me.x,
+      canvas.height / 2 - me.y,
+      MAP_SIZE_LENGTH,
+      MAP_SIZE_WIDTH
+    );
+  }
+  if (map === 1) {
+    ctx.drawImage(
+      getAsset("map2.png"),
+      canvas.width / 2 - me.x,
+      canvas.height / 2 - me.y,
+      MAP_SIZE_LENGTH,
+      MAP_SIZE_WIDTH
+    );
+  }
 }
 
 function renderPlayer(me, player) {
@@ -173,6 +184,12 @@ function renderBullet(me, bullet) {
   );
 }
 
+let map;
+
+export function randommap(rm){
+  map = rm;
+}
+
 function render(powerbar) {
   const { me, bullets, others } = getCurrentState();
   if (!me) {
@@ -180,7 +197,7 @@ function render(powerbar) {
   }
 
   renderBackground();
-  renderMap(me);
+  renderMap(me, map);
   bullets.forEach(renderBullet.bind(null, me));
   others.forEach(renderPlayer.bind(null, me));
   powerbar.update(me, others);

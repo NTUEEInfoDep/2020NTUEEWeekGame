@@ -4,8 +4,8 @@ const Bullet = require("./bullet");
 
 class Banana extends Player {
   // Soft body and strong mind
-  constructor(id, username, x, y) {
-    super(id, username, x, y);
+  constructor(id, username, x, y, map) {
+    super(id, username, x, y, map);
     this.role = 4;
     // life
     this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.Banana;
@@ -29,7 +29,8 @@ class Banana extends Player {
         this.username,
         this.role,
         this.bulletSpeed*power,
-        1
+        1,
+        this.map
       );
     }
     return null;
@@ -46,7 +47,8 @@ class Banana extends Player {
         this.username,
         this.role,
         this.bulletSpeed,
-        4
+        4,
+        this.map
       );
     }
   }
@@ -58,6 +60,10 @@ class Banana extends Player {
       this.mode = mode;
       this.abnormalmodeCooldown = this.abnormalmodeCooldowntime;
     }
+  }
+
+  setmap(map){
+    this.map = map;
   }
 
   serializeForUpdate() {

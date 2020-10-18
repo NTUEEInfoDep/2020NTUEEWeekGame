@@ -4,8 +4,8 @@ const Bullet = require("./bullet");
 
 class PinkAss extends Player {
   // Firm body and nice shape...
-  constructor(id, username, x, y) {
-    super(id, username, x, y);
+  constructor(id, username, x, y, map) {
+    super(id, username, x, y, map);
     this.role = 2;
     // life
     this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.PinkAss;
@@ -17,6 +17,7 @@ class PinkAss extends Player {
     this.fireCooldowntime = 1.3 * Constants.PLAYER_FIRE_COOLDOWN;
     //power
     this.bulletSpeed = 1 * Constants.BULLET_SPEED;
+    this.map = 0;
   }
   fire(power) {
     if (this.fireCooldown <= 0) {
@@ -29,7 +30,8 @@ class PinkAss extends Player {
         this.username,
         this.role,
         this.bulletSpeed*power,
-        1
+        1,
+        this.map
       );
     }
     return null;
@@ -46,7 +48,8 @@ class PinkAss extends Player {
         this.username,
         this.role,
         this.bulletSpeed,
-        2
+        2,
+        this.map
       );
     }
   }
@@ -58,6 +61,10 @@ class PinkAss extends Player {
       this.mode = mode;
       this.abnormalmodeCooldown = this.abnormalmodeCooldowntime;
     }
+  }
+
+  setmap(map){
+    this.map = map;
   }
 
   serializeForUpdate() {

@@ -4,7 +4,7 @@ const Constants = require("../shared/constants");
 // const { plugins } = require("../../webpack.config");
 
 class Player extends ObjectClass {
-  constructor(id, username, x, y) {
+  constructor(id, username, x, y, map) {
     // faces toward left or right, currently right
     super(id, x, y, 0, 0);
     this.username = username;
@@ -21,6 +21,7 @@ class Player extends ObjectClass {
     this.mode = 1;
     this.abnormalmodeCooldown = 0;
     this.abnormalmodeCooldowntime = Constants.PLAYER_MODE_COOLDOWN;
+    this.map = map;
   }
 
   // Returns a newly created bullet, or null.
@@ -39,8 +40,8 @@ class Player extends ObjectClass {
     // Make sure the player stays in bounds
     this.x = Math.max(0, Math.min(Constants.MAP_SIZE_LENGTH, this.x));
     this.y =
-      (Constants.MAP[Math.floor(this.x / 10)] * (10 - (this.x % 10)) +
-        Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) /
+      (Constants.MAP[this.map][Math.floor(this.x / 10)] * (10 - (this.x % 10)) +
+        Constants.MAP[this.map][Math.floor(this.x / 10 + 1)] * (this.x % 10)) /
       10;
 
     this.fireCooldown -= dt;
@@ -82,19 +83,19 @@ class Player extends ObjectClass {
           this.fireDirection = -this.fireDirection;
         }
         if (
-          Constants.MAP[Math.floor(this.x / 10)] <
-          Constants.MAP[Math.floor(this.x / 10 + 1)]
+          Constants.MAP[this.map][Math.floor(this.x / 10)] <
+          Constants.MAP[this.map][Math.floor(this.x / 10 + 1)]
         )
           this.direction = Math.atan(
-            (Constants.MAP[Math.floor(this.x / 10)] -
-              Constants.MAP[Math.floor(this.x / 10 + 1)]) /
+            (Constants.MAP[this.map][Math.floor(this.x / 10)] -
+              Constants.MAP[this.map][Math.floor(this.x / 10 + 1)]) /
               10
           );
         else
           this.direction =
             Math.atan(
-              (Constants.MAP[Math.floor(this.x / 10) + 1] -
-                Constants.MAP[Math.floor(this.x / 10)]) /
+              (Constants.MAP[this.map][Math.floor(this.x / 10) + 1] -
+                Constants.MAP[this.map][Math.floor(this.x / 10)]) /
                 10
             ) -
             Math.PI / 2;
@@ -105,8 +106,8 @@ class Player extends ObjectClass {
         }
         this.direction =
           Math.atan(
-            (Constants.MAP[Math.floor(this.x / 10 + 1)] -
-              Constants.MAP[Math.floor(this.x / 10)]) /
+            (Constants.MAP[this.map][Math.floor(this.x / 10 + 1)] -
+              Constants.MAP[this.map][Math.floor(this.x / 10)]) /
               10
           ) +
           Math.PI / 2;
@@ -120,19 +121,19 @@ class Player extends ObjectClass {
           this.fireDirection = -this.fireDirection;
         }
         if (
-          Constants.MAP[Math.floor(this.x / 10)] <
-          Constants.MAP[Math.floor(this.x / 10 + 1)]
+          Constants.MAP[this.map][Math.floor(this.x / 10)] <
+          Constants.MAP[this.map][Math.floor(this.x / 10 + 1)]
         )
           this.direction = Math.atan(
-            (Constants.MAP[Math.floor(this.x / 10)] -
-              Constants.MAP[Math.floor(this.x / 10 + 1)]) /
+            (Constants.MAP[this.map][Math.floor(this.x / 10)] -
+              Constants.MAP[this.map][Math.floor(this.x / 10 + 1)]) /
               10
           );
         else
           this.direction =
             Math.atan(
-              (Constants.MAP[Math.floor(this.x / 10) + 1] -
-                Constants.MAP[Math.floor(this.x / 10)]) /
+              (Constants.MAP[this.map][Math.floor(this.x / 10) + 1] -
+                Constants.MAP[this.map][Math.floor(this.x / 10)]) /
                 10
             ) -
             Math.PI / 2;
@@ -143,8 +144,8 @@ class Player extends ObjectClass {
         }
         this.direction =
           Math.atan(
-            (Constants.MAP[Math.floor(this.x / 10 + 1)] -
-              Constants.MAP[Math.floor(this.x / 10)]) /
+            (Constants.MAP[this.map][Math.floor(this.x / 10 + 1)] -
+              Constants.MAP[this.map][Math.floor(this.x / 10)]) /
               10
           ) +
           Math.PI / 2;
@@ -195,7 +196,8 @@ class Player extends ObjectClass {
         this.y,
         this.fireDirection,
         this.username,
-        1
+        1,
+        this.map
       );
     }
     return null;

@@ -15,7 +15,9 @@ class Game {
     this.randomrooms = [];
     this.playrooms = {};
     this.waitrooms = {};
-    (this.roles = {}), (this.sockets = {});
+    this.roles = {};
+    this.sockets = {};
+    this.map = {};
     this.players = {};
     this.cameras = {};
     this.bullets = [];
@@ -30,11 +32,17 @@ class Game {
     const username = userinfo[0];
     const side = username in this.waitrooms;
     let x;
+    if(this.map[username] !== 0 || this.map[username] !== 1){
+      if(Math.random() >= 0.5) this.map[username] = 1;
+      else this.map[username] = 0;
+      socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
+    }
+
     if (side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);
     else x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);
     const y =
-      (Constants.MAP[Math.floor(x / 10)] * (x % 10) +
-        Constants.MAP[Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
+      (Constants.MAP[this.map[username]][Math.floor(x / 10)] * (x % 10) +
+        Constants.MAP[this.map[username]][Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
       10;
     // Adding player to rooms and store the name. The first player joined
     // goes to waitrooms. The second player will be join and move the room
@@ -74,14 +82,15 @@ class Game {
         userinfo[2]
       );
       if (this.roles[socket.id] === 1) {
-        this.players[socket.id] = new Cat(socket.id, username, x, y);
+        this.players[socket.id] = new Cat(socket.id, username, x, y, this.map[username]);
       } else if (this.roles[socket.id] === 2) {
-        this.players[socket.id] = new PinkAss(socket.id, username, x, y);
+        this.players[socket.id] = new PinkAss(socket.id, username, x, y, this.map[username]);
       } else if (this.roles[socket.id] === 3) {
-        this.players[socket.id] = new Pudding(socket.id, username, x, y);
+        this.players[socket.id] = new Pudding(socket.id, username, x, y, this.map[username]);
       } else if (this.roles[socket.id] === 4) {
-        this.players[socket.id] = new Banana(socket.id, username, x, y);
+        this.players[socket.id] = new Banana(socket.id, username, x, y, this.map[username]);
       }
+      if (this.map[username] === 0 || this.map[username] === 1) this.players[socket.id].setmap(this.map[username]);
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
@@ -95,14 +104,15 @@ class Game {
         userinfo[2]
       );
       if (this.roles[socket.id] === 1) {
-        this.players[socket.id] = new Cat(socket.id, username, x, y);
+        this.players[socket.id] = new Cat(socket.id, username, x, y, this.map[username]);
       } else if (this.roles[socket.id] === 2) {
-        this.players[socket.id] = new PinkAss(socket.id, username, x, y);
+        this.players[socket.id] = new PinkAss(socket.id, username, x, y, this.map[username]);
       } else if (this.roles[socket.id] === 3) {
-        this.players[socket.id] = new Pudding(socket.id, username, x, y);
+        this.players[socket.id] = new Pudding(socket.id, username, x, y, this.map[username]);
       } else if (this.roles[socket.id] === 4) {
-        this.players[socket.id] = new Banana(socket.id, username, x, y);
+        this.players[socket.id] = new Banana(socket.id, username, x, y, this.map[username]);
       }
+      if (this.map[username] === 0 || this.map[username] === 1) this.players[socket.id].setmap(this.map[username]);
     }
   }
 

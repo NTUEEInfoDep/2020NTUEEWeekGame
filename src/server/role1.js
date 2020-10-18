@@ -4,8 +4,8 @@ const Bullet = require("./bullet");
 
 class Cat extends Player {
   // A multi-life and timid cat...
-  constructor(id, username, x, y) {
-    super(id, username, x, y);
+  constructor(id, username, x, y, map) {
+    super(id, username, x, y, map);
     this.role = 1;
     // life
     this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.Cat;
@@ -32,7 +32,8 @@ class Cat extends Player {
         this.username,
         this.role,
         this.bulletSpeed*power,
-        1
+        1,
+        this.map
       );
     }
     return null;
@@ -42,11 +43,11 @@ class Cat extends Player {
     if (this.skillCooldown <= 0) {
       this.skillCooldown = this.skillCooldowntime;
       return [
-        new Bullet(this, this.x, this.y, this.fireDirection - Math.PI / 15, this.username, this.role, this.bulletSpeed, 1),
-        new Bullet(this, this.x, this.y, this.fireDirection - Math.PI / 30, this.username, this.role, this.bulletSpeed, 1),
-        new Bullet(this, this.x, this.y, this.fireDirection, this.username, this.role, this.bulletSpeed, 1),
-        new Bullet(this, this.x, this.y, this.fireDirection + Math.PI / 30, this.username, this.role, this.bulletSpeed, 1),
-        new Bullet(this, this.x, this.y, this.fireDirection + Math.PI / 15, this.username, this.role, this.bulletSpeed, 1)
+        new Bullet(this, this.x, this.y, this.fireDirection - Math.PI / 15, this.username, this.role, this.bulletSpeed, 1, this.map),
+        new Bullet(this, this.x, this.y, this.fireDirection - Math.PI / 30, this.username, this.role, this.bulletSpeed, 1, this.map),
+        new Bullet(this, this.x, this.y, this.fireDirection, this.username, this.role, this.bulletSpeed, 1, this.map),
+        new Bullet(this, this.x, this.y, this.fireDirection + Math.PI / 30, this.username, this.role, this.bulletSpeed, 1, this.map),
+        new Bullet(this, this.x, this.y, this.fireDirection + Math.PI / 15, this.username, this.role, this.bulletSpeed, 1, this.map)
       ]
     }
   }
@@ -59,6 +60,10 @@ class Cat extends Player {
       this.mode = mode;
       this.abnormalmodeCooldown = this.abnormalmodeCooldowntime;
     }
+  }
+
+  setmap(map){
+    this.map = map;
   }
 
   serializeForUpdate() {

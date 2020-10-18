@@ -4,8 +4,8 @@ const Bullet = require("./bullet");
 
 class Pudding extends Player {
   // Absolutely no chemical substance or toxic ingredient added...
-  constructor(id, username, x, y) {
-    super(id, username, x, y);
+  constructor(id, username, x, y, map) {
+    super(id, username, x, y, map);
     this.role = 3;
     // life
     this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.Pudding;
@@ -29,7 +29,8 @@ class Pudding extends Player {
         this.username,
         this.role,
         this.bulletSpeed*power,
-        1
+        1,
+        this.map
       );
     }
     return null;
@@ -46,7 +47,8 @@ class Pudding extends Player {
         this.username,
         this.role,
         this.bulletSpeed,
-        3
+        3,
+        this.map
       );
     }
   }
@@ -60,6 +62,10 @@ class Pudding extends Player {
     }
   }
   
+  setmap(map){
+    this.map = map;
+  }
+
   serializeForUpdate() {
     return {
       ...super.serializeForUpdate(),

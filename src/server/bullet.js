@@ -4,12 +4,13 @@ const ObjectClass = require("./object");
 const Constants = require("../shared/constants");
 
 class Bullet extends ObjectClass {
-  constructor(_parent, x, y, dir, username, role, speed, mode) {
+  constructor(_parent, x, y, dir, username, role, speed, mode, map) {
     super(shortid(), x, y, dir, speed);
     this._parent = _parent;
     this.username = username;
     this.role = role;
     this.mode = mode;
+    this.map = map;
   }
 
   // Returns true if the bullet should be destroyed
@@ -35,8 +36,8 @@ class Bullet extends ObjectClass {
       this.x > Constants.MAP_SIZE_LENGTH ||
       this.y < 0 ||
       this.y >
-        (Constants.MAP[Math.floor(this.x / 10)] * (10 - (this.x % 10)) +
-          Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) /
+        (Constants.MAP[this.map][Math.floor(this.x / 10)] * (10 - (this.x % 10)) +
+          Constants.MAP[this.map][Math.floor(this.x / 10 + 1)] * (this.x % 10)) /
           10
     );
   }

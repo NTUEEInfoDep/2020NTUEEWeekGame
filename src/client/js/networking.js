@@ -1,6 +1,7 @@
 import io from "socket.io-client";
 import { throttle } from "throttle-debounce";
 import { processGameUpdate } from "./state";
+import { randommap } from "./render";
 
 const $id = (element) => {
   return document.getElementById(element);
@@ -61,6 +62,8 @@ export const queueEnd = new Promise((resolve) => {
     resolve();
   });
 });
+
+socket.on(Constants.MSG_TYPES.MAP, randommap);
 
 export const checkRoom = (roomID) => {
   socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, roomID);
