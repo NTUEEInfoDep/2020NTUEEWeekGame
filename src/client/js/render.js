@@ -2,7 +2,7 @@ import { debounce } from "throttle-debounce";
 import { MAP_SIZE_LENGTH, MAP_SIZE_WIDTH } from "../../shared/constants";
 import { getAsset } from "./assets";
 import { getCurrentState } from "./state";
-import { healthBarInit } from "./strength_bar";
+
 const Constants = require("../../shared/constants");
 
 const {
@@ -27,8 +27,12 @@ setCanvasDimensions();
 
 window.addEventListener("resize", debounce(40, setCanvasDimensions));
 
-function renderBackground(color = "black") {
-  ctx.fillStyle = color;
+function renderBackground() {
+  const r = 100 + 27 * Math.sin(Date.now() / 1009);
+  const g = 100 + 27 * Math.sin(Date.now() / 2003);
+  const b = 100 + 27 * Math.sin(Date.now() / 3001);
+
+  ctx.fillStyle = `rgb(${r},${g},${b})`;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -154,37 +158,30 @@ function renderBullet(me, bullet) {
   );
 }
 
-function renderMainMenu() {
-  const t = Date.now() / 1000;
-  const p = 127 + 127 * Math.sin(t);
-  renderBackground(`rgb(${p},${p},${p})`);
-}
-
-let renderInterval = setInterval(renderMainMenu, 1000 / 60);
-
 function render(powerbar) {
   const { me, bullets, others } = getCurrentState();
   if (!me) {
     return;
   }
 
-  powerbar.update(me, others);
-  renderBackground(me.x, me.y);
+  renderBackground();
   renderMap(me);
   bullets.forEach(renderBullet.bind(null, me));
   others.forEach(renderPlayer.bind(null, me));
+  powerbar.update(me, others);
 }
+
+let renderInterval = setInterval(renderBackground, 1000 / 60);
 
 export function startRendering(powerbar) {
   clearInterval(renderInterval);
-  const power = powerbar;
-  renderInterval = setInterval(()=>{
-    render(power);
+  renderInterval = setInterval(() => {
+    render(powerbar);
   }, 1000 / 60);
 }
 
 export function stopRendering(powerbar) {
   clearInterval(renderInterval);
   powerbar.stopListening();
-  renderInterval = setInterval(renderMainMenu, 1000 / 60);
+  renderInterval = setInterval(renderBackground, 1000 / 60);
 }

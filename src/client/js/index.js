@@ -5,76 +5,53 @@ import { startRendering, stopRendering } from "./render";
 import { startCapturingInput, stopCapturingInput } from "./input";
 import { downloadAssets } from "./assets";
 import { initState } from "./state";
-import { healthBarInit } from "./strength_bar"
-const $id = (element) => {
-  return document.getElementById(element);
-};
-
-const joinPage = $id("join-page");
-const joinInput = $id("join-page-input");
-const roomIDInput = $id("room-id-input");
-const randomButton = $id("random-button");
-
-const crtPage = $id("crt-page");
-const crtInput = $id("crt-page-input");
-const crts = document.getElementsByClassName("crtContainer");
-
-const rulePage = $id("rule-page");
-const ruleInput = $id("rule-page-input");
-const ruleBlinker = $id("blinker");
-
-const gameOverPage = $id("game-over-page");
-const winCard = $id("win");
-const loseCard = $id("lose");
+import { healthBarInit } from "./strength_bar";
 
 const powerbar = healthBarInit();
 
+const $id = (element) => {
+  return document.getElementById(element);
+};
+const crts = document.getElementsByClassName("crtContainer");
+
 function gameStart() {
-  rulePage.classList.add("hidden");
+  $id("rule-page").classList.add("hidden");
+
   initState();
   startCapturingInput();
-  powerbar.startListening();
   startRendering(powerbar);
+  powerbar.startListening();
 }
 
 function step3(n) {
-  play(roomIDInput.value, n);
+  play($id("room-id-input").value, n);
 
-  crtPage.classList.add("hidden");
-  rulePage.classList.remove("hidden");
+  $id("crt-page").classList.add("hidden");
+  $id("rule-page").classList.remove("hidden");
 
-  if (roomIDInput.value === "random") {
-    ruleBlinker.innerHTML = "Waiting for Others";
+  if ($id("room-id-input").value === "random") {
+    $id("blinker").innerHTML = "Waiting for Others";
     queueEnd.then(gameStart);
   } else {
-    // ruleBlinker.innerHTML = "3";
-    // setTimeout(() => {
-    //   ruleBlinker.innerHTML = "2";
-    // }, 1000);
-    // setTimeout(() => {
-    //   ruleBlinker.innerHTML = "1";
-    // }, 2000);
-    // setTimeout(() => {
-    ruleBlinker.innerHTML = "Click to Start";
-    ruleInput.focus();
-    ruleInput.onkeydown = gameStart;
-    rulePage.onclick = gameStart;
-    // }, 3000);
+    $id("blinker").innerHTML = "Click to Start";
+    $id("rule-page-input").focus();
+    $id("rule-page-input").onkeydown = gameStart;
+    $id("rule-page").onclick = gameStart;
   }
 }
 
 function step2() {
-  if (roomIDInput.value === "") {
-    roomIDInput.value = "random";
+  if ($id("room-id-input").value === "") {
+    $id("room-id-input").value = "random";
   }
 
-  checkRoom(roomIDInput.value);
+  checkRoom($id("room-id-input").value);
 
-  joinPage.classList.add("hidden");
-  crtPage.classList.remove("hidden");
+  $id("join-page").classList.add("hidden");
+  $id("crt-page").classList.remove("hidden");
 
-  crtInput.focus();
-  crtInput.onkeydown = (e) => {
+  $id("crt-page-input").focus();
+  $id("crt-page-input").onkeydown = (e) => {
     if (e.code === "Digit1" || e.code === "Numpad1") step3(1);
     else if (e.code === "Digit2" || e.code === "Numpad2") step3(2);
     else if (e.code === "Digit3" || e.code === "Numpad3") step3(3);
@@ -87,39 +64,37 @@ function step2() {
 }
 
 function step1() {
-  joinPage.classList.remove("hidden");
+  $id("join-page").classList.remove("hidden");
 
-  joinInput.focus();
-  joinInput.onkeydown = () => {
-    roomIDInput.focus();
+  $id("join-page-input").focus();
+  $id("join-page-input").onkeydown = () => {
+    $id("room-id-input").focus();
   };
-  roomIDInput.value = "";
-  roomIDInput.onkeydown = (e) => {
+  $id("room-id-input").value = "";
+  $id("room-id-input").onkeydown = (e) => {
     if (e.code === "Enter") step2();
   };
-  randomButton.onclick = step2;
+  $id("random-button").onclick = step2;
 }
 
 function onGameOver(reason) {
-  // eslint-disable-next-line no-console
-  console.log(`<><><> This player ${reason}s <><><>`);
-
   stopCapturingInput();
-  gameOverPage.classList.remove("hidden");
-  if (reason === "win") winCard.classList.remove("hidden");
-  else if (reason === "lose") loseCard.classList.remove("hidden");
+
+  $id("game-over-page").classList.remove("hidden");
+  if (reason === "win") $id("win").classList.remove("hidden");
+  else if (reason === "lose") $id("lose").classList.remove("hidden");
 
   setTimeout(() => {
-    gameoverPage.onclick = () => {
+    $id("game-over-page").onclick = () => {
       stopRendering(powerbar);
 
-      gameOverPage.classList.add("hidden");
-      winCard.classList.add("hidden");
-      loseCard.classList.add("hidden");
+      $id("game-over-page").classList.add("hidden");
+      $id("win").classList.add("hidden");
+      $id("lose").classList.add("hidden");
 
       step1();
     };
-  }, 3000);
+  }, 2000);
 }
 
 Promise.all([connect(onGameOver), downloadAssets()])
@@ -128,5 +103,3 @@ Promise.all([connect(onGameOver), downloadAssets()])
   })
   // eslint-disable-next-line no-console
   .catch(console.error);
-//console.log(document.getElementById('game-canvas'));
-//healthBarInit();
