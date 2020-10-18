@@ -35,7 +35,13 @@ export const connect = (onGameOver) =>
     socket.on("disconnect", () => {
       // eslint-disable-next-line no-console
       console.log("Disconnected from server...");
+      $id("join-page").classList.add("hidden");
+      $id("crt-page").classList.add("hidden");
+      $id("rule-page").classList.add("hidden");
+      $id("game-over-page").classList.add("hidden");
       alertPage.classList.remove("hidden");
+      alertTitle.innerHTML = "Disconnected";
+      alertButton.innerHTML = "reconnect";
       alertButton.onclick = () => {
         window.location.reload();
       };
@@ -63,8 +69,8 @@ export const checkRoom = (roomID) => {
       $id("join-page").classList.add("hidden");
       $id("crt-page").classList.add("hidden");
       alertPage.classList.remove("hidden");
-      alertTitle.innerHTML = "Room Full ...";
-      alertButton.innerHTML = "Change a Room";
+      alertTitle.innerHTML = "Room is Full ...";
+      alertButton.innerHTML = "change a room";
       alertButton.onclick = () => {
         window.location.reload();
       };

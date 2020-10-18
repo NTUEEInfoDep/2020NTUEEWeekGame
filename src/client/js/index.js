@@ -35,7 +35,7 @@ function gameStart() {
   startRendering();
 }
 
-function step3Rule(n) {
+function step3(n) {
   play(roomIDInput.value, n);
 
   crtPage.classList.add("hidden");
@@ -66,38 +66,30 @@ function step2() {
     roomIDInput.value = "random";
   }
 
-  //
-  // Redesign if possible
   checkRoom(roomIDInput.value);
-  //
-  //
 
   joinPage.classList.add("hidden");
   crtPage.classList.remove("hidden");
 
   crtInput.focus();
   crtInput.onkeydown = (e) => {
-    if (e.code === "Digit1" || e.code === "Numpad1") step3Rule(1);
-    else if (e.code === "Digit2" || e.code === "Numpad2") step3Rule(2);
-    else if (e.code === "Digit3" || e.code === "Numpad3") step3Rule(3);
-    else if (e.code === "Digit4" || e.code === "Numpad4") step3Rule(4);
+    if (e.code === "Digit1" || e.code === "Numpad1") step3(1);
+    else if (e.code === "Digit2" || e.code === "Numpad2") step3(2);
+    else if (e.code === "Digit3" || e.code === "Numpad3") step3(3);
+    else if (e.code === "Digit4" || e.code === "Numpad4") step3(4);
     else if (e.code === "Digit5" || e.code === "Numpad5" || e.code === "Enter")
-      step3Rule(Math.floor(4 * Math.random()) + 1);
+      step3(Math.floor(4 * Math.random()) + 1);
   };
-  crts[0].onclick = () => step3Rule(1);
-  crts[1].onclick = () => step3Rule(2);
-  crts[2].onclick = () => step3Rule(3);
-  crts[3].onclick = () => step3Rule(4);
-  crts[5].onclick = () => step3Rule(Math.floor(4 * Math.random()) + 1);
+  for (let i = 0; i <= 3; i += 1) crts[i].onclick = () => step3(i + 1);
+  crts[5].onclick = () => step3(Math.floor(4 * Math.random()) + 1);
 }
 
 function step1() {
   joinPage.classList.remove("hidden");
 
   joinInput.focus();
-  joinInput.onkeydown = (e) => {
-    if (e.code === "Enter") step2();
-    else roomIDInput.focus();
+  joinInput.onkeydown = () => {
+    roomIDInput.focus();
   };
   roomIDInput.value = "";
   roomIDInput.onkeydown = (e) => {
