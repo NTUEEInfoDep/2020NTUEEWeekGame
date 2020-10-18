@@ -4,11 +4,12 @@ const ObjectClass = require("./object");
 const Constants = require("../shared/constants");
 
 class Bullet extends ObjectClass {
-  constructor(_parent, x, y, dir, username, role, speed) {
+  constructor(_parent, x, y, dir, username, role, speed, mode) {
     super(shortid(), x, y, dir, speed);
     this._parent = _parent;
     this.username = username;
     this.role = role;
+    this.mode = mode;
   }
 
   // Returns true if the bullet should be destroyed
@@ -39,10 +40,12 @@ class Bullet extends ObjectClass {
           10
     );
   }
+
   serializeForUpdate() {
     return {
       ...super.serializeForUpdate(),
       role:this.role,
+      mode: this.mode
     };
   }
 }

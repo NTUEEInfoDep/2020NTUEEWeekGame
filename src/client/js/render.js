@@ -43,8 +43,7 @@ function renderMap(me) {
 }
 
 function renderPlayer(me, player) {
-  const { x, y, direction, fireDirection, role } = player;
-
+  const { x, y, direction, fireDirection, role, mode } = player;
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
@@ -55,12 +54,20 @@ function renderPlayer(me, player) {
   if (direction < 0) {
     ctx.scale(-1, 1);
   }
-
   let playerStyle;
-  if (role === 1) playerStyle = "crt1.png";
-  else if (role === 2) playerStyle = "crt2.png";
+  if (role === 1){
+    if (mode === 3) playerStyle = "num1_frozen.png";
+    else playerStyle = "crt1.png";
+  }
+  else if (role === 2){
+    if (mode === 3) playerStyle = "num2_frozen.png";
+    else playerStyle = "crt2.png";
+  }
   else if (role === 3) playerStyle = "crt3.png";
-  else playerStyle = "crt4.png";
+  else {
+    if (mode === 3) playerStyle = "num4_frozen.png";
+    else playerStyle = "crt4.png";
+  }
 
   ctx.drawImage(
     getAsset(playerStyle),
@@ -137,13 +144,21 @@ function renderPlayer(me, player) {
 }
 
 function renderBullet(me, bullet) {
-  const { x, y, role } = bullet;
-
+  const { x, y, role, mode } = bullet;
   let bulletImg;
   if (role === 1) bulletImg = "bullet1.png";
-  else if (role === 2) bulletImg = "bullet2.png";
-  else if (role === 3) bulletImg = "bullet3.png";
-  else bulletImg = "bullet4.png";
+  else if (role === 2){
+    if (mode === 2) bulletImg = "fart.png";
+    else bulletImg = "bullet2.png";
+  }
+  else if (role === 3){
+    if(mode === 3) bulletImg = "ice.png";
+    else bulletImg = "bullet3.png";
+  }
+  else {
+    if (mode === 4) bulletImg = "banana.png";
+    else bulletImg = "bullet4.png";
+  }
 
   ctx.drawImage(
     getAsset(bulletImg),

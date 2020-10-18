@@ -15,11 +15,16 @@ class Player extends ObjectClass {
     this.friction = 0;
     this.score = 0;
     this.angleSpeed = 0;
-    this.playerSpeed=0;
+    this.playerSpeed = 0;
+    this.skillCooldown = 0;
+    this.skillCooldowntime = Constants.PLAYER_SKILL_COOLDOWN;
+    this.mode = 1;
+    this.abnormalmodeCooldown = 0;
+    this.abnormalmodeCooldowntime = Constants.PLAYER_MODE_COOLDOWN;
   }
 
   // Returns a newly created bullet, or null.
-  update(dt) {
+  update(dt) {  
     super.update(dt);
 
     // Update score
@@ -42,6 +47,18 @@ class Player extends ObjectClass {
     if (this.fireCooldown <= 0) {
       this.fireCooldown = 0;
     }
+    
+    this.skillCooldown -= dt;
+    if (this.skillCooldown <= 0){
+      this.skillCooldown = 0;
+    }
+
+    this.abnormalmodeCooldown -= dt;
+    if (this.abnormalmodeCooldown <= 0){
+      this.abnormalmodeCooldown = 0;
+      this.changemode(Constants.PLAYER_MODE.NORMAL);
+    }
+
     this.fireDirection += this.angleSpeed * dt;
     if (this.direction >= 0){
       this.fireDirection = Math.max(
@@ -59,57 +76,107 @@ class Player extends ObjectClass {
 
   // Receive keyboard input and move character
   move(e) {
-    if (e === "ArrowLeft") {
-      if (this.fireDirection > 0){
-        this.fireDirection = -this.fireDirection;
+    if(this.mode === 1 || this.mode === 4){
+      if (e === "ArrowLeft") {
+        if (this.fireDirection > 0){
+          this.fireDirection = -this.fireDirection;
+        }
+        if (
+          Constants.MAP[Math.floor(this.x / 10)] <
+          Constants.MAP[Math.floor(this.x / 10 + 1)]
+        )
+          this.direction = Math.atan(
+            (Constants.MAP[Math.floor(this.x / 10)] -
+              Constants.MAP[Math.floor(this.x / 10 + 1)]) /
+              10
+          );
+        else
+          this.direction =
+            Math.atan(
+              (Constants.MAP[Math.floor(this.x / 10) + 1] -
+                Constants.MAP[Math.floor(this.x / 10)]) /
+                10
+            ) -
+            Math.PI / 2;
       }
-      if (
-        Constants.MAP[Math.floor(this.x / 10)] <
-        Constants.MAP[Math.floor(this.x / 10 + 1)]
-      )
-        this.direction = Math.atan(
-          (Constants.MAP[Math.floor(this.x / 10)] -
-            Constants.MAP[Math.floor(this.x / 10 + 1)]) /
-            10
-        );
-      else
+      if (e === "ArrowRight") {
+        if (this.fireDirection < 0){
+          this.fireDirection = -this.fireDirection;
+        }
         this.direction =
           Math.atan(
-            (Constants.MAP[Math.floor(this.x / 10) + 1] -
+            (Constants.MAP[Math.floor(this.x / 10 + 1)] -
               Constants.MAP[Math.floor(this.x / 10)]) /
               10
-          ) -
+          ) +
           Math.PI / 2;
-    }
-    if (e === "ArrowRight") {
-      if (this.fireDirection < 0){
-        this.fireDirection = -this.fireDirection;
       }
-      this.direction =
-        Math.atan(
-          (Constants.MAP[Math.floor(this.x / 10 + 1)] -
-            Constants.MAP[Math.floor(this.x / 10)]) /
-            10
-        ) +
-        Math.PI / 2;
+      this.friction = 0;
+      this.speed = this.playerSpeed;
     }
-    this.friction = 0;
-    this.speed = this.playerSpeed;
+    else if (this.mode === 2) {
+      if (e === "ArrowRight") {
+        if (this.fireDirection > 0){
+          this.fireDirection = -this.fireDirection;
+        }
+        if (
+          Constants.MAP[Math.floor(this.x / 10)] <
+          Constants.MAP[Math.floor(this.x / 10 + 1)]
+        )
+          this.direction = Math.atan(
+            (Constants.MAP[Math.floor(this.x / 10)] -
+              Constants.MAP[Math.floor(this.x / 10 + 1)]) /
+              10
+          );
+        else
+          this.direction =
+            Math.atan(
+              (Constants.MAP[Math.floor(this.x / 10) + 1] -
+                Constants.MAP[Math.floor(this.x / 10)]) /
+                10
+            ) -
+            Math.PI / 2;
+      }
+      if (e === "ArrowLeft") {
+        if (this.fireDirection < 0){
+          this.fireDirection = -this.fireDirection;
+        }
+        this.direction =
+          Math.atan(
+            (Constants.MAP[Math.floor(this.x / 10 + 1)] -
+              Constants.MAP[Math.floor(this.x / 10)]) /
+              10
+          ) +
+          Math.PI / 2;
+      }
+      this.friction = 0;
+      this.speed = this.playerSpeed;
+    }
+    else if (this.mode === 3) {
+      this.friction = Constants.PLAYER_FRICTION;
+      this.speed = 0;
+    }
   }
 
   // Stop the player's movement
   stop(e) {
-    if ((e === "ArrowRight" && this.direction >0)|| (e === "ArrowLeft" && this.direction<0)){
-      this.friction = Constants.PLAYER_FRICTION;
+    if(this.mode !== 4) {
+      if ((e === "ArrowRight" && this.direction >0)|| (e === "ArrowLeft" && this.direction<0)){
+        this.friction = Constants.PLAYER_FRICTION;
+      }
     }
+    else {
+      this.friction = Constants.PLAYER_FRICTION / 400;
+    }
+    
   }
 
   fireDirectionMove(e) {
     if (e === "ArrowUp") {
-      if (this.direction > 0) this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+      if (this.direction >= 0) this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
       else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
     } else if (e === "ArrowDown") {
-      if (this.direction > 0) this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+      if (this.direction >= 0) this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
       else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
     }
   }
@@ -127,7 +194,8 @@ class Player extends ObjectClass {
         this.x,
         this.y,
         this.fireDirection,
-        this.username
+        this.username,
+        1
       );
     }
     return null;
@@ -147,6 +215,7 @@ class Player extends ObjectClass {
       direction: this.direction,
       fireDirection: this.fireDirection,
       hp: this.hp,
+      mode: this.mode,
     };
   }
 }

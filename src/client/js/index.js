@@ -110,7 +110,7 @@ function onGameOver(reason) {
   else if (reason === "lose") loseCard.classList.remove("hidden");
 
   setTimeout(() => {
-    gameoverPage.onclick = () => {
+    gameOverPage.onclick = () => {
       stopRendering(powerbar);
 
       gameOverPage.classList.add("hidden");

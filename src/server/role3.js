@@ -28,11 +28,38 @@ class Pudding extends Player {
         this.fireDirection,
         this.username,
         this.role,
-        this.bulletSpeed*power
+        this.bulletSpeed*power,
+        1
       );
     }
     return null;
   }
+
+  skill() {
+    if(this.skillCooldown <= 0){
+      this.skillCooldown = this.skillCooldowntime;
+      return new Bullet(
+        this,
+        this.x,
+        this.y,
+        this.fireDirection,
+        this.username,
+        this.role,
+        this.bulletSpeed,
+        3
+      );
+    }
+  }
+
+  changemode(mode){
+    if(mode === 1)
+      this.mode = mode;
+    else{
+      this.mode = mode;
+      this.abnormalmodeCooldown = this.abnormalmodeCooldowntime;
+    }
+  }
+  
   serializeForUpdate() {
     return {
       ...super.serializeForUpdate(),

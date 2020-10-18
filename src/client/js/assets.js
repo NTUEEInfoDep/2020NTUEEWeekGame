@@ -7,12 +7,18 @@ const ASSET_NAMES = [
   "crt2.png",
   "crt3.png",
   "crt4.png",
+  "num1_frozen.png",
+  "num2_frozen.png",
+  "num4_frozen.png",
 
   // bullet
   "bullet1.png",
   "bullet2.png",
   "bullet3.png",
   "bullet4.png",
+  "fart.png",
+  "ice.png",
+  "banana.png",
 
   // gameover
   "lose.png",

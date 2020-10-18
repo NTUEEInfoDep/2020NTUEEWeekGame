@@ -104,8 +104,6 @@ class Game {
         this.players[socket.id] = new Banana(socket.id, username, x, y);
       }
     }
-    console.log(this.randomrooms);
-    console.log(this.playrooms);
   }
 
   // Simply remove player from game
@@ -158,6 +156,28 @@ class Game {
       const keyType = keyEvent[0];
       const key = keyEvent[1];
       if (keyType === "keydown") {
+        if (key === "Enter"){
+          if (this.roles[socket.id] === 1){
+            const newBullet = player.skill();
+            if (newBullet) {
+              newBullet.forEach((index) => {
+                this.bullets.push(index);
+              });
+            }
+          }
+          else if (this.roles[socket.id] === 2){
+            const newBullet = player.skill();
+            if (newBullet) this.bullets.push(newBullet);
+          }
+          else if (this.roles[socket.id] === 3){
+            const newBullet = player.skill();
+            if (newBullet) this.bullets.push(newBullet);
+          }
+          else if (this.roles[socket.id] === 4){
+            const newBullet = player.skill();
+            if (newBullet) this.bullets.push(newBullet);
+          }
+        }
         if (key === "Space" && keyEvent.length === 3) {
           const newBullet = player.fire(keyEvent[2]);
           if (newBullet) this.bullets.push(newBullet);
@@ -285,7 +305,6 @@ class Game {
         b.distanceTo(camera) <= Constants.MAP_SIZE_LENGTH / 2 &&
         playerIDs.includes(b._parent.id)
     );
-
     return {
       t: Date.now(),
       me: camera.serializeForUpdate(),

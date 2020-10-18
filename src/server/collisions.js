@@ -20,6 +20,9 @@ function applyCollisions(players, bullets) {
         destroyedBullets.push(bullet);
         // judge by role instance
         player.takeBulletDamage(bullet._parent);
+        if (bullet.mode === Constants.PLAYER_MODE.fart) player.changemode(Constants.PLAYER_MODE.fart);
+        if (bullet.mode === Constants.PLAYER_MODE.snow) player.changemode(Constants.PLAYER_MODE.snow);
+        if (bullet.mode === Constants.PLAYER_MODE.banana_peel) player.changemode(Constants.PLAYER_MODE.banana_peel);
         break;
       }
     }
