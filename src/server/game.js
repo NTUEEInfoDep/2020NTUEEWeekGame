@@ -169,12 +169,12 @@ class Game {
         }
         if (key === "ShiftLeft") camera.follow(player);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
-        if (key === "KeyQ" || key === "KeyE") player.fireDirectionMove(key);
+        if (key === "ArrowUp" || key === "ArrowDown") player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent[1]);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
-        if (key === "KeyQ" || key === "KeyE") player.fireDirectionStop(key);
+        if (key === "ArrowUp" || key === "ArrowDown") player.fireDirectionStop(key);
       }
     }
   }
