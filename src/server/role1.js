@@ -21,7 +21,7 @@ class Cat extends Player {
   stop(e) {
     this.friction = Constants.PLAYER_FRICTION / 2;
   }
-  fire() {
+  fire(power) {
     if (this.fireCooldown <= 0) {
       this.fireCooldown = this.fireCooldowntime;
       return new Bullet(
@@ -31,7 +31,7 @@ class Cat extends Player {
         this.fireDirection,
         this.username,
         this.role,
-        this.bulletSpeed
+        this.bulletSpeed*power
       );
     }
     return null;

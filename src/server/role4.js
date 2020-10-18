@@ -18,7 +18,7 @@ class Banana extends Player {
     //power
     this.bulletSpeed = 1 * Constants.BULLET_SPEED;
   }
-  fire() {
+  fire(power) {
     if (this.fireCooldown <= 0) {
       this.fireCooldown = this.fireCooldowntime;
       return new Bullet(
@@ -28,7 +28,7 @@ class Banana extends Player {
         this.fireDirection,
         this.username,
         this.role,
-        this.bulletSpeed
+        this.bulletSpeed*power
       );
     }
     return null;

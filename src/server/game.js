@@ -42,7 +42,6 @@ class Game {
     // Ridection or alert for this is still needed.
 
     if (username === "random") {
-      console.log("random pair triggered!");
       this.randomrooms.push([socket.id, userinfo]);
       // this.players[socket.id] = new Player(socket.id, username, x, y, side);
       if (this.randomrooms.length >= 2) {
@@ -57,11 +56,8 @@ class Game {
         this.addPlayer(player1, pop1[1]);
         this.addPlayer(player2, pop2[1]);
         // return;
-      } else {
-        console.log("Waiting to be paired !!!");
       }
     } else if (username in this.playrooms) {
-      console.log("The room is too crowded");
       delete this.sockets[socket.id];
       // return;
     } else if (username in this.waitrooms) {
@@ -108,11 +104,8 @@ class Game {
         this.players[socket.id] = new Banana(socket.id, username, x, y);
       }
     }
-    console.log(this.players);
-    console.log("Playrooms:");
+    console.log(this.randomrooms);
     console.log(this.playrooms);
-    console.log("Waitrooms:");
-    console.log(this.waitrooms);
   }
 
   // Simply remove player from game
@@ -123,6 +116,12 @@ class Game {
 
   // Deal with disconnected player and its room
   removeDisconnectedPlayer(socket) {
+    this.randomrooms.forEach((index) => { 
+      if (index[0] === socket.id){
+        let i = this.randomrooms.indexOf(index);
+        this.randomrooms.splice(index, 1);
+      }
+    });
     Object.keys(this.playrooms).forEach((roomname) => {
       const playerIDs = this.playrooms[roomname];
       if (playerIDs.includes(socket.id)) {
@@ -159,8 +158,8 @@ class Game {
       const keyType = keyEvent[0];
       const key = keyEvent[1];
       if (keyType === "keydown") {
-        if (key === "Space") {
-          const newBullet = player.fire();
+        if (key === "Space" && keyEvent.length === 3) {
+          const newBullet = player.fire(keyEvent[2]);
           if (newBullet) this.bullets.push(newBullet);
         }
         if (key === "ArrowLeft" || key === "ArrowRight") {
@@ -169,12 +168,12 @@ class Game {
         }
         if (key === "ShiftLeft") camera.follow(player);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
-        if (key === "KeyQ" || key === "KeyE") player.fireDirectionMove(key);
+        if (key === "ArrowUp" || key === "ArrowDown") player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
         if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent[1]);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
-        if (key === "KeyQ" || key === "KeyE") player.fireDirectionStop(key);
+        if (key === "ArrowUp" || key === "ArrowDown") player.fireDirectionStop(key);
       }
     }
   }
@@ -297,10 +296,7 @@ class Game {
   }
 
   checkRoomname(socket, roomname) {
-    console.log(Object.keys(this.playrooms));
-    console.log(Object.keys(this.waitrooms));
-    console.log(roomname);
-    console.log(Object.keys(this.waitrooms).includes(roomname));
+    
     if (Object.keys(this.playrooms).includes(roomname)) {
       socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, 2);
     } else if (Object.keys(this.waitrooms).includes(roomname)) {
