@@ -50,13 +50,13 @@ canvas {
 
 #join-page-subtitle {
   font-size: 1rem;
-  font-family: "Arvo";
+  font-family: "Arvo", sans-serif;
 }
 
 #join-page-title {
   overflow: visible;
   font-size: 8rem;
-  font-family: "Pdark";
+  font-family: "Pdark", sans-serif;
   line-height: 8rem;
 }
 
@@ -64,7 +64,7 @@ canvas {
   margin: 1.5rem 0 0;
   border: none;
   font-size: 1.5rem;
-  font-family: "Arvo";
+  font-family: "Arvo", sans-serif;
   text-align: center;
 }
 
@@ -88,7 +88,7 @@ canvas {
   opacity: 1;
   background-color: white;
   font-size: 2rem;
-  font-family: "Righteous";
+  font-family: "Righteous", sans-serif;
   text-transform: uppercase;
   text-decoration: none;
 }
@@ -97,7 +97,7 @@ canvas {
   color: black;
   background-color: white;
   font-size: 2rem;
-  font-family: "Righteous";
+  font-family: "Righteous", sans-serif;
   text-transform: uppercase;
   text-decoration: none;
   transition: all 0.4s ease 0s;
@@ -112,7 +112,7 @@ canvas {
 #join-page-or {
   padding: 0.5rem 0;
   font-size: 1rem;
-  font-family: "Arvo";
+  font-family: "Arvo", sans-serif;
 }
 
 /* Character Page */
@@ -135,13 +135,13 @@ canvas {
 #crt-page-title {
   padding: 0 0 1rem;
   font-size: 3rem;
-  font-family: "Kalam";
+  font-family: "Kalam", sans-serif;
   font-weight: bold;
 }
 
 #crt-page p {
   font-size: 2rem;
-  font-family: "Kalam";
+  font-family: "Kalam", sans-serif;
 }
 
 #crt-containers {
@@ -171,7 +171,7 @@ canvas {
 
 .crtContainer p {
   font-size: 1.5rem;
-  font-family: "Kalam";
+  font-family: "Kalam", sans-serif;
 }
 
 #crt-page-or {
@@ -202,13 +202,13 @@ canvas {
 #rule-page #rule-title {
   font-size: 3rem;
   line-height: 2rem;
-  font-family: "Kalam";
+  font-family: "Kalam", sans-serif;
 }
 
 #rule-page p {
   font-size: 1.5rem;
   line-height: 2rem;
-  font-family: "Kalam";
+  font-family: "Kalam", sans-serif;
 }
 
 #rule-page #blinker {
@@ -216,7 +216,7 @@ canvas {
   color: crimson;
   text-transform: uppercase;
   font-size: 2rem;
-  font-family: "Kalam";
+  font-family: "Kalam", sans-serif;
 }
 
 /* Game Over */
@@ -252,7 +252,7 @@ canvas {
 #game-over-page p {
   color: black;
   font-size: 5rem;
-  font-family: "Pdark";
+  font-family: "Pdark", sans-serif;
   letter-spacing: 3rem;
   margin-right: -3rem;
   text-transform: uppercase;
@@ -286,7 +286,7 @@ canvas {
 #alert-title {
   color: crimson;
   font-size: 3rem;
-  font-family: "Righteous";
+  font-family: "Righteous", sans-serif;
   text-transform: uppercase;
 }
 
@@ -297,7 +297,7 @@ canvas {
   background-color: crimson;
   color: black;
   font-size: 2rem;
-  font-family: "Righteous";
+  font-family: "Righteous", sans-serif;
   text-decoration: none;
   transition: all 0.4s ease 0s;
 }
@@ -309,10 +309,6 @@ canvas {
 }
 
 /* Other Stuff */
-
-p span {
-  text-decoration: line-through;
-}
 
 .hidden {
   display: none !important;

@@ -10,7 +10,7 @@ class PinkAss extends Player {
     // life
     this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.PinkAss;
     // force
-    this.bulletDamage = 2 * Constants.BULLET_DAMAGE;
+    this.bulletDamage = 1.3 * Constants.BULLET_DAMAGE;
     //speed
     this.playerSpeed = 0.8 * Constants.PLAYER_SPEED;
     //firespeed
