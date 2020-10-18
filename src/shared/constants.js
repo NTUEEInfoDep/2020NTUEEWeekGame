@@ -3,11 +3,11 @@ module.exports = Object.freeze({
   PLAYER_MAX_HP: 100,
   PLAYER_FRICTION: 400,
   PLAYER_SPEED: 100,
-  PLAYER_FIRE_COOLDOWN: 0.5,
+  PLAYER_FIRE_COOLDOWN: 0,
   PLAYER_ANGLE_SPEED: 2,
   PLAYER_HP_COEF: {
     Cat: 1.5,
-    PinkAss: 1.3,
+    PinkAss: 0.9,
     Pudding: 0.8,
     Banana: 1,
   },
@@ -16,8 +16,8 @@ module.exports = Object.freeze({
   CAMERA_FRICTION: 1300,
 
   BULLET_RADIUS: 25,
-  BULLET_SPEED: 600,
-  BULLET_GRAVITY: 200,
+  BULLET_SPEED: 800,
+  BULLET_GRAVITY: 300,
   BULLET_DAMAGE: 10,
 
   SCORE_BULLET_HIT: 20,
