@@ -89,3 +89,4 @@ export const updateMovement = throttle(20, (movement) => {
 export const updateCamera = throttle(20, (mouseXY) => {
   socket.emit(Constants.MSG_TYPES.MOVE_CAMERA, mouseXY);
 });
+

@@ -106,24 +106,11 @@ class Player extends ObjectClass {
 
   fireDirectionMove(e) {
     if (e === "ArrowUp") {
-      if (this.fireDirection>=0)
-      {
-        this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
-      }
-      else
-      {
-        this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
-      }
-    } 
-    else if (e === "ArrowDown") {
-      if (this.fireDirection>=0)
-      {
-        this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
-      }
-      else
-      {
-        this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
-      }
+      if (this.direction > 0) this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+      else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+    } else if (e === "ArrowDown") {
+      if (this.direction > 0) this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+      else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
     }
   }
 
