@@ -105,10 +105,12 @@ class Player extends ObjectClass {
   }
 
   fireDirectionMove(e) {
-    if (e === "KeyQ") {
-      this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
-    } else if (e === "KeyE") {
-      this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+    if (e === "ArrowUp") {
+      if (this.direction > 0) this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+      else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+    } else if (e === "ArrowDown") {
+      if (this.direction > 0) this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+      else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
     }
   }
 

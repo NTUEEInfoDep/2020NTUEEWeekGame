@@ -2,7 +2,7 @@ import { debounce } from "throttle-debounce";
 import { MAP_SIZE_LENGTH, MAP_SIZE_WIDTH } from "../../shared/constants";
 import { getAsset } from "./assets";
 import { getCurrentState } from "./state";
-
+import { healthBarInit } from "./strength_bar";
 const Constants = require("../../shared/constants");
 
 const {
@@ -162,24 +162,29 @@ function renderMainMenu() {
 
 let renderInterval = setInterval(renderMainMenu, 1000 / 60);
 
-function render() {
+function render(powerbar) {
   const { me, bullets, others } = getCurrentState();
   if (!me) {
     return;
   }
 
+  powerbar.update(me, others);
   renderBackground(me.x, me.y);
   renderMap(me);
   bullets.forEach(renderBullet.bind(null, me));
   others.forEach(renderPlayer.bind(null, me));
 }
 
-export function startRendering() {
+export function startRendering(powerbar) {
   clearInterval(renderInterval);
-  renderInterval = setInterval(render, 1000 / 60);
+  const power = powerbar;
+  renderInterval = setInterval(()=>{
+    render(power);
+  }, 1000 / 60);
 }
 
-export function stopRendering() {
+export function stopRendering(powerbar) {
   clearInterval(renderInterval);
+  powerbar.stopListening();
   renderInterval = setInterval(renderMainMenu, 1000 / 60);
 }

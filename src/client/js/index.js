@@ -5,7 +5,7 @@ import { startRendering, stopRendering } from "./render";
 import { startCapturingInput, stopCapturingInput } from "./input";
 import { downloadAssets } from "./assets";
 import { initState } from "./state";
-
+import { healthBarInit } from "./strength_bar"
 const $id = (element) => {
   return document.getElementById(element);
 };
@@ -27,12 +27,14 @@ const gameoverPage = $id("gameover");
 const winCard = $id("win");
 const loseCard = $id("lose");
 
+const powerbar = healthBarInit();
+
 function gameStart() {
   rulePage.classList.add("hidden");
-
   initState();
   startCapturingInput();
-  startRendering();
+  powerbar.startListening();
+  startRendering(powerbar);
 }
 
 function step3Rule(n) {
@@ -113,7 +115,7 @@ function onGameOver(reason) {
 
   setTimeout(() => {
     gameoverPage.onclick = () => {
-      stopRendering();
+      stopRendering(powerbar);
 
       gameoverPage.classList.add("hidden");
       winCard.classList.add("hidden");
@@ -130,3 +132,5 @@ Promise.all([connect(onGameOver), downloadAssets()])
   })
   // eslint-disable-next-line no-console
   .catch(console.error);
+//console.log(document.getElementById('game-canvas'));
+//healthBarInit();
