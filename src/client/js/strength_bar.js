@@ -129,14 +129,14 @@ class StrengthBar {
 
 export function healthBarInit() {
   const app = new PIXI.Application({
-    view: document.getElementById('game-canvas'),
+    view: document.getElementById('canvas'),
     forceCanvas: true,
     transparent: true,
     clearBeforeRender: false,
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  const canvas = document.getElementById("game-canvas");
+  const canvas = document.getElementById("canvas");
   const powerbar = new StrengthBar(app, canvas);
   return powerbar;
 }
