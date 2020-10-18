@@ -163,7 +163,6 @@ class Player extends ObjectClass {
     this.score += Constants.SCORE_BULLET_HIT;
   }
 
-<<<<<<< Updated upstream
   setFireDirection(dir) {
     if (dir < Constants.FIRE_RANGE_MIN) {
       this.fireDirection = Constants.FIRE_RANGE_MIN;
@@ -172,17 +171,6 @@ class Player extends ObjectClass {
     } else {
       this.fireDirection = dir;
     }
-=======
-
-  // Reveive other big skill
-  takeBigSkill(role) {
-    this.mode = role.bigSkillName;
-  }
-
-  // Back to normal
-  restoreToNormal() {
-    this.mode = "mode";
->>>>>>> Stashed changes
   }
 
   serializeForUpdate() {

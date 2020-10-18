@@ -267,12 +267,10 @@ hr {
   border-radius: 5px;
   text-align: center;
 }
-
-<<<<<<< Updated upstream
+/*
 @media screen and (max-width: 640px) {
   h1 {
-    font-size: 2rem;
-=======
+    font-size: 2rem*/
 .button1 {
   border: none;
   border-radius: 5px;
@@ -323,7 +321,6 @@ hr {
 @keyframes blink {
   from {
     opacity: 1;
->>>>>>> Stashed changes
   }
   h2 {
     font-size: 1.75rem;

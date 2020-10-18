@@ -14,16 +14,6 @@ import "../css/bootstrap-reboot.css";
 import "../css/main.css";
 
 const playMenu = document.getElementById("play-menu");
-<<<<<<< Updated upstream
-const playButton = document.getElementById("enter-button");
-const usernameInput = document.getElementById("username-input");
-
-function onGameOver() {
-  stopCapturingInput();
-  stopRendering();
-  playMenu.classList.remove("hidden");
-  setLeaderboardHidden(true);
-=======
 const roomIDInput = document.getElementById("room-id");
 const playButton = document.getElementById("play-menu-enter");
 const characterMenu = document.getElementById("mode-menu");
@@ -120,7 +110,6 @@ function onGameOver(reason) {
   gameoverInput.focus();
   gameoverInput.onkeydown = gameoverHandler;
   gameover.onclick = gameoverHandler;
->>>>>>> Stashed changes
 }
 
 //
