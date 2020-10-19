@@ -99,6 +99,8 @@ class Player extends ObjectClass {
                 10
             ) -
             Math.PI / 2;
+        if (this.x===0)
+          this.x=Constants.MAP_SIZE_LENGTH;
       }
       if (e === "ArrowRight") {
         if (this.fireDirection < 0){
@@ -111,6 +113,8 @@ class Player extends ObjectClass {
               10
           ) +
           Math.PI / 2;
+        if (this.x===Constants.MAP_SIZE_LENGTH)
+          this.x=0;
       }
       this.friction = 0;
       this.speed = this.playerSpeed;
@@ -137,6 +141,8 @@ class Player extends ObjectClass {
                 10
             ) -
             Math.PI / 2;
+        if (this.x===Constants.MAP_SIZE_LENGTH)
+          this.x=0;
       }
       if (e === "ArrowLeft") {
         if (this.fireDirection < 0){
@@ -149,6 +155,8 @@ class Player extends ObjectClass {
               10
           ) +
           Math.PI / 2;
+        if (this.x===0)
+          this.x=Constants.MAP_SIZE_LENGTH;
       }
       this.friction = 0;
       this.speed = this.playerSpeed;
