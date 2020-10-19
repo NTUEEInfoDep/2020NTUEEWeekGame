@@ -32,7 +32,7 @@ class Game {
     const username = userinfo[0];
     const side = username in this.waitrooms;
     let x;
-    if(this.map[username] !== 0 || this.map[username] !== 1){
+    if(this.map[username] !== 0 && this.map[username] !== 1){
       if(Math.random() >= 0.5) this.map[username] = 1;
       else this.map[username] = 0;
       socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
@@ -90,7 +90,10 @@ class Game {
       } else if (this.roles[socket.id] === 4) {
         this.players[socket.id] = new Banana(socket.id, username, x, y, this.map[username]);
       }
-      if (this.map[username] === 0 || this.map[username] === 1) this.players[socket.id].setmap(this.map[username]);
+      if (this.map[username] === 0 || this.map[username] === 1){
+        this.players[socket.id].setmap(this.map[username]);
+        socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
+      }
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
@@ -134,6 +137,7 @@ class Game {
       const playerIDs = this.playrooms[roomname];
       if (playerIDs.includes(socket.id)) {
         this.removeRoom(roomname, playerIDs, ["win", "win"], "play");
+        delete this.map[roomname];
       }
     });
     Object.keys(this.waitrooms).forEach((roomname) => {
