@@ -144,6 +144,7 @@ class Game {
       const playerIDs = this.waitrooms[roomname];
       if (playerIDs.includes(socket.id)) {
         this.removeRoom(roomname, playerIDs, ["win", "win"], "wait");
+        delete this.map[roomname];
       }
     });
   }
