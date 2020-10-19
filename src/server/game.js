@@ -179,7 +179,7 @@ class Game {
   removeDisconnectedPlayer(socket) {
     this.randomrooms.forEach((index) => {
       if (index[0] === socket.id) {
-        let i = this.randomrooms.indexOf(index);
+        const i = this.randomrooms.indexOf(index);
         this.randomrooms.splice(index, 1);
       }
     });
@@ -203,6 +203,7 @@ class Game {
   removeRoom(roomname, playerIDs, reason, roomType) {
     if (roomType === "play" || roomType === "game_end") {
       delete this.playrooms[roomname];
+      delete this.map[roomname];
     } else if (roomType === "wait") delete this.waitrooms[roomname];
     delete this.cameras[roomname];
     playerIDs.forEach((playerID, index) => {
