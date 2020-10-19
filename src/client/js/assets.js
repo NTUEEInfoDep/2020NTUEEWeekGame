@@ -1,9 +1,9 @@
 const ASSET_NAMES = [
-  // map
+  // maps
   "map1.png",
   "map2.png",
 
-  // character
+  // characters
   "crt1.png",
   "crt2.png",
   "crt3.png",
@@ -12,7 +12,7 @@ const ASSET_NAMES = [
   "num2_frozen.png",
   "num4_frozen.png",
 
-  // bullet
+  // bullets
   "bullet1.png",
   "bullet2.png",
   "bullet3.png",

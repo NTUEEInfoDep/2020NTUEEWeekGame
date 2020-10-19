@@ -86,13 +86,37 @@ class Game {
         userinfo[2]
       );
       if (this.roles[socket.id] === 1) {
-        this.players[socket.id] = new Cat(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Cat(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 2) {
-        this.players[socket.id] = new PinkAss(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new PinkAss(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 3) {
-        this.players[socket.id] = new Pudding(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Pudding(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 4) {
-        this.players[socket.id] = new Banana(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Banana(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       }
       this.players[socket.id].setmap(this.map[username]);
       socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
@@ -109,13 +133,37 @@ class Game {
         userinfo[2]
       );
       if (this.roles[socket.id] === 1) {
-        this.players[socket.id] = new Cat(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Cat(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 2) {
-        this.players[socket.id] = new PinkAss(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new PinkAss(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 3) {
-        this.players[socket.id] = new Pudding(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Pudding(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 4) {
-        this.players[socket.id] = new Banana(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Banana(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       }
       this.players[socket.id].setmap(this.map[username]);
       socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
@@ -130,9 +178,9 @@ class Game {
 
   // Deal with disconnected player and its room
   removeDisconnectedPlayer(socket) {
-    this.randomrooms.forEach((index) => { 
-      if (index[0] === socket.id){
-        let i = this.randomrooms.indexOf(index);
+    this.randomrooms.forEach((index) => {
+      if (index[0] === socket.id) {
+        const i = this.randomrooms.indexOf(index);
         this.randomrooms.splice(index, 1);
       }
     });
@@ -152,7 +200,7 @@ class Game {
 
   // Send Game over and remove room and players
   removeRoom(roomname, playerIDs, reason, roomType) {
-    if (roomType === "play" || roomType === "game_end"){
+    if (roomType === "play" || roomType === "game_end") {
       delete this.playrooms[roomname];
       delete this.map[roomname];
     }
@@ -176,24 +224,21 @@ class Game {
       const keyType = keyEvent[0];
       const key = keyEvent[1];
       if (keyType === "keydown") {
-        if (key === "Enter"){
-          if (this.roles[socket.id] === 1){
+        if (key === "Enter") {
+          if (this.roles[socket.id] === 1) {
             const newBullet = player.skill();
             if (newBullet) {
               newBullet.forEach((index) => {
                 this.bullets.push(index);
               });
             }
-          }
-          else if (this.roles[socket.id] === 2){
+          } else if (this.roles[socket.id] === 2) {
             const newBullet = player.skill();
             if (newBullet) this.bullets.push(newBullet);
-          }
-          else if (this.roles[socket.id] === 3){
+          } else if (this.roles[socket.id] === 3) {
             const newBullet = player.skill();
             if (newBullet) this.bullets.push(newBullet);
-          }
-          else if (this.roles[socket.id] === 4){
+          } else if (this.roles[socket.id] === 4) {
             const newBullet = player.skill();
             if (newBullet) this.bullets.push(newBullet);
           }
@@ -208,12 +253,15 @@ class Game {
         }
         if (key === "ShiftLeft") camera.follow(player);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
-        if (key === "ArrowUp" || key === "ArrowDown") player.fireDirectionMove(key);
+        if (key === "ArrowUp" || key === "ArrowDown")
+          player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
-        if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent[1]);
+        if (key === "ArrowLeft" || key === "ArrowRight")
+          player.stop(keyEvent[1]);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
-        if (key === "ArrowUp" || key === "ArrowDown") player.fireDirectionStop(key);
+        if (key === "ArrowUp" || key === "ArrowDown")
+          player.fireDirectionStop(key);
       }
     }
   }
@@ -335,7 +383,6 @@ class Game {
   }
 
   checkRoomname(socket, roomname) {
-    
     if (Object.keys(this.playrooms).includes(roomname)) {
       socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, 2);
     } else if (Object.keys(this.waitrooms).includes(roomname)) {

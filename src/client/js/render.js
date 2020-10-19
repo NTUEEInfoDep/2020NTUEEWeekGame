@@ -70,18 +70,14 @@ function renderPlayer(me, player) {
     ctx.scale(-1, 1);
   }
   let playerStyle;
-  if (role === 1){
-    if (mode === 3) playerStyle = "num1_frozen.png";
-    else playerStyle = "crt1.png";
-  }
-  else if (role === 2){
-    if (mode === 3) playerStyle = "num2_frozen.png";
-    else playerStyle = "crt2.png";
-  }
-  else if (role === 3) playerStyle = "crt3.png";
-  else {
-    if (mode === 3) playerStyle = "num4_frozen.png";
-    else playerStyle = "crt4.png";
+  if (role === 1) {
+    playerStyle = mode === 3 ? "num1_frozen.png" : "crt1.png";
+  } else if (role === 2) {
+    playerStyle = mode === 3 ? "num2_frozen.png" : "crt2.png";
+  } else if (role === 3) {
+    playerStyle = "crt3.png";
+  } else if (role === 4) {
+    playerStyle = mode === 3 ? "num4_frozen.png" : "crt4.png";
   }
 
   ctx.drawImage(
@@ -102,15 +98,11 @@ function renderPlayer(me, player) {
   ctx.fillRect(0, 0, PLAYER_RADIUS * 2, 10);
 
   let hpW = (PLAYER_RADIUS * 2 * player.hp) / PLAYER_MAX_HP;
-  if (role === 1) {
-    hpW /= PLAYER_HP_COEF.Cat;
-  } else if (role === 2) {
-    hpW /= PLAYER_HP_COEF.PinkAss;
-  } else if (role === 3) {
-    hpW /= PLAYER_HP_COEF.Pudding;
-  } else if (role === 4) {
-    hpW /= PLAYER_HP_COEF.Banana;
-  }
+  if (role === 1) hpW /= PLAYER_HP_COEF.Cat;
+  else if (role === 2) hpW /= PLAYER_HP_COEF.PinkAss;
+  else if (role === 3) hpW /= PLAYER_HP_COEF.Pudding;
+  else if (role === 4) hpW /= PLAYER_HP_COEF.Banana;
+
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, hpW, 10);
 
@@ -160,19 +152,16 @@ function renderPlayer(me, player) {
 
 function renderBullet(me, bullet) {
   const { x, y, role, mode } = bullet;
+
   let bulletImg;
-  if (role === 1) bulletImg = "bullet1.png";
-  else if (role === 2){
-    if (mode === 2) bulletImg = "fart.png";
-    else bulletImg = "bullet2.png";
-  }
-  else if (role === 3){
-    if(mode === 3) bulletImg = "ice.png";
-    else bulletImg = "bullet3.png";
-  }
-  else {
-    if (mode === 4) bulletImg = "banana.png";
-    else bulletImg = "bullet4.png";
+  if (role === 1) {
+    bulletImg = "bullet1.png";
+  } else if (role === 2) {
+    bulletImg = mode === 2 ? "fart.png" : "bullet2.png";
+  } else if (role === 3) {
+    bulletImg = mode === 3 ? "ice.png" : "bullet3.png";
+  } else {
+    bulletImg = mode === 4 ? "banana.png" : "bullet4.png";
   }
 
   ctx.drawImage(
@@ -186,7 +175,7 @@ function renderBullet(me, bullet) {
 
 let map;
 
-export function randommap(rm){
+export function randommap(rm) {
   map = rm;
 }
 

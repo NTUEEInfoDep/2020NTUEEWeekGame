@@ -27,6 +27,28 @@ canvas {
   height: 100%;
 }
 
+/* Creators */
+
+#creators {
+  right: 1rem;
+  bottom: 1rem;
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  min-width: fit-content;
+  min-height: fit-content;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #eeeeee;
+  color: #001116;
+  font-size: 1rem;
+  font-family: "Arvo", sans-serif;
+}
+
 /* Join Page */
 
 #join-page {
@@ -48,16 +70,16 @@ canvas {
   color: black;
 }
 
-#join-page-subtitle {
+#join-page-suptitle {
   font-size: 1rem;
   font-family: "Arvo", sans-serif;
 }
 
 #join-page-title {
+  margin: -0.75rem 0 0;
   overflow: visible;
   font-size: 8rem;
   font-family: "Pdark", sans-serif;
-  line-height: 8rem;
 }
 
 #room-id-input {
