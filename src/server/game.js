@@ -153,6 +153,7 @@ class Game {
   removeRoom(roomname, playerIDs, reason, roomType) {
     if (roomType === "play" || roomType === "game_end"){
       delete this.playrooms[roomname];
+      delete this.map[roomname];
     }
     else if (roomType === "wait") delete this.waitrooms[roomname];
     delete this.cameras[roomname];
