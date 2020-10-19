@@ -32,18 +32,22 @@ class Game {
     const username = userinfo[0];
     const side = username in this.waitrooms;
     let x;
-    if(this.map[username] !== 0 && this.map[username] !== 1){
-      if(Math.random() >= 0.5) this.map[username] = 1;
-      else this.map[username] = 0;
-      socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
+    let y;
+    if (username !== "random") {
+      if (this.map[username] !== 0 && this.map[username] !== 1){
+        if (Math.random() >= 0.6) this.map[username] = 1;
+        else this.map[username] = 0;
+      }
+      if (side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);
+      else x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);
+      y =
+        (Constants.MAP[this.map[username]][Math.floor(x / 10)] * (x % 10) +
+          Constants.MAP[this.map[username]][Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
+        10;  
     }
+    
 
-    if (side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);
-    else x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);
-    const y =
-      (Constants.MAP[this.map[username]][Math.floor(x / 10)] * (x % 10) +
-        Constants.MAP[this.map[username]][Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
-      10;
+    
     // Adding player to rooms and store the name. The first player joined
     // goes to waitrooms. The second player will be join and move the room
     // from waitrooms to playrooms. If a third player is coming, it will be blocked.
@@ -90,10 +94,8 @@ class Game {
       } else if (this.roles[socket.id] === 4) {
         this.players[socket.id] = new Banana(socket.id, username, x, y, this.map[username]);
       }
-      if (this.map[username] === 0 || this.map[username] === 1){
-        this.players[socket.id].setmap(this.map[username]);
-        socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
-      }
+      this.players[socket.id].setmap(this.map[username]);
+      socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
@@ -115,7 +117,8 @@ class Game {
       } else if (this.roles[socket.id] === 4) {
         this.players[socket.id] = new Banana(socket.id, username, x, y, this.map[username]);
       }
-      if (this.map[username] === 0 || this.map[username] === 1) this.players[socket.id].setmap(this.map[username]);
+      this.players[socket.id].setmap(this.map[username]);
+      socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
     }
   }
 
@@ -137,14 +140,12 @@ class Game {
       const playerIDs = this.playrooms[roomname];
       if (playerIDs.includes(socket.id)) {
         this.removeRoom(roomname, playerIDs, ["win", "win"], "play");
-        delete this.map[roomname];
       }
     });
     Object.keys(this.waitrooms).forEach((roomname) => {
       const playerIDs = this.waitrooms[roomname];
       if (playerIDs.includes(socket.id)) {
         this.removeRoom(roomname, playerIDs, ["win", "win"], "wait");
-        delete this.map[roomname];
       }
     });
   }
@@ -155,7 +156,10 @@ class Game {
       delete this.playrooms[roomname];
       delete this.map[roomname];
     }
-    else if (roomType === "wait") delete this.waitrooms[roomname];
+    else if (roomType === "wait"){
+      delete this.waitrooms[roomname];
+      delete this.map[roomname];
+    }
     delete this.cameras[roomname];
     playerIDs.forEach((playerID, index) => {
       this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER, reason[index]);
