@@ -81,7 +81,7 @@ function onGameOver(reason) {
   if (reason === "win") $id("win").classList.remove("hidden");
   else if (reason === "lose") $id("lose").classList.remove("hidden");
 
-  const getOut = () => {
+  /*const getOut = () => {
     stopRendering(powerbar);
 
     $id("game-over-page").classList.add("hidden");
@@ -89,12 +89,13 @@ function onGameOver(reason) {
     $id("lose").classList.add("hidden");
 
     step1();
-  };
+  };*/
 
   setTimeout(() => {
-    $id("game-over-page").onclick = getOut;
+    $id("game-over-page").onclick = () =>{
+      window.location.reload();
+    };
   }, 2000);
-  setTimeout(getOut, 10000);
 }
 
 Promise.all([connect(onGameOver), downloadAssets()])

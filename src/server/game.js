@@ -52,7 +52,6 @@ class Game {
     // goes to waitrooms. The second player will be join and move the room
     // from waitrooms to playrooms. If a third player is coming, it will be blocked.
     // Ridection or alert for this is still needed.
-
     if (username === "random") {
       this.randomrooms.push([socket.id, userinfo]);
       // this.players[socket.id] = new Player(socket.id, username, x, y, side);
@@ -179,8 +178,11 @@ class Game {
   // Deal with disconnected player and its room
   removeDisconnectedPlayer(socket) {
     this.randomrooms.forEach((index) => {
+      console.log(index[0]);
+      console.log(socket.id);
       if (index[0] === socket.id) {
         const i = this.randomrooms.indexOf(index);
+        console.log(i);
         this.randomrooms.splice(index, 1);
       }
     });
