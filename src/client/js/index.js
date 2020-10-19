@@ -9,13 +9,12 @@ import { healthBarInit } from "./strength_bar";
 
 const powerbar = healthBarInit();
 
-const $id = (element) => {
-  return document.getElementById(element);
-};
+const $id = (element) => document.getElementById(element);
 const crts = document.getElementsByClassName("crtContainer");
 
 function gameStart() {
   $id("rule-page").classList.add("hidden");
+  $id("creators").classList.add("hidden");
 
   initState();
   startCapturingInput();
@@ -23,8 +22,8 @@ function gameStart() {
   powerbar.startListening();
 }
 
-function step3(n) {
-  play($id("room-id-input").value, n);
+function step3(crtChosen) {
+  play($id("room-id-input").value, crtChosen);
 
   $id("crt-page").classList.add("hidden");
   $id("rule-page").classList.remove("hidden");
@@ -41,11 +40,8 @@ function step3(n) {
 }
 
 function step2() {
-  if ($id("room-id-input").value === "") {
-    $id("room-id-input").value = "random";
-  }
-
-  checkRoom($id("room-id-input").value);
+  if ($id("room-id-input").value === "") $id("room-id-input").value = "random";
+  else checkRoom($id("room-id-input").value);
 
   $id("join-page").classList.add("hidden");
   $id("crt-page").classList.remove("hidden");
@@ -64,6 +60,7 @@ function step2() {
 }
 
 function step1() {
+  $id("creators").classList.remove("hidden");
   $id("join-page").classList.remove("hidden");
 
   $id("join-page-input").focus();
@@ -84,17 +81,20 @@ function onGameOver(reason) {
   if (reason === "win") $id("win").classList.remove("hidden");
   else if (reason === "lose") $id("lose").classList.remove("hidden");
 
+  const getOut = () => {
+    stopRendering(powerbar);
+
+    $id("game-over-page").classList.add("hidden");
+    $id("win").classList.add("hidden");
+    $id("lose").classList.add("hidden");
+
+    step1();
+  };
+
   setTimeout(() => {
-    $id("game-over-page").onclick = () => {
-      stopRendering(powerbar);
-
-      $id("game-over-page").classList.add("hidden");
-      $id("win").classList.add("hidden");
-      $id("lose").classList.add("hidden");
-
-      step1();
-    };
+    $id("game-over-page").onclick = getOut;
   }, 2000);
+  setTimeout(getOut, 10000);
 }
 
 Promise.all([connect(onGameOver), downloadAssets()])
