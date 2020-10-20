@@ -227,22 +227,22 @@ class Game {
       const keyType = keyEvent[0];
       const key = keyEvent[1];
       if (keyType === "keydown") {
-        if (key === "Enter") {
+        if (key === "Enter" && keyEvent.length === 3) {
           if (this.roles[socket.id] === 1) {
-            const newBullet = player.skill();
+            const newBullet = player.skill(keyEvent[2]);
             if (newBullet) {
               newBullet.forEach((index) => {
                 this.bullets.push(index);
               });
             }
           } else if (this.roles[socket.id] === 2) {
-            const newBullet = player.skill();
+            const newBullet = player.skill(keyEvent[2]);
             if (newBullet) this.bullets.push(newBullet);
           } else if (this.roles[socket.id] === 3) {
-            const newBullet = player.skill();
+            const newBullet = player.skill(keyEvent[2]);
             if (newBullet) this.bullets.push(newBullet);
           } else if (this.roles[socket.id] === 4) {
-            const newBullet = player.skill();
+            const newBullet = player.skill(keyEvent[2]);
             if (newBullet) this.bullets.push(newBullet);
           }
         }
@@ -252,7 +252,6 @@ class Game {
         }
         if (key === "ArrowLeft" || key === "ArrowRight") {
           follow = player.move(key);
-          console.log(follow);
           if (follow) camera.follow(player);
           // camera.follow(player);
         }

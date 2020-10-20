@@ -37,7 +37,7 @@ class PinkAss extends Player {
     return null;
   }
 
-  skill(){
+  skill(power){
     if(this.skillCooldown <= 0){
       this.skillCooldown = this.skillCooldowntime;
       return new Bullet(
@@ -47,7 +47,7 @@ class PinkAss extends Player {
         this.fireDirection,
         this.username,
         this.role,
-        this.bulletSpeed,
+        this.bulletSpeed*power,
         2,
         this.map
       );
