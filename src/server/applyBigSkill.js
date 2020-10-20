@@ -19,9 +19,11 @@ const switchMode = (player) => {
     
     if (snowMode){
         player.mode = 'snow';
+        console.log('snow')
         return
     } else if (fartMode){
         player.mode = 'fart';
+        console.log('fart')
         return 
     }
 
@@ -41,8 +43,9 @@ function applyBigSkill(players, infos) {
         // Every time renew the game frame, push the new timer into player's timers array
         let timers = [];
         for (let j=0; j< infos.length; j++){
+            console.log('Infos: ', infos[j])
             if (players[i].id != infos[j].parentId){
-                if (infos[j] !== null && infos[j].hasAttribute('timer')){
+                if (infos[j] !== null && infos[j].hasOwnProperty('timer')){
                     timers.push({
                         mode: infos[j].mode,
                         // A promise, has invoked.

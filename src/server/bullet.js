@@ -1,12 +1,14 @@
+/* eslint-disable no-underscore-dangle */
 const shortid = require("shortid");
 const ObjectClass = require("./object");
 const Constants = require("../shared/constants");
 
 class Bullet extends ObjectClass {
-  constructor(_parent, y, dir, username) {
-    super(shortid(), x, y, dir, Constants.BULLET_SPEED);
+  constructor(_parent, x, y, dir, username, role, speed) {
+    super(shortid(), x, y, dir, speed);
     this._parent = _parent;
     this.username = username;
+    this.role = role;
   }
 
   // Returns true if the bullet should be destroyed
@@ -29,10 +31,19 @@ class Bullet extends ObjectClass {
 
     return (
       this.x < 0 ||
-      this.x > Constants.MAP_SIZE ||
+      this.x > Constants.MAP_SIZE_LENGTH ||
       this.y < 0 ||
-      this.y > Constants.MAP_SIZE
+      this.y >
+        (Constants.MAP[Math.floor(this.x / 10)] * (10 - (this.x % 10)) +
+          Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) /
+          10
     );
+  }
+  serializeForUpdate() {
+    return {
+      ...super.serializeForUpdate(),
+      role:this.role,
+    };
   }
 }
 

@@ -1,289 +1,99 @@
-html,
-body {
+* {
   margin: 0;
   border: 0;
   padding: 0;
+  box-sizing: content-box;
+  text-decoration: none;
   overflow: hidden;
+  line-height: normal;
   overscroll-behavior: none;
+}
+
+html, body {
   background-color: black;
 }
+
+/* Font Face */
 
 @font-face {
   font-family: "Pdark";
   src: url("../../../public/fonts/pdark.ttf") format("truetype");
 }
 
-@font-face {
-  font-family: "AstronBoy";
-  src: url("../../../public/fonts/astron_boy.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Nest";
-  /* src: url("../../../public/fonts/Nest.otf") format("truetype"); */
-}
+/* Canvas */
 
 canvas {
   width: 100%;
   height: 100%;
 }
 
-hr {
-  width: 100%;
-}
+/* Join Page */
 
-.button1 {
-  font-size: 30px;
-  color: black !important;
-  background-color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 10px 20px 4px 20px;
-  border-radius: 5px;
-  display: inline-block;
-  border: solid;
-  outline: none;
-  transition: all 0.4s ease 0s;
-  font-family: "AstronBoy";
-}
-
-.button1:hover {
-  background: coral;
-  letter-spacing: 3px;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
-  transition: all 0.4s ease 0s;
-}
-
-.button2 {
-  width: 300px;
-  font-size: 25px;
-  margin: 5px;
-  color: black !important;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 10px 20px 4px 20px;
-  border-radius: 5px;
-  display: inline-block;
-  border: solid;
-  outline: none;
-  transition: all 0.4s ease 0s;
-  font-family: "AstronBoy";
-}
-
-.button2:hover {
-  background-color: coral;
-  letter-spacing: 3px;
-  transition: all 0.4s ease 0s;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.blink {
-  animation-duration: 1s;
-  animation-name: blink;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-timing-function: ease-in-out;
-}
-@keyframes blink {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-.characterPic {
-  width: 80%;
-  padding: 10px 0px;
-  font-size: 2rem;
-}
-
-.characterContainer {
-  flex: 1;
-  border-style: solid;
-  border-color: black;
-  margin: 1px;
-  padding: 30px 1px 30px 1px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.characterContainer:hover {
-  background-color: coral;
-  letter-spacing: 3px;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
-  transition: all 0.4s ease 0s;
-}
-
-#game-canvas {
-  width: 100%;
-  height: 100%;
-}
-
-#play-menu {
-  position: fixed;
+#join-page {
   top: 50%;
   left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  padding: 70px;
-  background-color: white;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
+  width: fit-content;
+  height: fit-content;
+  min-width: fit-content;
+  min-height: fit-content;
+  padding: 3rem;
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 5px;
-  max-height: 85%;
   text-align: center;
+  background-color: white;
+  color: black;
 }
 
-#play-menu #header #title {
+#join-page-subtitle {
+  font-size: 1rem;
+  font-family: "Arvo";
+}
+
+#join-page-title {
+  overflow: visible;
   font-size: 8rem;
-  margin-bottom: 1rem;
   font-family: "Pdark";
-}
-#play-menu #header #subtitle {
-  font-size: 2rem;
-  font-family: "Nest";
+  line-height: 8rem;
 }
 
-#play-menu input {
-  font-size: 23px;
-  outline: none;
+#room-id-input {
+  margin: 1.5rem 0 0;
   border: none;
-  border-bottom: 1px solid black;
-  margin-bottom: 5px;
-  padding: 3px;
-  text-align: center;
-}
-
-#play-menu input:hover {
-  outline: none;
-}
-
-#mode-menu {
-  position: fixed;
-  width: 92%;
-  height: 80%;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  padding: px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 5px;
-  max-height: 85%;
-  text-align: center;
-}
-
-#mode-menu #header {
-  font-size: 5rem;
-  padding-top: 10px;
-  font-family: "AstronBoy";
-}
-
-#mode-menu #character-table {
   font-size: 1.5rem;
-  display: flex;
-  padding: 40px;
-  font-family: "Nest";
-  flex-direction: row;
-  align-items: center;
-}
-
-#instructions {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  padding: 70px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 5px;
-  max-height: 85%;
+  font-family: "Arvo";
   text-align: center;
-  margin-bottom: 0;
-  font-family: "Nest";
-  font-size: 1.5rem;
-  line-height: 3rem;
 }
 
-#instructions #enter-game {
+#room-id-input:hover {
+  opacity: 0.5;
+  border-bottom: 0.1rem solid black;
+  letter-spacing: 0.5rem;
+  margin-right: -0.5rem;
+  transition: all 0.4s ease 0s;
+}
+
+#room-id-input:focus {
+  border-bottom: 0.1rem solid black;
+  opacity: 0.5;
+  letter-spacing: 0rem;
+  margin-right: 0rem;
+}
+
+#room-id-input::placeholder {
+  color: black;
+  opacity: 1;
+  background-color: white;
+  font-size: 2rem;
+  font-family: "Righteous";
   text-transform: uppercase;
-  margin-bottom: 0;
-  font-family: "Nest";
-  font-size: 2rem;
-  line-height: 3rem;
-  letter-spacing: 3px;
+  text-decoration: none;
 }
 
-#leaderboard {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 10px;
-  border-radius: 5px;
-}
-
-#leaderboard th {
-  text-align: center;
-  padding: 2px 5px;
-}
-
-#leaderboard td {
-  text-align: center;
-  padding: 2px 5px;
-}
-
-#disconnect-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-}
-
-#disconnect-modal > div {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  padding: 15px 20px;
-  background-color: white;
-  border-radius: 5px;
-  text-align: center;
-}
-/*
-@media screen and (max-width: 640px) {
-  h1 {
-    font-size: 2rem*/
-.button1 {
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  /* padding: 10px 20px 4px 20px; */
-  display: inline-block;
-  color: black !important;
-  background-color: white;
-  font-size: 30px;
-  font-family: "Nest";
-}
-
-#disconnect-window button {
+#random-button {
   color: black;
   background-color: white;
   font-size: 2rem;
@@ -293,13 +103,216 @@ hr {
   transition: all 0.4s ease 0s;
 }
 
-#disconnect-window button:hover {
+#random-button:hover {
+  letter-spacing: 1rem;
+  margin-right: -1rem;
+  transition: all 0.4s ease 0s;
+}
+
+#join-page-or {
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  font-family: "Arvo";
+}
+
+/* Character Page */
+
+#crt-page {
+  position: fixed;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 30px;
+  padding: 3rem;
+  background-color: white;
+}
+
+#crt-page-title {
+  padding: 0 0 1rem;
+  font-size: 3rem;
+  font-family: "Kalam";
+  font-weight: bold;
+}
+
+#crt-page p {
+  font-size: 2rem;
+  font-family: "Kalam";
+}
+
+#crt-containers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.crtContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.6rem;
+  border-bottom: 0.5rem solid white;
+  padding: 0 0.6rem;
+}
+
+.crtContainer:hover {
+  transition: all 0.4s ease 0s;
+  border-bottom: 0.5rem solid black;
+}
+
+.crtContainer img {
+  width: 8rem;
+  padding: 1rem 1rem 0;
+}
+
+.crtContainer p {
+  font-size: 1.5rem;
+  font-family: "Kalam";
+}
+
+#crt-page-or {
+  border-bottom: none;
+}
+
+#crt-page-or p {
+  padding: 2rem;
+}
+
+/* Rule Page */
+
+#rule-page {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
+  max-height: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-radius: 30px;
+  padding: 3rem;
+  background-color: white;
+}
+
+#rule-page #rule-title {
+  font-size: 3rem;
+  line-height: 2rem;
+  font-family: "Kalam";
+}
+
+#rule-page p {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-family: "Kalam";
+}
+
+#rule-page #blinker {
+  padding: 1rem 0 0;
+  color: crimson;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-family: "Kalam";
+}
+
+/* Game Over */
+
+#game-over-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+#game-over-page div {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
+  width: fit-content;
+  height: fit-content;
+  min-width: fit-content;
+  min-height: fit-content;
+  padding: 3rem;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  transition: all 0.4s ease 0s;
+}
+
+#game-over-page p {
+  color: black;
+  font-size: 5rem;
+  font-family: "Pdark";
   letter-spacing: 3rem;
   margin-right: -3rem;
+  text-transform: uppercase;
+  padding: 1rem;
+}
+
+#game-over-page img {
+  width: 20rem;
+}
+
+/* Alert Page */
+
+#alert-page {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%) translateY(-50%);
+  width: fit-content;
+  height: fit-content;
+  min-width: fit-content;
+  min-height: fit-content;
+  padding: 3rem;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: black;
+}
+
+#alert-title {
+  color: crimson;
+  font-size: 3rem;
+  font-family: "Righteous";
+  text-transform: uppercase;
+}
+
+#alert-button {
+  margin: 1rem 1rem 0;
+  padding: 0.5rem 3rem;
+  border-radius: 30px;
+  background-color: crimson;
+  color: black;
+  font-size: 2rem;
+  font-family: "Righteous";
+  text-decoration: none;
+  transition: all 0.4s ease 0s;
+}
+
+#alert-button:hover {
+  letter-spacing: 1rem;
+  margin-right: -1rem;
   transition: all 0.4s ease 0s;
 }
 
 /* Other Stuff */
+
+p span {
+  text-decoration: line-through;
+}
 
 .hidden {
   display: none !important;
@@ -311,7 +324,7 @@ hr {
 }
 
 .blink {
-  animation-duration: 1s;
+  animation-duration: 0.8s;
   animation-name: blink;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -322,24 +335,20 @@ hr {
   from {
     opacity: 1;
   }
-  h2 {
-    font-size: 1.75rem;
+  to {
+    opacity: 0;
   }
-  #play-menu {
+}
+
+/* Mobile Devises */
+
+/* @media screen and (max-width: 90%) {
+  #join-page {
     padding: 10px 15px;
     min-width: 280px;
   }
-  #disconnect-modal > div {
+  #disconnect-window>div {
     padding: 10px;
     min-width: 280px;
   }
-  #leaderboard th {
-    padding: 0 3px;
-  }
-  #leaderboard td {
-    padding: 0 3px;
-  }
-  #leaderboard table {
-    font-size: 14px;
-  }
-}
+} */

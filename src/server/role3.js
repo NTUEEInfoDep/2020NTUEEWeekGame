@@ -31,25 +31,41 @@ class Pudding extends Player {
     constructor(id, username, x, y){
 		super(id, username, x, y);
 		this.role = 3;
-		this.bulletDamage = Constants.BULLET_DAMAGE;
-	
+		// life
+		this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.Pudding;
+		// force
+		this.bulletDamage = 0.7 * Constants.BULLET_DAMAGE;
+		//speed
+		this.playerSpeed = 1.3 * Constants.PLAYER_SPEED;
+		//firespeed
+		this.fireCooldowntime = 0.7 * Constants.PLAYER_FIRE_COOLDOWN;
+		//power
+		this.bulletSpeed = 1 * Constants.BULLET_SPEED;
+
 		this.bigSkill = new BigSkill(this, this.username, this.role);
 		this.bigSkillName = "snow";
 	}
 	fire() {
 		if (this.fireCooldown <= 0) {
-		  this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
-		  return new Bullet(
+		this.fireCooldown = this.fireCooldowntime;
+		return new Bullet(
 			this,
 			this.x,
 			this.y,
 			this.fireDirection,
 			this.username,
-			this.role
-		  );
+			this.role,
+			this.bulletSpeed
+		);
 		}
 		return null;
-	  }
+	}
+	serializeForUpdate() {
+		return {
+		...super.serializeForUpdate(),
+		role: this.role,
+		};
+	}
 
 	  // Need revision
 	emitBigSkill (){
@@ -62,14 +78,7 @@ class Pudding extends Player {
 				timer: this.bigSkill.Timer
 			}
 		}
-		return null
-	}
-
-	serializeForUpdate(){
-		return {
-			...super.serializeForUpdate(),
-			role: this.role,
-		};
+		return {}
 	}
 }
 

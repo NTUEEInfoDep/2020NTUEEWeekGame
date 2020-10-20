@@ -6,6 +6,7 @@ const socketio = require("socket.io");
 const Constants = require("../shared/constants");
 const Game = require("./game");
 const webpackConfig = require("../../webpack.config.js");
+const { check } = require("prettier");
 
 // Setup an Express server
 const app = express();
@@ -28,12 +29,8 @@ console.log(`Server listening on port ${port}`);
 // Setup the Game
 const game = new Game();
 
-function joinGame(username) {
-  game.addPlayer(this, username);
-}
-
-function handleInput(dir) {
-  game.handleInput(this, dir);
+function joinGame(userinfo) {
+  game.addPlayer(this, userinfo);
 }
 
 // Handle keyboard input
@@ -45,15 +42,20 @@ function onDisconnect() {
   game.removeDisconnectedPlayer(this);
 }
 
+function checkRoomname(roomname) {
+  game.checkRoomname(this, roomname);
+}
 // Setup socket.io
 const io = socketio(server);
 
 // Listen for socket.io connections
 io.on("connection", (socket) => {
-  console.log("Player connected!", socket.id);
+  console.log(`\nPlayer connected! (id: ${socket.id})`);
 
   socket.on(Constants.MSG_TYPES.JOIN_GAME, joinGame);
-  socket.on(Constants.MSG_TYPES.INPUT, handleInput);
   socket.on(Constants.MSG_TYPES.KEY_INPUT, handleKeyInput);
   socket.on("disconnect", onDisconnect);
+  socket.on(Constants.MSG_TYPES.CHECK_ROOMNAME, checkRoomname);
+  // socket.on(Constants.MSG_TYPES.INPUT, handleInput);
+  // socket.on(Constants.MSG_TYPES.MOVE_CAMERA, handleCamera);
 });

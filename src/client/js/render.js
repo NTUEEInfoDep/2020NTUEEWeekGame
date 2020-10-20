@@ -1,21 +1,24 @@
-// Learn more about this file at:
-// https://victorzhou.com/blog/build-an-io-game-part-1/#5-client-rendering
 import { debounce } from "throttle-debounce";
+import { MAP_SIZE_LENGTH, MAP_SIZE_WIDTH } from "../../shared/constants";
 import { getAsset } from "./assets";
 import { getCurrentState } from "./state";
 // import { getRole } from "./index.js";
 
 const Constants = require("../../shared/constants");
-const styleNum = Math.random();
-const { PLAYER_RADIUS, PLAYER_MAX_HP, BULLET_RADIUS, MAP_SIZE } = Constants;
 
-// Get the canvas graphics context
-const canvas = document.getElementById("game-canvas");
-const context = canvas.getContext("2d");
+const {
+  PLAYER_RADIUS,
+  PLAYER_MAX_HP,
+  BULLET_RADIUS,
+  PLAYER_HP_COEF,
+} = Constants;
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
 function setCanvasDimensions() {
-  // On small screens (e.g. phones), we want to "zoom out" so players can still see at least
-  // 800 in-game units of width.
+  // On small screens (e.g. phones), we want to "zoom out"
+  // so players can still see at least 800 in-game units of width.
   const scaleRatio = Math.max(1, 800 / window.innerWidth);
   canvas.width = scaleRatio * window.innerWidth;
   canvas.height = scaleRatio * window.innerHeight;
@@ -25,146 +28,126 @@ setCanvasDimensions();
 
 window.addEventListener("resize", debounce(40, setCanvasDimensions));
 
-function renderBackground(x, y) {
-  const backgroundX = MAP_SIZE / 2 - x + canvas.width / 2;
-  const backgroundY = MAP_SIZE / 2 - y + canvas.height / 2;
-  const backgroundGradient = context.createRadialGradient(
-    backgroundX,
-    backgroundY,
-    MAP_SIZE / 10,
-    backgroundX,
-    backgroundY,
-    MAP_SIZE / 2
-  );
-  backgroundGradient.addColorStop(0, "black");
-  backgroundGradient.addColorStop(1, "gray");
-  context.fillStyle = backgroundGradient;
-  context.fillRect(0, 0, canvas.width, canvas.height);
+function renderBackground(color = "black") {
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-// Renders a ship at the given coordinates
+function renderMap(me) {
+  ctx.drawImage(
+    getAsset("map1.png"),
+    canvas.width / 2 - me.x,
+    canvas.height / 2 - me.y,
+    MAP_SIZE_LENGTH,
+    MAP_SIZE_WIDTH
+  );
+}
+
 function renderPlayer(me, player) {
-  const { x, y, direction, fireDirection } = player;
+  const { x, y, direction, fireDirection, role } = player;
+
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
-  // Draw ship
-  context.save();
-  context.translate(canvasX, canvasY);
-  context.rotate(direction);
-  context.drawImage(
-    getAsset("bullet.svg"), // originally `ship.svg`
+  //
+  // Draw player
+  ctx.save();
+  ctx.translate(canvasX, canvasY - PLAYER_RADIUS / 2);
+  if (direction < 0) {
+    ctx.scale(-1, 1);
+  }
+
+  let playerStyle;
+  if (role === 1) playerStyle = "crt1.png";
+  else if (role === 2) playerStyle = "crt2.png";
+  else if (role === 3) playerStyle = "crt3.png";
+  else playerStyle = "crt4.png";
+
+  ctx.drawImage(
+    getAsset(playerStyle),
     -PLAYER_RADIUS,
     -PLAYER_RADIUS,
     PLAYER_RADIUS * 2,
     PLAYER_RADIUS * 2
   );
-  context.restore();
+  ctx.restore();
 
-  // Draw health bar
-  context.fillStyle = "white";
-  context.fillRect(
-    canvasX - PLAYER_RADIUS,
-    canvasY + PLAYER_RADIUS + 8,
-    PLAYER_RADIUS * 2,
-    2
-  );
-  context.fillStyle = "red";
+  //
+  // Draw health info
+  ctx.save();
+  ctx.translate(canvasX - PLAYER_RADIUS, canvasY + PLAYER_RADIUS / 2 + 8);
+
+  ctx.fillStyle = "red";
+  ctx.fillRect(0, 0, PLAYER_RADIUS * 2, 10);
+
+  let hpW = (PLAYER_RADIUS * 2 * player.hp) / PLAYER_MAX_HP;
   if (role === 1) {
-    context.fillRect(
-      canvasX -
-        PLAYER_RADIUS +
-        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 9),
-      canvasY + PLAYER_RADIUS + 8,
-      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 9)),
-      2
-    );
+    hpW /= PLAYER_HP_COEF.Cat;
   } else if (role === 2) {
-    context.fillRect(
-      canvasX -
-        PLAYER_RADIUS +
-        (PLAYER_RADIUS * 2 * player.hp) / (PLAYER_MAX_HP * 2),
-      canvasY + PLAYER_RADIUS + 8,
-      PLAYER_RADIUS * 2 * (1 - player.hp / (PLAYER_MAX_HP * 2)),
-      2
-    );
-  } else {
-    context.fillRect(
-      canvasX - PLAYER_RADIUS + (PLAYER_RADIUS * 2 * player.hp) / PLAYER_MAX_HP,
-      canvasY + PLAYER_RADIUS + 8,
-      PLAYER_RADIUS * 2 * (1 - player.hp / PLAYER_MAX_HP),
-      2
-    );
+    hpW /= PLAYER_HP_COEF.PinkAss;
+  } else if (role === 3) {
+    hpW /= PLAYER_HP_COEF.Pudding;
+  } else if (role === 4) {
+    hpW /= PLAYER_HP_COEF.Banana;
   }
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, hpW, 10);
 
+  ctx.font = "20px sans-serif";
+  ctx.fillStyle = "white";
+  ctx.fillText(Math.floor(player.hp), 0, -3);
+
+  ctx.restore();
+
+  //
   // Draw fire range
-  context.save();
-  context.beginPath();
-  context.arc(
-    canvasX,
-    canvasY,
-    PLAYER_RADIUS * 2.5,
-    Constants.FIRE_RANGE_MIN - Math.PI / 2,
-    Constants.FIRE_RANGE_MAX - Math.PI / 2,
-    false
-  );
-  context.lineWidth = PLAYER_RADIUS / 5;
-  context.lineCap = "round";
-  context.strokeStyle = "white";
-  context.stroke();
-  context.restore();
+  ctx.save();
+  ctx.translate(canvasX, canvasY - PLAYER_RADIUS / 2);
 
+  ctx.beginPath();
+  if (direction >= 0) ctx.arc(0, 0, PLAYER_RADIUS * 2, 0, -Math.PI / 2, true);
+  else ctx.arc(0, 0, PLAYER_RADIUS * 2, -Math.PI / 2, -Math.PI, true);
+
+  ctx.lineWidth = PLAYER_RADIUS / 20;
+  ctx.lineCap = "round";
+  if (role === 1) ctx.strokeStyle = "#c3b6b0";
+  else if (role === 2) ctx.strokeStyle = "#ff9fc1";
+  else if (role === 3) ctx.strokeStyle = "#e89b1a";
+  else if (role === 4) ctx.strokeStyle = "#fff9dd";
+  ctx.setLineDash([PLAYER_RADIUS / 10, PLAYER_RADIUS / 5]);
+  ctx.stroke();
+
+  ctx.restore();
+
+  //
   // Draw barrel
-  context.save();
-  context.translate(canvasX, canvasY);
-  context.rotate(fireDirection - Math.PI);
+  ctx.save();
+  ctx.translate(canvasX, canvasY - PLAYER_RADIUS / 2);
+  ctx.rotate(fireDirection - Math.PI);
 
-  if (styleNum < 1 / 3) {
-    // dash-line style
-    context.strokeStyle = "tomato";
-    context.lineWidth = 2;
-    context.setLineDash([2, 2]);
-    context.beginPath();
-    context.moveTo(0, PLAYER_RADIUS);
-    context.lineTo(0, PLAYER_RADIUS * 2.5);
-    context.stroke();
-  } else if (styleNum < 2 / 3) {
-    // long-aimer style
-    context.strokeStyle = "lightblue";
-    context.beginPath();
-    context.moveTo(-BULLET_RADIUS, PLAYER_RADIUS);
-    context.lineTo(-BULLET_RADIUS, PLAYER_RADIUS * 4);
-    context.moveTo(BULLET_RADIUS, PLAYER_RADIUS);
-    context.lineTo(BULLET_RADIUS, PLAYER_RADIUS * 4);
-    context.stroke();
-  } else {
-    // dashboard style
-    context.fillStyle = "LawnGreen";
-    context.fillRect(
-      -BULLET_RADIUS / 2,
-      PLAYER_RADIUS * 2,
-      BULLET_RADIUS,
-      PLAYER_RADIUS
-    );
-  }
-  context.restore();
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = PLAYER_RADIUS / 20;
+  ctx.beginPath();
+  ctx.moveTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
+  ctx.lineTo(-PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
+  ctx.moveTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 1.75);
+  ctx.lineTo(PLAYER_RADIUS / 20, PLAYER_RADIUS * 2.25);
+  ctx.stroke();
+
+  ctx.restore();
 }
 
 function renderBullet(me, bullet) {
-  const { x, y } = bullet;
+  const { x, y, role } = bullet;
 
-  let bulletStyle = "bullet.svg";
-  if (styleNum < 1 / 4) {
-    bulletStyle = "bullet1.png";
-  } else if (styleNum < 2 / 4) {
-    bulletStyle = "bullet2.png";
-  } else if (styleNum < 3 / 4) {
-    bulletStyle = "bullet3.png";
-  } else {
-    bulletStyle = "bullet4.png";
-  }
-  context.drawImage(
-    getAsset(bulletStyle),
+  let bulletImg;
+  if (role === 1) bulletImg = "bullet1.png";
+  else if (role === 2) bulletImg = "bullet2.png";
+  else if (role === 3) bulletImg = "bullet3.png";
+  else bulletImg = "bullet4.png";
+
+  ctx.drawImage(
+    getAsset(bulletImg),
     canvas.width / 2 + x - me.x - BULLET_RADIUS,
     canvas.height / 2 + y - me.y - BULLET_RADIUS,
     BULLET_RADIUS * 2,
@@ -173,48 +156,30 @@ function renderBullet(me, bullet) {
 }
 
 function renderMainMenu() {
-  const t = Date.now() / 7500;
-  const x = MAP_SIZE / 2 + 800 * Math.cos(t);
-  const y = MAP_SIZE / 2 + 800 * Math.sin(t);
-  renderBackground(x, y);
+  const t = Date.now() / 1000;
+  const p = 127 + 127 * Math.sin(t);
+  renderBackground(`rgb(${p},${p},${p})`);
 }
 
 let renderInterval = setInterval(renderMainMenu, 1000 / 60);
 
 function render() {
-  const { me, others, bullets } = getCurrentState();
+  const { me, bullets, others } = getCurrentState();
   if (!me) {
     return;
   }
 
-  // Draw background
   renderBackground(me.x, me.y);
-
-  // Draw boundaries
-  context.strokeStyle = "black";
-  context.lineWidth = 1;
-  context.strokeRect(
-    canvas.width / 2 - me.x,
-    canvas.height / 2 - me.y,
-    MAP_SIZE,
-    MAP_SIZE
-  );
-
-  // Draw all bullets
+  renderMap(me);
   bullets.forEach(renderBullet.bind(null, me));
-
-  // Draw all players
-  renderPlayer(me, me);
   others.forEach(renderPlayer.bind(null, me));
 }
 
-// Replaces main menu rendering with game rendering.
 export function startRendering() {
   clearInterval(renderInterval);
   renderInterval = setInterval(render, 1000 / 60);
 }
 
-// Replaces game rendering with main menu rendering.
 export function stopRendering() {
   clearInterval(renderInterval);
   renderInterval = setInterval(renderMainMenu, 1000 / 60);

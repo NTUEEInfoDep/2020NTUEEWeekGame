@@ -32,22 +32,29 @@ class PinkAss extends Player {
 		super(id, username, x, y);
 		this.role = 2;
 		// life
-		this.hp = Constants.PLAYER_MAX_HP * 2;
+		this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.PinkAss;
 		// force
-		this.bulletDamage = 0.5 * Constants.BULLET_DAMAGE; 
+		this.bulletDamage = 2 * Constants.BULLET_DAMAGE;
+		//speed
+		this.playerSpeed = 0.8 * Constants.PLAYER_SPEED;
+		//firespeed
+		this.fireCooldowntime = 1.3 * Constants.PLAYER_FIRE_COOLDOWN;
+		//power
+		this.bulletSpeed = 1 * Constants.BULLET_SPEED;
 		this.bigSkillName = "fart";
 		this.bigSkill = new BigSkill();
 	}
 	fire() {
 		if (this.fireCooldown <= 0) {
-		  this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
+		  this.fireCooldown = this.fireCooldowntime;
 		  return new Bullet(
 			this,
 			this.x,
 			this.y,
 			this.fireDirection,
 			this.username,
-			this.role
+			this.role,
+			this.bulletSpeed
 		  );
 		}
 		return null;
@@ -64,7 +71,7 @@ class PinkAss extends Player {
 				timer: this.bigSkill.Timer
 			}
 		}
-		return null
+		return {}
 	}
 
 	serializeForUpdate(){

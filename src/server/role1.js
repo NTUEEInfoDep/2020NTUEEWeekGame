@@ -57,9 +57,15 @@ class Cat extends Player {
         super(id, username, x, y);
 		this.role = 1;
 		// life
-		this.hp = Constants.PLAYER_MAX_HP * 9;
+		this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.Cat;
 		// force
-		this.bulletDamage = 0.1 * Constants.BULLET_DAMAGE;
+		this.bulletDamage = 0.8 * Constants.BULLET_DAMAGE;
+		//speed
+		this.playerSpeed = 1.2 * Constants.PLAYER_SPEED;
+		//firespeed
+		this.fireCooldowntime = 1 * Constants.PLAYER_FIRE_COOLDOWN;
+		//power
+		this.bulletSpeed = 1 * Constants.BULLET_SPEED;
 		// !!!!!!!!!!!!!!!!!!!! Need revision
 		this.canSpeed = 700;
 		// Five cans
@@ -92,14 +98,15 @@ class Cat extends Player {
 
 	fire() {
 		if (this.fireCooldown <= 0) {
-		  this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
+		  this.fireCooldown = this.fireCooldowntime;
 		  return new Bullet(
 			this,
 			this.x,
 			this.y,
 			this.fireDirection,
 			this.username,
-			this.role
+			this.role,
+			this.bulletSpeed
 		  );
 		}
 		return null;
@@ -115,7 +122,7 @@ class Cat extends Player {
 				weapon: this.canArray
 			}
 		}
-		return null
+		return {}
 	}
 
 	serializeForUpdate(){

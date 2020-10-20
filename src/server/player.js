@@ -11,6 +11,7 @@ class Player extends ObjectClass {
     this.hp = Constants.PLAYER_MAX_HP;
     this.fireDirection = 0;
     this.fireCooldown = 0;
+    this.fireCooldowntime=0;
     this.friction = 0;
     this.score = 0;
     this.angleSpeed = 0;
@@ -24,6 +25,7 @@ class Player extends ObjectClass {
     }
     */
     this.sufferFrom = [];
+    this.playerSpeed=0;
   }
 
   // Returns a newly created bullet, or null.
@@ -40,14 +42,28 @@ class Player extends ObjectClass {
       this.friction = 0;
     }
     // Make sure the player stays in bounds
-    this.x = Math.max(0, Math.min(Constants.MAP_SIZE, this.x));
-    this.y = Math.max(0, Math.min(Constants.MAP_SIZE, this.y));
+    this.x = Math.max(0, Math.min(Constants.MAP_SIZE_LENGTH, this.x));
+    this.y =
+      (Constants.MAP[Math.floor(this.x / 10)] * (10 - (this.x % 10)) +
+        Constants.MAP[Math.floor(this.x / 10 + 1)] * (this.x % 10)) /
+      10;
 
     this.fireCooldown -= dt;
     if (this.fireCooldown <= 0) {
       this.fireCooldown = 0;
     }
-
+    this.fireDirection += this.angleSpeed * dt;
+    if (this.direction >= 0){
+      this.fireDirection = Math.max(
+        0,
+        Math.min(Math.PI / 2, this.fireDirection)
+      );
+    } else{
+      this.fireDirection = Math.max(
+        -Math.PI / 2,
+        Math.min(0, this.fireDirection)
+      );
+    }
     return null;
   }
 
@@ -67,43 +83,77 @@ class Player extends ObjectClass {
 		  return;
     }
 
-		// Move
 		if (e === "ArrowLeft") {
-			if (
-			  Constants.MAP[Math.floor(this.x / 10)] <
-			  Constants.MAP[Math.floor(this.x / 10 + 1)]
-			)
-			  this.direction = Math.atan(
-				(Constants.MAP[Math.floor(this.x / 10)] -
-				  Constants.MAP[Math.floor(this.x / 10 + 1)]) /
-				  10
-			  );
-			else
-			  this.direction =
-				Math.atan(
-				  (Constants.MAP[Math.floor(this.x / 10) + 1] -
-					Constants.MAP[Math.floor(this.x / 10)]) /
-					10
-				) -
-				Math.PI / 2;
-		  }
-		  if (e === "ArrowRight") {
-			this.direction =
-			  Math.atan(
-				(Constants.MAP[Math.floor(this.x / 10 + 1)] -
-				  Constants.MAP[Math.floor(this.x / 10)]) /
-				  10
-			  ) +
-			  Math.PI / 2;
-		  }
-		  this.friction = 0;
-		  this.speed = Constants.PLAYER_SPEED;
+      if (this.fireDirection > 0){
+        this.fireDirection = -this.fireDirection;
+      }
+      if (
+        Constants.MAP[Math.floor(this.x / 10)] <
+        Constants.MAP[Math.floor(this.x / 10 + 1)]
+      )
+        this.direction = Math.atan(
+          (Constants.MAP[Math.floor(this.x / 10)] -
+            Constants.MAP[Math.floor(this.x / 10 + 1)]) /
+            10
+        );
+      else
+        this.direction =
+          Math.atan(
+            (Constants.MAP[Math.floor(this.x / 10) + 1] -
+              Constants.MAP[Math.floor(this.x / 10)]) /
+              10
+          ) -
+          Math.PI / 2;
+    }
+    if (e === "ArrowRight") {
+      if (this.fireDirection < 0){
+        this.fireDirection = -this.fireDirection;
+      }
+      this.direction =
+        Math.atan(
+          (Constants.MAP[Math.floor(this.x / 10 + 1)] -
+            Constants.MAP[Math.floor(this.x / 10)]) /
+            10
+        ) +
+        Math.PI / 2;
+    }
+    this.friction = 0;
+    this.speed = this.playerSpeed;
     }
 
 
   // Stop the player's movement
   stop(e) {
-    this.friction = Constants.PLAYER_FRICTION;
+    if ((e === "ArrowRight" && this.direction >0)|| (e === "ArrowLeft" && this.direction<0)){
+      this.friction = Constants.PLAYER_FRICTION;
+    }
+  }
+
+  fireDirectionMove(e) {
+    if (e === "ArrowUp") {
+      if (this.fireDirection>=0)
+      {
+        this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+      }
+      else
+      {
+        this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+      }
+    } 
+    else if (e === "ArrowDown") {
+      if (this.fireDirection>=0)
+      {
+        this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+      }
+      else
+      {
+        this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+      }
+    }
+  }
+
+  fireDirectionStop(e) {
+    this.angleSpeed = 0;
   }
 
   // According to mode(big skill emitted)
@@ -141,9 +191,9 @@ class Player extends ObjectClass {
   // Fire a bullet with cooldown limit
   fire() {
     if (this.fireCooldown <= 0) {
-      this.fireCooldown += Constants.PLAYER_FIRE_COOLDOWN;
+      this.fireCooldown = this.fireCooldowntime;
       return new Bullet(
-        this.id,
+        this,
         this.x,
         this.y,
         this.fireDirection,
@@ -161,16 +211,6 @@ class Player extends ObjectClass {
 
   onDealtDamage() {
     this.score += Constants.SCORE_BULLET_HIT;
-  }
-
-  setFireDirection(dir) {
-    if (dir < Constants.FIRE_RANGE_MIN) {
-      this.fireDirection = Constants.FIRE_RANGE_MIN;
-    } else if (dir > Constants.FIRE_RANGE_MAX) {
-      this.fireDirection = Constants.FIRE_RANGE_MAX;
-    } else {
-      this.fireDirection = dir;
-    }
   }
 
   serializeForUpdate() {
