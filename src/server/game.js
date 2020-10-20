@@ -32,23 +32,26 @@ class Game {
     const username = userinfo[0];
     const side = username in this.waitrooms;
     let x;
-    if(this.map[username] !== 0 && this.map[username] !== 1){
-      if(Math.random() >= 0.5) this.map[username] = 1;
-      else this.map[username] = 0;
-      socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
+    let y;
+    if (username !== "random") {
+      if (this.map[username] !== 0 && this.map[username] !== 1){
+        if (Math.random() >= 0.6) this.map[username] = 1;
+        else this.map[username] = 0;
+      }
+      if (side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);
+      else x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);
+      y =
+        (Constants.MAP[this.map[username]][Math.floor(x / 10)] * (x % 10) +
+          Constants.MAP[this.map[username]][Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
+        10;  
     }
+    
 
-    if (side) x = Constants.MAP_SIZE_LENGTH * (0.6 + Math.random() * 0.2);
-    else x = Constants.MAP_SIZE_LENGTH * (0.4 - Math.random() * 0.2);
-    const y =
-      (Constants.MAP[this.map[username]][Math.floor(x / 10)] * (x % 10) +
-        Constants.MAP[this.map[username]][Math.floor(x / 10 + 1)] * (10 - (x % 10))) /
-      10;
+    
     // Adding player to rooms and store the name. The first player joined
     // goes to waitrooms. The second player will be join and move the room
     // from waitrooms to playrooms. If a third player is coming, it will be blocked.
     // Ridection or alert for this is still needed.
-
     if (username === "random") {
       this.randomrooms.push([socket.id, userinfo]);
       // this.players[socket.id] = new Player(socket.id, username, x, y, side);
@@ -82,18 +85,40 @@ class Game {
         userinfo[2]
       );
       if (this.roles[socket.id] === 1) {
-        this.players[socket.id] = new Cat(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Cat(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 2) {
-        this.players[socket.id] = new PinkAss(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new PinkAss(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 3) {
-        this.players[socket.id] = new Pudding(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Pudding(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 4) {
-        this.players[socket.id] = new Banana(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Banana(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       }
-      if (this.map[username] === 0 || this.map[username] === 1){
-        this.players[socket.id].setmap(this.map[username]);
-        socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
-      }
+      this.players[socket.id].setmap(this.map[username]);
+      socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
     } else {
       socket.join(username);
       this.waitrooms[username] = [];
@@ -107,15 +132,40 @@ class Game {
         userinfo[2]
       );
       if (this.roles[socket.id] === 1) {
-        this.players[socket.id] = new Cat(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Cat(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 2) {
-        this.players[socket.id] = new PinkAss(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new PinkAss(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 3) {
-        this.players[socket.id] = new Pudding(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Pudding(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       } else if (this.roles[socket.id] === 4) {
-        this.players[socket.id] = new Banana(socket.id, username, x, y, this.map[username]);
+        this.players[socket.id] = new Banana(
+          socket.id,
+          username,
+          x,
+          y,
+          this.map[username]
+        );
       }
-      if (this.map[username] === 0 || this.map[username] === 1) this.players[socket.id].setmap(this.map[username]);
+      this.players[socket.id].setmap(this.map[username]);
+      socket.emit(Constants.MSG_TYPES.MAP, this.map[username]);
     }
   }
 
@@ -127,9 +177,12 @@ class Game {
 
   // Deal with disconnected player and its room
   removeDisconnectedPlayer(socket) {
-    this.randomrooms.forEach((index) => { 
-      if (index[0] === socket.id){
-        let i = this.randomrooms.indexOf(index);
+    this.randomrooms.forEach((index) => {
+      console.log(index[0]);
+      console.log(socket.id);
+      if (index[0] === socket.id) {
+        const i = this.randomrooms.indexOf(index);
+        console.log(i);
         this.randomrooms.splice(index, 1);
       }
     });
@@ -137,24 +190,26 @@ class Game {
       const playerIDs = this.playrooms[roomname];
       if (playerIDs.includes(socket.id)) {
         this.removeRoom(roomname, playerIDs, ["win", "win"], "play");
-        delete this.map[roomname];
       }
     });
     Object.keys(this.waitrooms).forEach((roomname) => {
       const playerIDs = this.waitrooms[roomname];
       if (playerIDs.includes(socket.id)) {
         this.removeRoom(roomname, playerIDs, ["win", "win"], "wait");
-        delete this.map[roomname];
       }
     });
   }
 
   // Send Game over and remove room and players
   removeRoom(roomname, playerIDs, reason, roomType) {
-    if (roomType === "play" || roomType === "game_end"){
+    if (roomType === "play" || roomType === "game_end") {
       delete this.playrooms[roomname];
+      delete this.map[roomname];
     }
-    else if (roomType === "wait") delete this.waitrooms[roomname];
+    else if (roomType === "wait"){
+      delete this.waitrooms[roomname];
+      delete this.map[roomname];
+    }
     delete this.cameras[roomname];
     playerIDs.forEach((playerID, index) => {
       this.sockets[playerID].emit(Constants.MSG_TYPES.GAME_OVER, reason[index]);
@@ -165,31 +220,29 @@ class Game {
   // Acquire presssed key code and its keytype. Call functions to handle these
   // inputs accordingly. Arrowkey is to move the player and space to shot bullet.
   handleKeyInput(socket, keyEvent) {
+    let follow = false;
     if (this.players[socket.id] && keyEvent) {
       const player = this.players[socket.id];
       const camera = this.cameras[socket.id];
       const keyType = keyEvent[0];
       const key = keyEvent[1];
       if (keyType === "keydown") {
-        if (key === "Enter"){
-          if (this.roles[socket.id] === 1){
-            const newBullet = player.skill();
+        if (key === "Enter" && keyEvent.length === 3) {
+          if (this.roles[socket.id] === 1) {
+            const newBullet = player.skill(keyEvent[2]);
             if (newBullet) {
               newBullet.forEach((index) => {
                 this.bullets.push(index);
               });
             }
-          }
-          else if (this.roles[socket.id] === 2){
-            const newBullet = player.skill();
+          } else if (this.roles[socket.id] === 2) {
+            const newBullet = player.skill(keyEvent[2]);
             if (newBullet) this.bullets.push(newBullet);
-          }
-          else if (this.roles[socket.id] === 3){
-            const newBullet = player.skill();
+          } else if (this.roles[socket.id] === 3) {
+            const newBullet = player.skill(keyEvent[2]);
             if (newBullet) this.bullets.push(newBullet);
-          }
-          else if (this.roles[socket.id] === 4){
-            const newBullet = player.skill();
+          } else if (this.roles[socket.id] === 4) {
+            const newBullet = player.skill(keyEvent[2]);
             if (newBullet) this.bullets.push(newBullet);
           }
         }
@@ -198,17 +251,21 @@ class Game {
           if (newBullet) this.bullets.push(newBullet);
         }
         if (key === "ArrowLeft" || key === "ArrowRight") {
-          player.move(key);
+          follow = player.move(key);
+          if (follow) camera.follow(player);
           // camera.follow(player);
         }
         if (key === "ShiftLeft") camera.follow(player);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.move(key);
-        if (key === "ArrowUp" || key === "ArrowDown") player.fireDirectionMove(key);
+        if (key === "ArrowUp" || key === "ArrowDown")
+          player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
-        if (key === "ArrowLeft" || key === "ArrowRight") player.stop(keyEvent[1]);
+        if (key === "ArrowLeft" || key === "ArrowRight")
+          player.stop(keyEvent[1]);
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
-        if (key === "ArrowUp" || key === "ArrowDown") player.fireDirectionStop(key);
+        if (key === "ArrowUp" || key === "ArrowDown")
+          player.fireDirectionStop(key);
       }
     }
   }
@@ -330,7 +387,6 @@ class Game {
   }
 
   checkRoomname(socket, roomname) {
-    
     if (Object.keys(this.playrooms).includes(roomname)) {
       socket.emit(Constants.MSG_TYPES.CHECK_ROOMNAME, 2);
     } else if (Object.keys(this.waitrooms).includes(roomname)) {

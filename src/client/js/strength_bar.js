@@ -20,6 +20,7 @@ class StrengthBar {
     this.app.stage.addChild(this.hpContainer);
     this.allListeners = [];
     this.deltaT = -1;
+    this.keydown = undefined;
   }
 
   createHealthBar(x, y, w, h, hp) {
@@ -63,8 +64,10 @@ class StrengthBar {
   }
 
   start(e) {
-    if (e.code === "Space" && this.status === 0) {
+    console.log(e.type, e.code);
+    if ((e.code === "Space" || e.code === "Enter") && this.status === 0) {
       this.status = 1;
+      this.keydown = e.code;
       this.healthBar = this.createHealthBar(
         this.x,
         this.y,
@@ -78,7 +81,7 @@ class StrengthBar {
   }
 
   end(e) {
-    if (e.code === "Space" && this.status === 1) {
+    if (e.code === this.keydown && this.status === 1) {
       updateMovement(["keydown", e.code, 0.5 + this.power / 200]);
       this.status = 2;
       this.app.stage.removeChild(this.hpContainer);

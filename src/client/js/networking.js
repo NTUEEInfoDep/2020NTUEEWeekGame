@@ -3,13 +3,7 @@ import { throttle } from "throttle-debounce";
 import { processGameUpdate } from "./state";
 import { randommap } from "./render";
 
-const $id = (element) => {
-  return document.getElementById(element);
-};
-
-const alertPage = $id("alert-page");
-const alertTitle = $id("alert-title");
-const alertButton = $id("alert-button");
+const $id = (element) => document.getElementById(element);
 
 const Constants = require("../../shared/constants");
 
@@ -40,10 +34,10 @@ export const connect = (onGameOver) =>
       $id("crt-page").classList.add("hidden");
       $id("rule-page").classList.add("hidden");
       $id("game-over-page").classList.add("hidden");
-      alertPage.classList.remove("hidden");
-      alertTitle.innerHTML = "Disconnected";
-      alertButton.innerHTML = "reconnect";
-      alertButton.onclick = () => {
+      $id("alert-page").classList.remove("hidden");
+      $id("alert-title").innerHTML = "Disconnected";
+      $id("alert-button").innerHTML = "reconnect";
+      $id("alert-button").onclick = () => {
         window.location.reload();
       };
     });
@@ -71,10 +65,10 @@ export const checkRoom = (roomID) => {
     if (`${num}` === "2") {
       $id("join-page").classList.add("hidden");
       $id("crt-page").classList.add("hidden");
-      alertPage.classList.remove("hidden");
-      alertTitle.innerHTML = "Room is Full ...";
-      alertButton.innerHTML = "change a room";
-      alertButton.onclick = () => {
+      $id("alert-page").classList.remove("hidden");
+      $id("alert-title").innerHTML = "Room is Full ...";
+      $id("alert-button").innerHTML = "change a room";
+      $id("alert-button").onclick = () => {
         window.location.reload();
       };
     }
@@ -92,4 +86,3 @@ export const updateMovement = throttle(20, (movement) => {
 export const updateCamera = throttle(20, (mouseXY) => {
   socket.emit(Constants.MSG_TYPES.MOVE_CAMERA, mouseXY);
 });
-
