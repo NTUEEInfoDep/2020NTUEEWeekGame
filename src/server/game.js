@@ -220,6 +220,7 @@ class Game {
   // Acquire presssed key code and its keytype. Call functions to handle these
   // inputs accordingly. Arrowkey is to move the player and space to shot bullet.
   handleKeyInput(socket, keyEvent) {
+    let follow = false;
     if (this.players[socket.id] && keyEvent) {
       const player = this.players[socket.id];
       const camera = this.cameras[socket.id];
@@ -250,7 +251,9 @@ class Game {
           if (newBullet) this.bullets.push(newBullet);
         }
         if (key === "ArrowLeft" || key === "ArrowRight") {
-          player.move(key);
+          follow = player.move(key);
+          console.log(follow);
+          if (follow) camera.follow(player);
           // camera.follow(player);
         }
         if (key === "ShiftLeft") camera.follow(player);

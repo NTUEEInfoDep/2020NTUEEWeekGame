@@ -77,6 +77,7 @@ class Player extends ObjectClass {
 
   // Receive keyboard input and move character
   move(e) {
+    let shouldFollow = false;
     if(this.mode === 1 || this.mode === 4){
       if (e === "ArrowLeft") {
         if (this.fireDirection > 0){
@@ -101,6 +102,7 @@ class Player extends ObjectClass {
             Math.PI / 2;
         if (this.x===0)
           this.x=Constants.MAP_SIZE_LENGTH;
+          shouldFollow = true;
       }
       if (e === "ArrowRight") {
         if (this.fireDirection < 0){
@@ -115,6 +117,7 @@ class Player extends ObjectClass {
           Math.PI / 2;
         if (this.x===Constants.MAP_SIZE_LENGTH)
           this.x=0;
+          shouldFollow = true;
       }
       this.friction = 0;
       this.speed = this.playerSpeed;
@@ -143,6 +146,7 @@ class Player extends ObjectClass {
             Math.PI / 2;
         if (this.x===Constants.MAP_SIZE_LENGTH)
           this.x=0;
+          shouldFollow = true;
       }
       if (e === "ArrowLeft") {
         if (this.fireDirection < 0){
@@ -157,6 +161,7 @@ class Player extends ObjectClass {
           Math.PI / 2;
         if (this.x===0)
           this.x=Constants.MAP_SIZE_LENGTH;
+          shouldFollow = true;
       }
       this.friction = 0;
       this.speed = this.playerSpeed;
@@ -165,6 +170,7 @@ class Player extends ObjectClass {
       this.friction = Constants.PLAYER_FRICTION;
       this.speed = 0;
     }
+    return shouldFollow;
   }
 
   // Stop the player's movement
