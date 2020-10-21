@@ -12,7 +12,7 @@ class Banana extends Player {
     // force
     this.bulletDamage = 1 * Constants.BULLET_DAMAGE;
     //speed
-    this.playerSpeed = 1 * Constants.PLAYER_SPEED;
+    this.playerSpeed = 1.4 * Constants.PLAYER_SPEED;
     //firespeed
     this.fireCooldowntime = 1 * Constants.PLAYER_FIRE_COOLDOWN;
     //power

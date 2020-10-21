@@ -10,7 +10,16 @@ const ASSET_NAMES = [
   "crt4.png",
   "num1_frozen.png",
   "num2_frozen.png",
+  "num3_frozen.png",
   "num4_frozen.png",
+  "crt1_distracted.PNG",
+  "crt2_distracted.png",
+  "crt3_distracted.PNG",
+  "crt4_distracted.PNG",
+  "crt1_slipped.png",
+  "crt2_slipped.png",
+  "crt3_slipped.png",
+  "crt4_slipped.png",
 
   // bullets
   "bullet1.png",

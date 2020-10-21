@@ -10,9 +10,9 @@ class Pudding extends Player {
     // life
     this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.Pudding;
     // force
-    this.bulletDamage = 1 * Constants.BULLET_DAMAGE;
+    this.bulletDamage = 0.8 * Constants.BULLET_DAMAGE;
     //speed
-    this.playerSpeed = 1.3 * Constants.PLAYER_SPEED;
+    this.playerSpeed = 1 * Constants.PLAYER_SPEED;
     //firespeed
     this.fireCooldowntime = 0.7 * Constants.PLAYER_FIRE_COOLDOWN;
     //power

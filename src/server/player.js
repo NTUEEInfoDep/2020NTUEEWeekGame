@@ -163,7 +163,7 @@ class Player extends ObjectClass {
           this.x=Constants.MAP_SIZE_LENGTH;
           shouldFollow = true;
       }
-      this.friction = 0;
+      this.friction = Constants.PLAYER_FRICTION;
       this.speed = this.playerSpeed;
     }
     else if (this.mode === 3) {
@@ -187,14 +187,25 @@ class Player extends ObjectClass {
   }
 
   fireDirectionMove(e) {
-    if (e === "ArrowUp") {
-      if (this.direction >= 0) this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
-      else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+    if(this.mode !== 2){
+      if (e === "ArrowUp") {
+        if (this.direction >= 0) this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+        else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
     } else if (e === "ArrowDown") {
-      if (this.direction >= 0) this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
-      else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+        if (this.direction >= 0) this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+        else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
     }
   }
+    else{
+      if (e === "ArrowDown") {
+        if (this.direction >= 0) this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+        else this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+  }   else if (e === "ArrowUp") {
+        if (this.direction >= 0) this.angleSpeed = Constants.PLAYER_ANGLE_SPEED;
+        else this.angleSpeed = -Constants.PLAYER_ANGLE_SPEED;
+  }
+}
+}
 
   fireDirectionStop(e) {
     this.angleSpeed = 0;
