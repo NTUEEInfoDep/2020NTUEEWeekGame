@@ -252,7 +252,7 @@ class Game {
         }
         if (key === "ArrowLeft" || key === "ArrowRight") {
           follow = player.move(key);
-          if (follow) camera.follow(player);
+          camera.follow(player);
           // camera.follow(player);
         }
         if (key === "ShiftLeft") camera.follow(player);

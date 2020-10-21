@@ -6,7 +6,7 @@ const Constants = require("../../shared/constants");
 const { PLAYER_RADIUS } = Constants;
 
 class StrengthBar {
-  constructor(app, canvas) {
+  constructor(app, canvas, coolDown, picts) {
     this.power = 0;
     this.x = 500;
     this.y = 500;
@@ -21,6 +21,8 @@ class StrengthBar {
     this.allListeners = [];
     this.deltaT = -1;
     this.keydown = undefined;
+    this.coolDown = coolDown;
+    this.picts = picts;
   }
 
   createHealthBar(x, y, w, h, hp) {
@@ -64,7 +66,6 @@ class StrengthBar {
   }
 
   start(e) {
-    console.log(e.type, e.code);
     if ((e.code === "Space" || e.code === "Enter") && this.status === 0) {
       this.status = 1;
       this.keydown = e.code;
@@ -82,11 +83,20 @@ class StrengthBar {
 
   end(e) {
     if (e.code === this.keydown && this.status === 1) {
-      updateMovement(["keydown", e.code, 0.5 + this.power / 200]);
+      if (e.code === "Enter" && Date.now() > this.coolDown){
+        updateMovement(["keydown", e.code, 0.5 + this.power / 200]);
+        this.coolDown = Date.now() + Constants.PLAYER_SKILL_COOLDOWN*1000;
+      }
+
+      else if (e.code === "Space") {
+        updateMovement(["keydown", e.code, 0.5 + this.power / 200]);
+      }
+
       this.status = 2;
       this.app.stage.removeChild(this.hpContainer);
+      this.app.stage.removeChild(this.picts[0]);
       this.app.ticker.remove(this.app.animationUpdate);
-      this.constructor(this.app, this.canvas);
+      this.constructor(this.app, this.canvas, this.coolDown, this.picts);
     }
   }
 
@@ -98,7 +108,7 @@ class StrengthBar {
       this.power = 0;
       this.deltaT = 1;
     }
-
+    
     this.power += this.deltaT;
     this.app.stage.removeChild(this.healthBar);
     this.createHealthBar(this.x, this.y, PLAYER_RADIUS * 2, 10, this.power);
@@ -113,7 +123,7 @@ class StrengthBar {
   update(me, others) {
     let x = 0;
     let y = 0;
-
+    
     Object.values(others).forEach((player) => {
       if (me.id === player.id) {
         x = player.x;
@@ -125,11 +135,31 @@ class StrengthBar {
 
     this.x = canvasX;
     this.y = canvasY - PLAYER_RADIUS / 2 + 100;
+    if (Date.now() > this.coolDown){
+      this.picts[0].position.x = this.x - 300 ;
+      this.picts[0].position.y = this.y - 300;
+      this.app.stage.addChild(this.picts[0])
+    }
+    if (Date.now() < this.coolDown){
+      this.app.stage.removeChild(this.picts[0]);
+    }
   }
 
   stopListening() {
     window.removeEventListener("keydown", this.down);
     window.removeEventListener("keyup", this.up);
+  }
+
+  loadPict(name, imageURL){
+    this.app.loader
+    .add(name, imageURL)
+    .load(function (loader, resources){
+      let pict = new PIXI.Sprite(resources[name].texture);
+      pict.scale.x = 0.5;
+      pict.scale.y = 0.5;
+      this.picts.push(pict);
+      console.log("success", this.picts[0]);
+    }.bind(this));
   }
 }
 
@@ -144,6 +174,7 @@ export function healthBarInit() {
     height: window.innerHeight,
   });
   const canvas = document.getElementById("canvas");
-  const powerbar = new StrengthBar(app, canvas);
+  const powerbar = new StrengthBar(app, canvas, Date.now(), []);
+  powerbar.loadPict('coolDown', "./assets/cool_down.PNG")  
   return powerbar;
 }
