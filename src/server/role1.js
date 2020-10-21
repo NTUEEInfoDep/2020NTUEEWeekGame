@@ -43,11 +43,11 @@ class Cat extends Player {
     if (this.skillCooldown <= 0) {
       this.skillCooldown = this.skillCooldowntime;
       return [
-        new Bullet(this, this.x, this.y, this.fireDirection - Math.PI / 15, this.username, this.role, this.bulletSpeed*power, 1, this.map),
-        new Bullet(this, this.x, this.y, this.fireDirection - Math.PI / 30, this.username, this.role, this.bulletSpeed*power, 1, this.map),
-        new Bullet(this, this.x, this.y, this.fireDirection, this.username, this.role, this.bulletSpeed*power, 1, this.map),
-        new Bullet(this, this.x, this.y, this.fireDirection + Math.PI / 30, this.username, this.role, this.bulletSpeed*power, 1, this.map),
-        new Bullet(this, this.x, this.y, this.fireDirection + Math.PI / 15, this.username, this.role, this.bulletSpeed*power, 1, this.map)
+        new Bullet(this, this.x, this.y, this.fireDirection - Math.PI / 15, this.username, this.role, this.bulletSpeed*power, 0, this.map),
+        new Bullet(this, this.x, this.y, this.fireDirection - Math.PI / 30, this.username, this.role, this.bulletSpeed*power, 0, this.map),
+        new Bullet(this, this.x, this.y, this.fireDirection, this.username, this.role, this.bulletSpeed*power, 0, this.map),
+        new Bullet(this, this.x, this.y, this.fireDirection + Math.PI / 30, this.username, this.role, this.bulletSpeed*power, 0, this.map),
+        new Bullet(this, this.x, this.y, this.fireDirection + Math.PI / 15, this.username, this.role, this.bulletSpeed*power, 0, this.map)
       ]
     }
   }
