@@ -47,10 +47,39 @@ class Camera extends ObjectClass {
   stop() {
     this.friction = Constants.CAMERA_FRICTION;
   }
-
-  follow(player) {
+  
+  rfollow(player){
     this.x = player.x;
     this.y = player.y;
+  }
+
+  follow(player) {
+    if(Math.abs(player.x - this.x) >= this.windowSize[0] / 2){
+      this.rfollow(player);
+    }
+    if(player.x - this.x > 200 && player.direction > 0){
+      if(player.x - this.x < 10){
+        this.friction = Constants.CAMERA_FRICTION2;
+      }
+      else{
+        this.direction = Math.PI / 2;
+        this.speed = Constants.CAMERA_SPEED2;
+        this.friction = 0;
+      }
+    }
+    else if (player.x - this.x < -200 && player.direction < 0){
+      if(player.x - this.x > -10){
+        this.friction = Constants.CAMERA_FRICTION2;
+      }
+      else{
+        this.direction = -Math.PI / 2;
+        this.speed = Constants.CAMERA_SPEED2;
+        this.friction = 0;
+      }
+    }
+    else{
+      this.friction = Constants.CAMERA_FRICTION2;
+    }
   }
 
   serializeForUpdate() {

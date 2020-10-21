@@ -261,8 +261,10 @@ class Game {
           player.fireDirectionMove(key);
       }
       if (keyType === "keyup") {
-        if (key === "ArrowLeft" || key === "ArrowRight")
+        if (key === "ArrowLeft" || key === "ArrowRight"){
           player.stop(keyEvent[1]);
+          camera.stop();
+        } 
         if (["KeyW", "KeyS", "KeyA", "KeyD"].includes(key)) camera.stop();
         if (key === "ArrowUp" || key === "ArrowDown")
           player.fireDirectionStop(key);

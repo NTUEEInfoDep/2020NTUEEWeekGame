@@ -243,6 +243,7 @@ class Player extends ObjectClass {
       fireDirection: this.fireDirection,
       hp: this.hp,
       mode: this.mode,
+      skill: this.skillCooldown,
     };
   }
 }
