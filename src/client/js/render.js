@@ -217,7 +217,7 @@ function renderBullet(me, bullet) {
 
   let bulletImg;
   if (role === 1) {
-    bulletImg = "bullet1.png";
+    bulletImg = mode === 1 ? "cat_can.PNG" : "bullet1.png";
   } else if (role === 2) {
     bulletImg = mode === 2 ? "fart.png" : "bullet2.png";
   } else if (role === 3) {

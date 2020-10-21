@@ -29,6 +29,7 @@ const ASSET_NAMES = [
   "fart.png",
   "ice.png",
   "banana.png",
+  "cat_can.PNG",
 
   // gameover
   "lose.png",
