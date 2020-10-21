@@ -11,14 +11,14 @@ module.exports = Object.freeze({
     Pudding: 0.8,
     Banana: 1,
   },
-  PLAYER_SKILL_COOLDOWN: 5,
+  PLAYER_SKILL_COOLDOWN: 15,
   PLAYER_MODE:{
     NORMAL: 1,
     fart: 2,
     snow: 3,
     banana_peel: 4
   },
-  PLAYER_MODE_COOLDOWN: 10,
+  PLAYER_MODE_COOLDOWN: 8,
 
   CAMERA_SPEED: 300,
   CAMERA_FRICTION: 1300,

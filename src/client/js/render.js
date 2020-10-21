@@ -71,15 +71,77 @@ function renderPlayer(me, player) {
   }
   let playerStyle;
   if (role === 1) {
-    playerStyle = mode === 3 ? "num1_frozen.png" : "crt1.png";
-  } else if (role === 2) {
-    playerStyle = mode === 3 ? "num2_frozen.png" : "crt2.png";
-  } else if (role === 3) {
-    playerStyle = "crt3.png";
-  } else if (role === 4) {
-    playerStyle = mode === 3 ? "num4_frozen.png" : "crt4.png";
+    if (mode === 3)
+    {
+      playerStyle = "num1_frozen.png";
+    }
+    else if (mode === 4)
+    {
+      playerStyle = "crt1_slipped.png"; 
+    }
+    else if  (mode === 2)
+    {
+      playerStyle = "crt1_distracted.PNG";
+    }
+    else
+    {
+      playerStyle = "crt1.png"; 
+    }
   }
-
+  if (role === 2) {
+    if (mode === 3)
+    {
+      playerStyle = "num2_frozen.png";
+    }
+    else if (mode === 4)
+    {
+      playerStyle = "crt2_slipped.png"; 
+    }
+    else if  (mode === 2)
+    {
+      playerStyle = "crt2_distracted.png";
+    }
+    else
+    {
+      playerStyle = "crt2.png"; 
+    }
+  }
+  if (role === 3) {
+    if (mode === 3)
+    {
+      playerStyle = "num3_frozen.png";
+    }
+    else if (mode === 4)
+    {
+      playerStyle = "crt3_slipped.png"; 
+    }
+    else if  (mode === 2)
+    {
+      playerStyle = "crt3_distracted.PNG";
+    }
+    else
+    {
+      playerStyle = "crt3.png"; 
+    }
+  }
+  if (role === 4) {
+    if (mode === 3)
+    {
+      playerStyle = "num4_frozen.png";
+    }
+    else if (mode === 4)
+    {
+      playerStyle = "crt4_slipped.png"; 
+    }
+    else if  (mode === 2)
+    {
+      playerStyle = "crt4_distracted.PNG";
+    }
+    else
+    {
+      playerStyle = "crt4.png"; 
+    }
+  }
   ctx.drawImage(
     getAsset(playerStyle),
     -PLAYER_RADIUS,
