@@ -10,7 +10,7 @@ class Cat extends Player {
     // life
     this.hp = Constants.PLAYER_MAX_HP * Constants.PLAYER_HP_COEF.Cat;
     // force
-    this.bulletDamage = 0.7 * Constants.BULLET_DAMAGE;
+    this.bulletDamage = 0.6 * Constants.BULLET_DAMAGE;
     //speed
     this.playerSpeed = 1.2 * Constants.PLAYER_SPEED;
     //firespeed

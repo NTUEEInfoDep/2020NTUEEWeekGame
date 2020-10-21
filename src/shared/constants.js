@@ -6,7 +6,7 @@ module.exports = Object.freeze({
   PLAYER_FIRE_COOLDOWN: 0.5,
   PLAYER_ANGLE_SPEED: 2,
   PLAYER_HP_COEF: {
-    Cat: 1.5,
+    Cat: 1.3,
     PinkAss: 0.9,
     Pudding: 0.8,
     Banana: 1,

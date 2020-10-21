@@ -12,7 +12,7 @@ class PinkAss extends Player {
     // force
     this.bulletDamage = 1.3 * Constants.BULLET_DAMAGE;
     //speed
-    this.playerSpeed = 0.8 * Constants.PLAYER_SPEED;
+    this.playerSpeed = 0.9 * Constants.PLAYER_SPEED;
     //firespeed
     this.fireCooldowntime = 1.3 * Constants.PLAYER_FIRE_COOLDOWN;
     //power
