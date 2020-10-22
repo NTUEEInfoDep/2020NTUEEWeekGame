@@ -55,8 +55,8 @@ function step2() {
     else if (e.code === "Digit5" || e.code === "Numpad5" || e.code === "Enter")
       step3(Math.floor(4 * Math.random()) + 1);
   };
-  for (let i = 0; i <= 3; i += 1) crts[i].onclick = () => step3(i + 1);
-  crts[5].onclick = () => step3(Math.floor(4 * Math.random()) + 1);
+  for (let i = 0; i <= 4; i += 1) crts[i].onclick = () => step3(i + 1);
+  crts[4].onclick = () => step3(Math.floor(4 * Math.random()) + 1);
 }
 
 function step1() {
