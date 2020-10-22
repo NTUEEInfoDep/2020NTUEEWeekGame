@@ -92,7 +92,7 @@ function onGameOver(reason) {
   };*/
 
   setTimeout(() => {
-    $id("game-over-page").onclick = () =>{
+    $id("game-over-page").onclick = () => {
       window.location.reload();
     };
   }, 2000);
