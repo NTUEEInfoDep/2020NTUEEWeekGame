@@ -83,12 +83,10 @@ class StrengthBar {
 
   end(e) {
     if (e.code === this.keydown && this.status === 1) {
-      if (e.code === "Enter" && Date.now() > this.coolDown){
+      if (e.code === "Enter" && Date.now() > this.coolDown) {
         updateMovement(["keydown", e.code, 0.5 + this.power / 200]);
-        this.coolDown = Date.now() + Constants.PLAYER_SKILL_COOLDOWN*1000;
-      }
-
-      else if (e.code === "Space") {
+        this.coolDown = Date.now() + Constants.PLAYER_SKILL_COOLDOWN * 1000;
+      } else if (e.code === "Space") {
         updateMovement(["keydown", e.code, 0.5 + this.power / 200]);
       }
 
@@ -108,7 +106,7 @@ class StrengthBar {
       this.power = 0;
       this.deltaT = 1;
     }
-    
+
     this.power += this.deltaT;
     this.app.stage.removeChild(this.healthBar);
     this.createHealthBar(this.x, this.y, PLAYER_RADIUS * 2, 10, this.power);
@@ -123,7 +121,7 @@ class StrengthBar {
   update(me, others) {
     let x = 0;
     let y = 0;
-    
+
     Object.values(others).forEach((player) => {
       if (me.id === player.id) {
         x = player.x;
@@ -135,12 +133,12 @@ class StrengthBar {
 
     this.x = canvasX;
     this.y = canvasY - PLAYER_RADIUS / 2 + 100;
-    if (Date.now() > this.coolDown){
-      this.picts[0].position.x = this.x+140;
-      this.picts[0].position.y = this.y-60;
+    if (Date.now() > this.coolDown) {
+      this.picts[0].position.x = this.x + 140;
+      this.picts[0].position.y = this.y - 60;
       this.app.stage.addChild(this.picts[0]);
     }
-    if (Date.now() < this.coolDown){
+    if (Date.now() < this.coolDown) {
       this.app.stage.removeChild(this.picts[0]);
     }
   }
@@ -150,16 +148,18 @@ class StrengthBar {
     window.removeEventListener("keyup", this.up);
   }
 
-  loadPict(name, imageURL){
-    this.app.loader
-    .add(name, imageURL)
-    .load(function (loader, resources){
-      let pict = new PIXI.Sprite(resources[name].texture);
-      pict.scale.x = 0.15;
-      pict.scale.y = 0.15;
-      this.picts.push(pict);
-      console.log("success", this.picts[0]);
-    }.bind(this));
+  loadPict(name, imageURL) {
+    this.app.loader.add(name, imageURL).load(
+      // eslint-disable-next-line func-names
+      function (loader, resources) {
+        const pict = new PIXI.Sprite(resources[name].texture);
+        pict.scale.x = 1.5;
+        pict.scale.y = 1.5;
+        this.picts.push(pict);
+        // eslint-disable-next-line no-console
+        console.log("success", this.picts[0]);
+      }.bind(this)
+    );
   }
 }
 
@@ -175,6 +175,6 @@ export function healthBarInit() {
   });
   const canvas = document.getElementById("canvas");
   const powerbar = new StrengthBar(app, canvas, Date.now(), []);
-  powerbar.loadPict('skillReady', "./assets/skill_ready.jpg");
+  powerbar.loadPict("skillReady", "./assets/skill_ready.jpg");
   return powerbar;
 }

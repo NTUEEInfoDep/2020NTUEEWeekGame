@@ -1,7 +1,7 @@
 import "../css/main.css";
 
 import { connect, play, queueEnd, checkRoom } from "./networking";
-import { startRendering, stopRendering } from "./render";
+import { startRendering } from "./render";
 import { startCapturingInput, stopCapturingInput } from "./input";
 import { downloadAssets } from "./assets";
 import { initState } from "./state";
@@ -80,16 +80,6 @@ function onGameOver(reason) {
   $id("game-over-page").classList.remove("hidden");
   if (reason === "win") $id("win").classList.remove("hidden");
   else if (reason === "lose") $id("lose").classList.remove("hidden");
-
-  /*const getOut = () => {
-    stopRendering(powerbar);
-
-    $id("game-over-page").classList.add("hidden");
-    $id("win").classList.add("hidden");
-    $id("lose").classList.add("hidden");
-
-    step1();
-  };*/
 
   setTimeout(() => {
     $id("game-over-page").onclick = () => {

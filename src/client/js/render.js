@@ -37,28 +37,21 @@ function renderBackground() {
 }
 
 function renderMap(me, map) {
-  if (map === 0) {
-    ctx.drawImage(
-      getAsset("map1.png"),
-      canvas.width / 2 - me.x,
-      canvas.height / 2 - me.y,
-      MAP_SIZE_LENGTH,
-      MAP_SIZE_WIDTH
-    );
-  }
-  if (map === 1) {
-    ctx.drawImage(
-      getAsset("map2.png"),
-      canvas.width / 2 - me.x,
-      canvas.height / 2 - me.y,
-      MAP_SIZE_LENGTH,
-      MAP_SIZE_WIDTH
-    );
-  }
+  let mapStyle;
+  if (map === 1) mapStyle = "map2.png";
+  else mapStyle = "map1.png";
+
+  ctx.drawImage(
+    getAsset(mapStyle),
+    canvas.width / 2 - me.x,
+    canvas.height / 2 - me.y,
+    MAP_SIZE_LENGTH,
+    MAP_SIZE_WIDTH
+  );
 }
 
 function renderPlayer(me, player) {
-  const { x, y, direction, fireDirection, role, mode, skillcooldown } = player;
+  const { x, y, direction, fireDirection, role, mode } = player;
   const canvasX = canvas.width / 2 + x - me.x;
   const canvasY = canvas.height / 2 + y - me.y;
 
@@ -69,31 +62,33 @@ function renderPlayer(me, player) {
   if (direction < 0) {
     ctx.scale(-1, 1);
   }
+
   let playerStyle;
   if (role === 1) {
     if (mode === 3) playerStyle = "num1_frozen.png";
     else if (mode === 4) playerStyle = "crt1_slipped.png";
-    else if  (mode === 2) playerStyle = "crt1_distracted.PNG";
+    else if (mode === 2) playerStyle = "crt1_distracted.PNG";
     else playerStyle = "crt1.png";
   }
   if (role === 2) {
     if (mode === 3) playerStyle = "num2_frozen.png";
     else if (mode === 4) playerStyle = "crt2_slipped.png";
-    else if  (mode === 2) playerStyle = "crt2_distracted.png";
+    else if (mode === 2) playerStyle = "crt2_distracted.png";
     else playerStyle = "crt2.png";
   }
   if (role === 3) {
     if (mode === 3) playerStyle = "num3_frozen.png";
     else if (mode === 4) playerStyle = "crt3_slipped.png";
-    else if  (mode === 2) playerStyle = "crt3_distracted.PNG";
+    else if (mode === 2) playerStyle = "crt3_distracted.PNG";
     else playerStyle = "crt3.png";
   }
   if (role === 4) {
     if (mode === 3) playerStyle = "num4_frozen.png";
     else if (mode === 4) playerStyle = "crt4_slipped.png";
-    else if  (mode === 2) playerStyle = "crt4_distracted.PNG";
+    else if (mode === 2) playerStyle = "crt4_distracted.PNG";
     else playerStyle = "crt4.png";
   }
+
   ctx.drawImage(
     getAsset(playerStyle),
     -PLAYER_RADIUS,
@@ -103,20 +98,19 @@ function renderPlayer(me, player) {
   );
   ctx.restore();
 
-  /*ctx.save();
-  ctx.translate(canvasX, canvasY - PLAYER_RADIUS / 2);
-  let skillStyle;
-  if (skillcooldown > 0) skillStyle = "cool_down.png";
-  else skillStyle = "skill_ready.png";
-  ctx.drawImage(
-    getAsset(skillStyle),
-    PLAYER_RADIUS,
-    PLAYER_RADIUS -20,
-    89,
-    41
-  );
-  ctx.restore();*/
-
+  // ctx.save();
+  // ctx.translate(canvasX, canvasY - PLAYER_RADIUS / 2);
+  // let skillStyle;
+  // if (skillcooldown > 0) skillStyle = "cool_down.png";
+  // else skillStyle = "skill_ready.png";
+  // ctx.drawImage(
+  //   getAsset(skillStyle),
+  //   PLAYER_RADIUS,
+  //   PLAYER_RADIUS -20,
+  //   89,
+  //   41
+  // );
+  // ctx.restore();
 
   //
   // Draw health info
